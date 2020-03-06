@@ -1,86 +1,86 @@
 var quizQuestions = [
     {
-        question: "What franchise would you rather play a game from?",
+        question: "",
         answers: [
             {
-                type: "Microsoft",
-                content: "Halo"
+                type: "",
+                content: ""
             },
             {
-                type: "Nintendo",
-                content: "Pokemon"
+                type: "",
+                content: ""
             },
             {
-                type: "Sony",
-                content: "Uncharted"
+                type: "",
+                content: ""
             }
         ]
     },
     {
-        question: "Which console would you prefer to play with friends?",
+        question: "",
         answers: [
             {
-                type: "Microsoft",
-                content: "X-Box"
+                type: "",
+                content: ""
             },
             {
-                type: "Nintendo",
-                content: "Nintendo 64"
+                type: "",
+                content: ""
             },
             {
-                type: "Sony",
-                content: "Playstation 1"
+                type: "",
+                content: ""
             }
         ]
     },
     {
-        question: "Which of these racing franchises would you prefer to play a game from?",
+        question: "",
         answers: [
             {
-                type: "Microsoft",
-                content: "Forza"
+                type: "",
+                content: ""
             },
             {
-                type: "Nintendo",
-                content: "Mario Kart"
+                type: "",
+                content: ""
             },
             {
-                type: "Sony",
-                content: "Gran Turismo"
+                type: "",
+                content: ""
             }
         ]
     },
     {
-        question: "Which of these games do you think is best?",
+        question: "",
         answers: [
             {
-                type: "Microsoft",
-                content: "BioShock"
+                type: "",
+                content: ""
             },
             {
-                type: "Nintendo",
-                content: "The Legend of Zelda: Ocarina of Time"
+                type: "",
+                content: ""
             },
             {
-                type: "Sony",
-                content: "Final Fantasy VII"
+                type: "",
+                content: ""
             }
         ]
     },
     {
-        question: "What console would you prefer to own?",
+        question: "",
         answers: [
             {
-                type: "Microsoft",
-                content: "X-Box One"
+                type: "",
+                content: ""
             },
             {
-                type: "Nintendo",
-                content: "Wii U"
+                type: "",
+                content: ""
             },
             {
-                type: "Sony",
-                content: "Playstation 4"
+                type: "",
+                content: ""
             }
         ]
     }
