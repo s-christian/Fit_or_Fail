@@ -49,7 +49,7 @@ var quizQuestions = [
                 content: ""
             }
         ]
-    },
+    }, 
     {
         question: "",
         answers: [
