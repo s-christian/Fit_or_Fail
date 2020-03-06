@@ -1,0 +1,154 @@
+body {
+	 margin:0 auto;
+	 padding:0px;
+	 text-align:center;
+	 width:100%;
+	 background-color:black;
+}
+header {
+	position: absolute;
+	left:0;
+	right:0;
+	margin: 1em;
+}
+nav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+nav li {
+	display: inline-block;
+	margin: 1em;
+}
+
+
+nav a{
+	font-weight:900;
+	text-decoration:none;
+	text-transform: uppercase;
+	font-size: .8rem;
+	padding: .5em;	
+	color: blue;
+}
+nav a:hover,
+nav a:focus {
+	color: #DDD;
+}
+
+header {
+	background-color: lightgrey;
+}
+span{
+	background-image: ;	
+	font-size: 25px;
+	margin-left: 10px;
+}
+.navbar {
+	display: flex;
+	align-items:center;
+	justify-content: space-between;
+	padding: 25px;
+	overflow:hidden;
+	background-color:;
+	position:fixed;
+	top:-3%;
+	width: 100;
+	margin-left: -1em;
+	transition: all ease 0.85s;
+	z-index:100;
+	OPacIty: 60%
+}
+.navbar a {
+	float: right;
+	display: block;
+	color:#f2f2f2;
+	text-align:center;
+	padding: 5px 5px;
+	text-decoration:none;
+	
+}
+.navbar a:hover{
+	background:#DDD;
+	color:black;
+}
+.btn {
+	left:0;
+	padding-left: 20px;
+}
+.aboutUs {
+	background-image:;
+	background-color: lightgrey;
+	background-size: cover;
+	background-position:center;
+	padding: 12em 0;
+}
+.home-hero{
+background-image:;
+background-color:lightgrey;
+background-size: cover;
+background-position: center;
+padding: 12em 0;	
+}
+@media(min-width:60rem) {
+	.home-hero {
+		height: 100vh;
+		padding-top: 35vh;
+	}
+	.containerL {
+	position:absolute;
+	right:0;
+	margin:20px;
+	max-width:150px;
+	padding:16px;
+	background-color:white;
+	opacity:.60;
+	
+}
+.containerL h1 {
+	font-size: 40px;
+}
+.title{
+	font-size: 2.5rem;
+	margin-bottom: 1.5em;
+	font-weight:900;
+}
+
+.title span{
+	font-weight:300;
+	display:block;
+	font-size: .5em;
+	margin-top: 1em;
+	
+}
+@media (min-width: 60rem) {
+	.title{
+		font-size:3rem;
+	}
+}
+.button {
+	display:inline-block;
+	font-size: 1rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	border-width: 2px;
+	border-style: solid;
+	padding: .5em 1.5em;
+	color:#FFF;
+	vertical-align:middle;
+}
+
+.button-accent{
+margin-top: -2em;
+	
+}
+.button-accent:hover,
+.button-accent:focus {
+	color:blue; 
+}
+
+@media (min-width: 60rem){
+	.button{
+		font-size:1.5rem;
+	}
+}
