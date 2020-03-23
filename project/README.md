@@ -20,6 +20,13 @@ I put the questions in the back end since we'll probably fetch them from our dat
 
 ---
 
+### Current API functions
+- GET login     - requires valid JWT, returns User information excluding the password
+- POST login    - returns a JWT plus User information excluding the password if given valid login credentials
+- POST register - returns a JWT plus User information after adding User to the database if given valid registration information
+
+---
+
 ### Technologies
 
 ##### Node packages:
@@ -35,10 +42,3 @@ I put the questions in the back end since we'll probably fetch them from our dat
 - [Postman](https://www.postman.com/)   - a client to make HTTP requests to the server, necessary for testing the back end API
 
 *Just take a look at `package.json` for all the information.*
-
----
-
-##### Current API functions
-- GET login     - requires valid JWT, returns User information excluding the password
-- POST login    - returns a JWT plus User information excluding the password if given valid login credentials
-- POST register - returns a JWT plus User information after adding User to the database if given valid registration information
