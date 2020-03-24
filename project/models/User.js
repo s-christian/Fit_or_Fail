@@ -33,6 +33,10 @@ const UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    wins: {
+        type: Number,
+        default: 0
+    },
     team: {
         type: String,
         default: ''
