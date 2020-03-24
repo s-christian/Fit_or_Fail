@@ -1,0 +1,16 @@
+[Week 3] - Requirements
+[Week 3] - Use cases
+
+[Week 4] - Repo setup
+[Week 4] - SPMP
+
+[Week 6] - Skeleton of unit tests, fill in skeleton of unit tests as code is written, unit tests completed by end of project
+[Week 6] - Skeleton of integration tests, fill in skeleton of integration tests as code is written, integration tests completed by end of project
+[Week 6] - Write end-to-end System Test Procedure
+[Week 6] - Write Regression Test Procedure (Use Prioritization Method)
+
+[Week 7] - Group project review
+	       1. Establish your review criteria
+	       2. Evalutating your project
+	       3. Applying the results of your review
+		   = Same thing as 2, but with direct commit links to where the changes were made. Basically just add an extra "commit" column or something.
