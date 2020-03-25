@@ -1,2 +1,9 @@
 # Ignore temporary Word documents
 ~$*
+
+# Directory to store personal text files and etc. related to the project
+# that you might not want to be a part of the actual repository
+personal_notes
+
+# Ignore node_modules
+node_modules
