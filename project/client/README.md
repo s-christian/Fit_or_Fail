@@ -1,1 +1,0 @@
-# This is the folder to host all the front end files in.
