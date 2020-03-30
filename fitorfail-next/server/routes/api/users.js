@@ -20,13 +20,13 @@ router.get("/", (req, res) => {
 // @desc    Get user data
 // @access  Public
 router.get("/:username", (req, res) => {
-	User.findOne({ username: req.params.username })
+	User.findOne({ username_lower: req.params.username.toLowerCase() })
 		.select("-password -email") // don't get the password or email (minus sign means exclude)
-		.then(user => {
+		.then((user) => {
 			if (user) return res.json({ user: user });
-			return res.json({ msg: `${req.params.username} does not exist`, user: "" });
+			return res.json({ msg: `User ${req.params.username} does not exist`, user: "" });
 		})
-		.catch(err => res.json(err));
+		.catch((err) => res.json(err));
 });
 
 module.exports = router;

@@ -33,6 +33,8 @@ router.post("/", (req, res) => {
 		validation_errors.username = "Username field is required";
 	} else if (!Validator.isAlphanumeric(username, "en-US")) {
 		validation_errors.username = "Username cannot contain symbols";
+	} else if (!Validator.isLength(username, { max: 16 })) {
+		validation_errors.username = "Username must be a max of 16 characters";
 	}
 
 	// Email checks
@@ -70,9 +72,9 @@ router.post("/", (req, res) => {
 	}
 
 	// Check for existing user if register input is valid
-	User.findOne({ username }).then((user) => {
+	User.findOne({ username_lower: username.toLowerCase() }).then((user) => {
 		if (user) account_errors.username = "Username already taken";
-		User.findOne({ email }).then((user) => {
+		User.findOne({ email: email }).then((user) => {
 			if (user) account_errors.email = "Email already registered";
 
 			// If we have any account_errors, return
@@ -118,13 +120,16 @@ router.post("/", (req, res) => {
 									res.json({
 										token,
 										user: {
-											id: user.id,
+											_id: user.id,
 											username: user.username,
+											username_lower: user.username_lower,
 											email: user.email,
 											profile_picture_url: user.profile_picture_url,
 											points: user.points,
+											wins: user.wins,
 											team: user.team,
-											account_type: user.account_type
+											account_type: user.account_type,
+											register_date: user.register_date
 										}
 									});
 								}

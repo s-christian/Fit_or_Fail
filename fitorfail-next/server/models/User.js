@@ -5,17 +5,24 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
 	username: {
 		type: String,
-		required: true,
-		unique: true
+		required: "username required",
+		unique: true,
+		maxlength: 16
+	},
+	username_lower: {
+		type: String,
+		default: function() {
+			return this.username.toLowerCase();
+		}
 	},
 	email: {
 		type: String,
-		required: true,
+		required: "email required",
 		unique: true
 	},
 	password: {
 		type: String,
-		required: true
+		required: "password required"
 	},
 	register_date: {
 		type: Date,
@@ -43,4 +50,5 @@ const UserSchema = new Schema({
 	}
 });
 
+// Creates the new "User" collection in the database and exports that model
 module.exports = User = mongoose.model("User", UserSchema);
