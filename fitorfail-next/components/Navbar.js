@@ -38,6 +38,11 @@ const Navbar = () => (
 					<a>Test: non-existant user profile page</a>
 				</Link>
 			</li>
+			<li>
+				<Link href="/users/CHRISTIAN">
+					<a>Test: case-insensitive username match</a>
+				</Link>
+			</li>
 		</ul>
 
 		{/* Really bad temporary CSS styling */}
@@ -69,6 +74,10 @@ const Navbar = () => (
 			a:hover {
 				color: gray;
 				transition: 200ms;
+			}
+
+			a:active {
+				color: red;
 			}
 		`}</style>
 	</div>
