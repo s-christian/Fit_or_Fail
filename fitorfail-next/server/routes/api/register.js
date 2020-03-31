@@ -1,4 +1,3 @@
-require("dotenv").config({ path: "../../config/.env" });
 const express = require("express");
 const router = express.Router();
 const Validator = require("validator");
