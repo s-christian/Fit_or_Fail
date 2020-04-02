@@ -4,17 +4,18 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } f
 import styled, { css } from "styled-components";
 
 const StyledNavbar = styled(Navbar)`
-	background-color: hsl(119, 0%, 95%);
+	background-color: white;
+	border-bottom: 1px solid black;
 `;
 
 const TopbarLink = styled.a`
 	height: 100%;
 	display: flex;
 	align-items: center;
-	text-decoration: none;
 	font-size: 1.25rem;
 	font-weight: 700;
 	color: #212121;
+
 	&:hover {
 		text-decoration: none;
 		color: hsl(189, 67%, 49%);
@@ -28,7 +29,7 @@ const TopbarLink = styled.a`
 		css`
 			color: hsl(189, 78%, 39%);
 			font-weight: 900;
-			font-size: 2rem;
+			font-size: 2.25rem;
 		`}
 `;
 
@@ -38,7 +39,7 @@ const CenteredNav = styled(Nav)`
 `;
 
 const TopbarPlay = styled(TopbarLink)`
-	background-color: hsl(119, 0%, 95%);
+	background-color: white;
 	border: 2px solid hsl(189, 78%, 39%);
 	padding: 0.5rem 2.5rem;
 	border-radius: 3px;
@@ -47,7 +48,7 @@ const TopbarPlay = styled(TopbarLink)`
 
 	&:hover {
 		background-color: hsl(0, 75%, 60%);
-		color: hsl(119, 0%, 95%);
+		color: white;
 		transition: 300ms;
 		border-color: hsl(0, 0%, 13%);
 	}
@@ -59,7 +60,6 @@ const Topbar = () => {
 
 	return (
 		// The second "light" is the color scheme for the hamburger icon
-		// TODO: Make "Play!" in the Topbar a button so it visually pops
 		<StyledNavbar light expand="md">
 			<NavbarBrand>
 				<Link href="/" passHref>
@@ -69,7 +69,7 @@ const Topbar = () => {
 							src="/assets/images/fitorfail_logo_small.jpg"
 							alt="Fit or Fail logo"
 							style={{
-								height: "30px",
+								height: "40px",
 								borderRadius: "50%",
 								marginRight: "0.5rem",
 								border: "1px solid black"
@@ -82,13 +82,6 @@ const Topbar = () => {
 			<NavbarToggler onClick={toggle} />
 			<Collapse isOpen={isOpen} navbar>
 				<CenteredNav className="ml-auto" navbar>
-					<NavItem>
-						<NavLink>
-							<Link href="/game" passHref>
-								<TopbarPlay>Play!</TopbarPlay>
-							</Link>
-						</NavLink>
-					</NavItem>
 					<NavItem>
 						<NavLink>
 							<Link href="/about" passHref>
@@ -121,6 +114,20 @@ const Topbar = () => {
 						<NavLink>
 							<Link href="/users/CHRISTIAN" passHref>
 								<TopbarLink>Test: User CHRISTIAN</TopbarLink>
+							</Link>
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink>
+							<Link href="/login" passHref>
+								<TopbarLink>Sign in</TopbarLink>
+							</Link>
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink>
+							<Link href="/game" passHref>
+								<TopbarPlay>Play!</TopbarPlay>
 							</Link>
 						</NavLink>
 					</NavItem>
