@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import StyledLink from "../components/StyledLink";
 import { Container, Jumbotron } from "reactstrap";
 import styled, { css } from "styled-components";
 import Link from "next/link";
@@ -97,12 +98,8 @@ const Index = () => {
 				<Container fluid="lg">
 					<Title secondary>Leaderboard</Title>
 					<Subtitle secondary>There's gonna be a cool leaderboard, woohoo</Subtitle>
-					<Link href="/testing">
-						<a>Leaderboard</a>
-					</Link>
-					<Link href="/testing">
-						<a>Link to testing page</a>
-					</Link>
+					<StyledLink href="/leaderboard">Leaderboard</StyledLink>
+					<StyledLink href="/testing">Link to test page</StyledLink>
 				</Container>
 			</StyledJumbo>
 		</Layout>
