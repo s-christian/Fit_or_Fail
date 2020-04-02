@@ -1,8 +1,7 @@
 // Clock example taken from: https://reactjs.org/docs/state-and-lifecycle.html
 // React.Component documentation: https://reactjs.org/docs/react-component.html
 
-// This component is rendered Client-Side (CSR = Client-Side Rendering) as opposed to Server-Side (SSR = Server-Side Rendering).
-// For more information, read over: https://www.toptal.com/front-end/client-side-vs-server-side-pre-rendering
+// Read up on the differences between SSR and CSR: https://www.toptal.com/front-end/client-side-vs-server-side-pre-rendering
 
 class Clock extends React.Component {
 	constructor(props) {

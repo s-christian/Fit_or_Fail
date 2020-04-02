@@ -22,7 +22,6 @@ app.prepare().then(() => {
 
 	// DB config
 	const db = process.env.DB_URI;
-	console.log("db: " + db);
 
 	// Connect to Mongo
 	mongoose

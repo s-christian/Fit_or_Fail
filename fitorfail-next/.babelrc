@@ -1,0 +1,6 @@
+// https://github.com/zeit/next.js/tree/canary/examples/with-styled-components
+{
+	"presets": ["next/babel"],
+	// below line necessary for SSR with styled-components, above applies defaults
+	"plugins": [["styled-components", { "ssr": true, "displayName": true }]]
+}

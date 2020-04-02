@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 	});
 });
 
-// @route   GET api/users?username=:username
+// @route   GET api/users/:username
 // @desc    Get user data
 // @access  Public
 router.get("/:username", (req, res) => {

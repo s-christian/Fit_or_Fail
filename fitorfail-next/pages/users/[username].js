@@ -12,7 +12,7 @@ import Layout from "../../components/Layout";
 // Notice that this is a function that does stuff other than immediately return HTML data.
 // I need to check if the user exists or not in order to deliver the correct HTML content,
 // so I start this function with the proper {} instead of ().
-function Userpage({ user, searchedUsername }) {
+const Userpage = ({ user, searchedUsername }) => {
 	// If user does not exist
 	if (!user)
 		return (
@@ -24,7 +24,7 @@ function Userpage({ user, searchedUsername }) {
 					</h1>
 
 					{/* Temporary CSS styling */}
-					<style jsx>{`
+					{/* <style jsx>{`
 						.container {
 							display: flex;
 							align-items: center;
@@ -36,7 +36,7 @@ function Userpage({ user, searchedUsername }) {
 							font-weight: 900;
 							text-shadow: 2px 2px gray;
 						}
-					`}</style>
+					`}</style> */}
 				</div>
 			</Layout>
 		);
@@ -56,7 +56,7 @@ function Userpage({ user, searchedUsername }) {
 				<p>Account type: {user.account_type}</p>
 
 				{/* Temporary CSS styling */}
-				<style jsx>{`
+				{/* <style jsx>{`
 					.container {
 						display: flex;
 						flex-direction: column;
@@ -74,11 +74,11 @@ function Userpage({ user, searchedUsername }) {
 						font-weight: 900;
 						text-shadow: 2px 2px gray;
 					}
-				`}</style>
+				`}</style> */}
 			</div>
 		</Layout>
 	);
-}
+};
 
 // Marks the page to be server-side rendered on every request
 export async function getServerSideProps(context) {
