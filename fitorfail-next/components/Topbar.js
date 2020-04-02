@@ -12,11 +12,13 @@ const TopbarLink = styled.a`
 	display: flex;
 	align-items: center;
 	text-decoration: none;
+	font-size: 1.25rem;
 	font-weight: 700;
 	color: #212121;
 	&:hover {
 		text-decoration: none;
 		color: hsl(189, 67%, 49%);
+		transition: 100ms;
 	}
 
 	/* This function allows you to pass this component keywords to provide different CSS styling. */
@@ -26,8 +28,29 @@ const TopbarLink = styled.a`
 		css`
 			color: hsl(189, 78%, 39%);
 			font-weight: 900;
-			font-size: 1.25rem;
+			font-size: 2rem;
 		`}
+`;
+
+const CenteredNav = styled(Nav)`
+	display: flex;
+	align-items: center;
+`;
+
+const TopbarPlay = styled(TopbarLink)`
+	background-color: hsl(119, 0%, 95%);
+	border: 2px solid hsl(189, 78%, 39%);
+	padding: 0.5rem 2.5rem;
+	border-radius: 3px;
+	font-weight: 800;
+	color: hsl(0, 75%, 60%);
+
+	&:hover {
+		background-color: hsl(0, 75%, 60%);
+		color: hsl(119, 0%, 95%);
+		transition: 300ms;
+		border-color: hsl(0, 0%, 13%);
+	}
 `;
 
 const Topbar = () => {
@@ -58,11 +81,11 @@ const Topbar = () => {
 			</NavbarBrand>
 			<NavbarToggler onClick={toggle} />
 			<Collapse isOpen={isOpen} navbar>
-				<Nav className="ml-auto" navbar>
+				<CenteredNav className="ml-auto" navbar>
 					<NavItem>
 						<NavLink>
 							<Link href="/game" passHref>
-								<TopbarLink>Play!</TopbarLink>
+								<TopbarPlay>Play!</TopbarPlay>
 							</Link>
 						</NavLink>
 					</NavItem>
@@ -101,7 +124,7 @@ const Topbar = () => {
 							</Link>
 						</NavLink>
 					</NavItem>
-				</Nav>
+				</CenteredNav>
 			</Collapse>
 		</StyledNavbar>
 	);
