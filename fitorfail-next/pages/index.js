@@ -4,15 +4,34 @@ import { Container, Jumbotron } from "reactstrap";
 import styled, { css } from "styled-components";
 import Link from "next/link";
 
+const Wrapper = styled.section`
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+`;
+
+const Main = styled.section`
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+`;
+
 const StyledJumbo = styled(Jumbotron)`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	text-align: center;
 	background-color: hsl(189, 78%, 39%);
-	margin-bottom: 2px;
+	margin-bottom: 0;
+	border-bottom: 2px solid white;
+	flex-grow: 2;
 
 	${(props) =>
 		props.secondary &&
 		css`
-			background-color: red;
+			background-color: hsl(112, 57%, 42%);
+			border-bottom: 0;
+			flex-grow: 1;
 		`}
 `;
 
@@ -44,6 +63,7 @@ const Subtitle = styled.p`
 `;
 
 const ButtonContainer = styled.div`
+	margin-top: 3rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -79,30 +99,36 @@ const StyledButton = styled.button`
 const Index = () => {
 	// Trying to add our fitorfail_logo.png behind the main text, but can't figure out how to
 	return (
-		<Layout title="Welcome">
-			<StyledJumbo fluid>
-				<Container fluid="lg">
-					<Title>Fit or Fail!</Title>
-					<Subtitle>The new revolutionary fitness trivia game</Subtitle>
-					<ButtonContainer>
-						<Link href="/game">
-							<StyledButton>PLAY</StyledButton>
-						</Link>
-						<Link href="/register">
-							<StyledButton secondary>Register</StyledButton>
-						</Link>
-					</ButtonContainer>
-				</Container>
-			</StyledJumbo>
-			<StyledJumbo secondary fluid>
-				<Container fluid="lg">
-					<Title secondary>Leaderboard</Title>
-					<Subtitle secondary>There's gonna be a cool leaderboard, woohoo</Subtitle>
-					<StyledLink href="/leaderboard">Leaderboard</StyledLink>
-					<StyledLink href="/testing">Link to test page</StyledLink>
-				</Container>
-			</StyledJumbo>
-		</Layout>
+		<Wrapper>
+			<Layout title="Welcome">
+				<Main>
+					<StyledJumbo fluid>
+						<Container fluid="lg">
+							<Title>Fit or Fail!</Title>
+							<Subtitle>The new revolutionary fitness trivia game</Subtitle>
+							<ButtonContainer>
+								<Link href="/game">
+									<StyledButton>PLAY</StyledButton>
+								</Link>
+								<Link href="/register">
+									<StyledButton secondary>Register</StyledButton>
+								</Link>
+							</ButtonContainer>
+						</Container>
+					</StyledJumbo>
+					<StyledJumbo secondary fluid>
+						<Container fluid="lg">
+							<Title secondary>Leaderboard</Title>
+							<Subtitle secondary>
+								There's gonna be a cool leaderboard, woohoo
+							</Subtitle>
+							<StyledLink href="/leaderboard">Leaderboard</StyledLink>
+							<StyledLink href="/testing">Link to test page</StyledLink>
+						</Container>
+					</StyledJumbo>
+				</Main>
+			</Layout>
+		</Wrapper>
 	);
 };
 

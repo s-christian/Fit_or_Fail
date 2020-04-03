@@ -39,18 +39,18 @@ const CenteredNav = styled(Nav)`
 `;
 
 const TopbarPlay = styled(TopbarLink)`
-	background-color: white;
-	border: 2px solid hsl(189, 78%, 39%);
+	background-color: hsl(0, 75%, 60%);
+	border: 2px solid hsl(0, 0%, 13%);
 	padding: 0.5rem 2.5rem;
 	border-radius: 3px;
 	font-weight: 800;
-	color: hsl(0, 75%, 60%);
+	color: white;
 
 	&:hover {
-		background-color: hsl(0, 75%, 60%);
-		color: white;
+		color: hsl(0, 75%, 60%);
+		background-color: white;
 		transition: 300ms;
-		border-color: hsl(0, 0%, 13%);
+		border-color: hsl(189, 78%, 39%);
 	}
 `;
 
@@ -120,7 +120,7 @@ const Topbar = () => {
 					<NavItem>
 						<NavLink>
 							<Link href="/login" passHref>
-								<TopbarLink>Sign in</TopbarLink>
+								<TopbarLink>Log in</TopbarLink>
 							</Link>
 						</NavLink>
 					</NavItem>
