@@ -58,6 +58,7 @@ const ButtonContainer = styled.div`
 	flex-basis: 400px;
 `;
 
+// Make buttons bigger?
 const StyledButton = styled.button`
 	width: 11rem;
 	background-color: hsl(0, 75%, 60%);

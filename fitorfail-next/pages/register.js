@@ -1,8 +1,12 @@
 import Layout from "../components/Layout";
 import Link from "next/link";
-import { Container, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Container, Form, FormGroup, Label, Input } from "reactstrap";
 import styled from "styled-components";
 
+// IDEAS:
+// Not sure how this will actually end up looking on a phone. Adjust accordingly.
+// Make form pop in from the bottom of the page, for extra fancy points.
+// If mobile devices have significantly less vertical space, just center the form instead of giving it a top margin.
 const StyledContainer = styled(Container)`
 	font-size: 1.25rem;
 	padding: 4rem 2rem;
@@ -18,7 +22,9 @@ const StyledContainer = styled(Container)`
 	}
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
+	width: 100%;
+	padding: 0.5rem 0;
 	background-color: hsl(0, 75%, 60%);
 	color: white;
 	border: 2px solid hsl(0, 0%, 17%);
@@ -29,9 +35,12 @@ const StyledButton = styled(Button)`
 		background-color: hsl(0, 91%, 83%);
 		transition: 300ms;
 	}
+	&:active {
+		background-color: hsla(108, 52%, 56%);
+	}
 `;
 
-function Index() {
+const Index = () => {
 	return (
 		<Layout title="Register" color="hsla(108, 52%, 56%)">
 			<StyledContainer>
@@ -53,17 +62,17 @@ function Index() {
 						<Label>Confirm Password</Label>
 						<Input type="password" placeholder="Retype your password" />
 					</FormGroup>
-					<StyledButton className="btn-lg btn-block">Log in</StyledButton>
-					<div className="text-center mt-2">
+					<StyledButton>Create account</StyledButton>
+					<div className="text-center mt-5">
 						Already have an account?{" "}
 						<Link href="/login">
-							<a style={{ textDecoration: "underline" }}>Log in</a>
+							<a style={{ textDecoration: "underline" }}>Log in!</a>
 						</Link>
 					</div>
 				</Form>
 			</StyledContainer>
 		</Layout>
 	);
-}
+};
 
 export default Index;
