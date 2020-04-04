@@ -73,7 +73,7 @@ router.post("/", (req, res) => {
 	// Check for existing user if register input is valid
 	User.findOne({ username_lower: username.toLowerCase() }).then((user) => {
 		if (user) account_errors.username = "Username already taken";
-		User.findOne({ email: email }).then((user) => {
+		User.findOne({ email: email.toLowerCase() }).then((user) => {
 			if (user) account_errors.email = "Email already registered";
 
 			// If we have any account_errors, return
