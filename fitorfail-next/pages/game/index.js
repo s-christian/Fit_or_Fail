@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import Link from "next/link";
 
 function Game() {
@@ -11,10 +11,10 @@ function Game() {
 			</p>
 			<p>Buttons to pick Solo or Online</p>
 			<p>
-				<Link href="/play/solo">
+				<Link href="/game/solo">
 					<a>Solo</a>
 				</Link>{" "}
-				<Link href="/play/online">
+				<Link href="/game/online">
 					<a>Online</a>
 				</Link>
 			</p>

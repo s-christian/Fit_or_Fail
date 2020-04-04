@@ -127,7 +127,7 @@ const Topbar = () => {
 					<NavItem>
 						<NavLink>
 							<Link href="/game" passHref>
-								<TopbarPlay>Play!</TopbarPlay>
+								<TopbarPlay as="button">Play!</TopbarPlay>
 							</Link>
 						</NavLink>
 					</NavItem>

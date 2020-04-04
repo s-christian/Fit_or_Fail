@@ -14,6 +14,8 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const auth = require("./middleware/auth");
+
 app.prepare().then(() => {
 	const server = express();
 
@@ -38,7 +40,7 @@ app.prepare().then(() => {
 	server.use("/api/register", require("./routes/api/register"));
 	server.use("/api/users", require("./routes/api/users"));
 
-	// Special serving for user pages to account for case differences in the URL
+	// Special serving for user pages to account for case differences in the URL (ex: route to the correct user 'Christian' if somebody attempts to go to "CHRISTIAN")
 	// Note: I can't believe this actually works. I'm dumbfounded at how long it took me to figure this out vs how relatively simple it ended up being.
 	// It's been hours. I finally had the thought to try custom routing on the back end, and it worked. I'm very glad I don't have to think about this any more.
 	// I tried every option under the sun for Next's Router (import "next/router"), and nothing worked.
@@ -57,6 +59,14 @@ app.prepare().then(() => {
 			.catch((err) => console.error({ msg: "Cannot reach api endpoint", err }));
 		// Else, render the default user page with the as-is URL
 		// console.log("Serve it normal!");
+		return handle(req, res);
+	});
+
+	// Routes that require authentication
+	// TODO: FINISH THIS! User must be logged in to access the game page, otherwise they're redirected to the login page.
+	server.get(["/game/solo", "/game/online"], auth, (req, res) => {
+		console.log(req.user);
+		// default
 		return handle(req, res);
 	});
 
