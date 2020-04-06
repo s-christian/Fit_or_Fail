@@ -34,8 +34,8 @@ const StyledAlert = styled(Alert)`
 	display: ${(props) => (props.message ? "inline-block" : "none")};
 	width: 100%;
 	text-align: center;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+	margin-top: 0;
+	margin-bottom: 0;
 `;
 
 const StyledButton = styled.button`
@@ -64,7 +64,7 @@ const Register = () => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [accountType, setAccountType] = useState("user");
 
-	const [message, setMessage] = useState(null);
+	const [messages, setMessages] = useState([]);
 	const [error, setError] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -85,14 +85,14 @@ const Register = () => {
 			})
 			.then((response) => {
 				setError(false);
-				setMessage("Registered!");
+				setMessages(["Registered!"]);
 			})
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code
 					// that falls out of the range of 2xx (ex: 400 is likely in our case)
 					setError(true);
-					setMessage(error.response.data.error);
+					setMessages(error.response.data.error);
 				} else if (error.request) {
 					// The request was made but no response was received
 					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -127,11 +127,22 @@ const Register = () => {
 		<Layout title="Register" color="hsla(108, 52%, 56%)">
 			<StyledContainer>
 				<Form className="login-form" onSubmit={handleSubmit}>
-					<h2 className="text-center">Register</h2>
-					<StyledAlert message={message} color={error ? "danger" : "success"}>
-						{message}
-					</StyledAlert>
-					<FormGroup>
+					<h2 className="text-center" style={{ marginBottom: "1rem" }}>
+						Register
+					</h2>
+					{/* Generates alerts based on errors or a successful registration */}
+					{messages.map((message) => {
+						return (
+							<StyledAlert
+								key={message}
+								message={message}
+								color={error ? "danger" : "success"}
+							>
+								{message}
+							</StyledAlert>
+						);
+					})}
+					<FormGroup style={{ marginTop: "1rem" }}>
 						<Label for="username">Username</Label>
 						<Input
 							type="text"
