@@ -36,8 +36,9 @@ app.prepare().then(() => {
 		.catch((err) => console.log(err));
 
 	// Use API routes
-	server.use("/api/login", require("./routes/api/login"));
-	server.use("/api/register", require("./routes/api/register"));
+	server.use("/login", require("./routes/login"));
+	server.use("/logout", require("./routes/logout"));
+	server.use("/register", require("./routes/register"));
 	server.use("/api/users", require("./routes/api/users"));
 
 	// Special serving for user pages to account for case differences in the URL (ex: route to the correct user 'Christian' if somebody attempts to go to "CHRISTIAN")
@@ -56,7 +57,7 @@ app.prepare().then(() => {
 					return res.redirect(`${apiRes.data.user.username}`);
 				}
 			})
-			.catch((err) => console.error({ msg: "Cannot reach api endpoint", err }));
+			.catch((err) => console.error({ error: "Cannot reach api endpoint", err }));
 		// Else, render the default user page with the as-is URL
 		// console.log("Serve it normal!");
 		return handle(req, res);
@@ -75,6 +76,7 @@ app.prepare().then(() => {
 		return handle(req, res);
 	});
 
+	// Start the server, listening on port <PORT>
 	server.listen(PORT, (err) => {
 		if (err) throw err;
 		console.log(`Server started on port ${PORT}`);

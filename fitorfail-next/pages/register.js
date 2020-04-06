@@ -1,7 +1,14 @@
+/* Resources:
+ * https://www.youtube.com/watch?v=XHPL-rX9m-Q
+ * https://github.com/axios/axios#handling-errors
+ */
+
 import Layout from "../components/Layout";
 import Link from "next/link";
-import { Container, Form, FormGroup, Label, Input } from "reactstrap";
+import { Container, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import styled from "styled-components";
+import axios from "axios";
+import { useState } from "react";
 
 // IDEAS:
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
@@ -10,7 +17,7 @@ import styled from "styled-components";
 const StyledContainer = styled(Container)`
 	font-size: 1.25rem;
 	padding: 4rem 2rem;
-	width: 550px;
+	width: 550px !important;
 	background-color: white;
 	border-radius: 3px;
 	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
@@ -18,8 +25,17 @@ const StyledContainer = styled(Container)`
 
 	// Make the box slimmer on small screens (phones)
 	@media screen and (max-width: 600px) {
-		width: 450px;
+		width: 450px !important;
 	}
+`;
+
+const StyledAlert = styled(Alert)`
+	// If there is no message to display, hide the alert
+	display: ${(props) => (props.message ? "inline-block" : "none")};
+	width: 100%;
+	text-align: center;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 `;
 
 const StyledButton = styled.button`
@@ -30,6 +46,7 @@ const StyledButton = styled.button`
 	border: 2px solid hsl(0, 0%, 17%);
 	font-weight: 700;
 	border-radius: 3px;
+	margin-top: 1rem;
 
 	&:hover {
 		background-color: hsl(0, 91%, 83%);
@@ -40,29 +57,127 @@ const StyledButton = styled.button`
 	}
 `;
 
-const Index = () => {
+const Register = () => {
+	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [accountType, setAccountType] = useState("user");
+
+	const [message, setMessage] = useState(null);
+	const [error, setError] = useState(true);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	function handleSubmit(event) {
+		// Necessary to prevent default HTML form submission
+		event.preventDefault();
+
+		setIsSubmitting(true);
+
+		// For below, a "response" always contains "data", "status", "statusText", "headers", "config", and "request".
+		axios
+			.post("http://localhost:3000/register", {
+				username,
+				email,
+				password,
+				confirmPassword,
+				accountType
+			})
+			.then((response) => {
+				setError(false);
+				setMessage("Registered!");
+			})
+			.catch((error) => {
+				if (error.response) {
+					// The request was made and the server responded with a status code
+					// that falls out of the range of 2xx (ex: 400 is likely in our case)
+					setError(true);
+					setMessage(error.response.data.error);
+				} else if (error.request) {
+					// The request was made but no response was received
+					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+					// http.ClientRequest in node.js
+					console.log(error.request);
+				} else {
+					// Something happened in setting up the request that triggered an Error
+					console.log("Error", error.message);
+				}
+			})
+			.finally(() => {
+				setUsername("");
+				setEmail("");
+				setPassword("");
+				setConfirmPassword("");
+			});
+
+		setIsSubmitting(false);
+	}
+
+	// Gets passed an "event" which contains the target element (the one that called the function).
+	// The target element contains the name and value that we set for it.
+	function handleChange({ target }) {
+		if (target.name === "username") setUsername(target.value);
+		else if (target.name === "email") setEmail(target.value);
+		else if (target.name === "password") setPassword(target.value);
+		else if (target.name === "confirmPassword") setConfirmPassword(target.value);
+		else console.error("Error changing register values");
+	}
+
 	return (
 		<Layout title="Register" color="hsla(108, 52%, 56%)">
 			<StyledContainer>
-				<Form className="login-form">
+				<Form className="login-form" onSubmit={handleSubmit}>
 					<h2 className="text-center">Register</h2>
+					<StyledAlert message={message} color={error ? "danger" : "success"}>
+						{message}
+					</StyledAlert>
 					<FormGroup>
-						<Label>Username</Label>
-						<Input type="text" placeholder="FitMaster27" />
+						<Label for="username">Username</Label>
+						<Input
+							type="text"
+							id="username"
+							name="username"
+							placeholder="FitMaster27"
+							onChange={handleChange}
+							value={username}
+						/>
 					</FormGroup>
 					<FormGroup>
-						<Label>Email</Label>
-						<Input type="email" placeholder="YourEmail@email.com" />
+						<Label for="email">Email</Label>
+						<Input
+							type="email"
+							id="email"
+							name="email"
+							placeholder="YourEmail@email.com"
+							onChange={handleChange}
+							value={email}
+						/>
 					</FormGroup>
 					<FormGroup>
-						<Label>Password</Label>
-						<Input type="password" placeholder="Password" />
+						<Label for="password">Password</Label>
+						<Input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="Password"
+							onChange={handleChange}
+							value={password}
+						/>
 					</FormGroup>
 					<FormGroup>
-						<Label>Confirm Password</Label>
-						<Input type="password" placeholder="Retype your password" />
+						<Label for="confirmPassword">Confirm Password</Label>
+						<Input
+							type="password"
+							id="confirmPassword"
+							name="confirmPassword"
+							placeholder="Retype your password"
+							onChange={handleChange}
+							value={confirmPassword}
+						/>
 					</FormGroup>
-					<StyledButton>Create account</StyledButton>
+					<StyledButton type="submit" disabled={isSubmitting}>
+						{isSubmitting ? "Please wait..." : "Register"}
+					</StyledButton>
 					<div className="text-center mt-5">
 						Already have an account?{" "}
 						<Link href="/login">
@@ -75,4 +190,4 @@ const Index = () => {
 	);
 };
 
-export default Index;
+export default Register;

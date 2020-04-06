@@ -1,5 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"; //reactstrap styles
 import { ThemeProvider } from "styled-components";
+import { SWRConfig } from "swr";
+import axios from "axios";
 
 // Example theme with color variables
 const theme = {
@@ -13,7 +15,9 @@ const theme = {
 const MyApp = ({ Component, pageProps }) => {
 	return (
 		<ThemeProvider theme={theme}>
-			<Component {...pageProps} />
+			<SWRConfig value={{ fetcher: (url) => axios(url).then((r) => r.data) }}>
+				<Component {...pageProps} />
+			</SWRConfig>
 		</ThemeProvider>
 	);
 };

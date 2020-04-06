@@ -24,7 +24,7 @@ router.get("/:username", (req, res) => {
 		.select("-password -email") // don't get the password or email (minus sign means exclude)
 		.then((user) => {
 			if (user) return res.json({ user: user });
-			return res.json({ msg: `User ${req.params.username} does not exist` });
+			return res.json({ error: `User ${req.params.username} does not exist` });
 		})
 		.catch((err) => res.json(err));
 });

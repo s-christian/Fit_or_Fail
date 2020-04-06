@@ -16,7 +16,6 @@
 		"bcryptjs": "^2.4.3",
 		"bootstrap": "^4.4.1",
 		"express": "^4.17.1",
-		"is-empty": "^1.2.0",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.9.6",
 		"next": "9.3.2",
@@ -24,6 +23,7 @@
 		"react-dom": "16.13.1",
 		"reactstrap": "^8.4.1",
 		"styled-components": "^5.0.1",
+		"swr": "^0.2.0",
 		"validator": "^13.0.0"
 	},
 	"devDependencies": {

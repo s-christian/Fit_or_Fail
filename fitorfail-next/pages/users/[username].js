@@ -2,8 +2,10 @@
  * https://nextjs.org/docs/basic-features/pages
  * https://nextjs.org/docs/basic-features/data-fetching
  * https://github.com/zeit/next.js/issues/9524
+ * https://github.com/zeit/swr#ssr-with-nextjs
  */
 
+import useSWR from "swr";
 import axios from "axios";
 
 import Layout from "../../components/Layout";
@@ -13,7 +15,7 @@ import Layout from "../../components/Layout";
 // I need to check if the user exists or not in order to deliver the correct HTML content,
 // so I start this function with the proper {} instead of ().
 const Userpage = ({ user, searchedUsername }) => {
-	// If user does not exist
+	// If user does not exist, return that the user was not found
 	if (!user)
 		return (
 			<Layout title="User not found">
@@ -42,18 +44,24 @@ const Userpage = ({ user, searchedUsername }) => {
 		);
 
 	// If user exists
-	// TODO: When someone goes to /users/CHRISTIAN and user "Christian" is found,
-	// change the URL to be the accurate username (/users/Christian).
+	// ISSUE: Data is cleared from page on refocus, even though supposedly none of the data was touched! Something to do with rendering it?
+	// Have to at least temporarily disallow revalidation on focus.
+	const initialUserInfo = user;
+	const { data } = useSWR(`http://localhost:3000/api/users/${searchedUsername}`, {
+		initialData: initialUserInfo,
+		revalidateOnFocus: false
+	});
+
 	return (
-		<Layout title={`${user.username} · player info`}>
+		<Layout title={`${data.username} · player info`}>
 			<div className="container">
-				<img src={user.profile_picture_url} alt={`${user.username}'s profile picture`} />
-				<h1 id="username">{user.username}</h1>
-				<p>Points: {user.points}</p>
-				<p>Wins: {user.wins}</p>
-				<p>Team: {user.team}</p>
-				<p>Member since: {user.register_date}</p>
-				<p>Account type: {user.account_type}</p>
+				<img src={data.profile_picture_url} alt={`${data.username}'s profile picture`} />
+				<h1 id="username">{data.username}</h1>
+				<p>Points: {data.points}</p>
+				<p>Wins: {data.wins}</p>
+				<p>Team: {data.team}</p>
+				<p>Member since: {data.register_date}</p>
+				<p>Account type: {data.account_type}</p>
 
 				{/* Temporary CSS styling */}
 				{/* <style jsx>{`
@@ -89,16 +97,17 @@ export async function getServerSideProps(context) {
 	// to get all of that user's information in order to populate the page.
 	const { username } = context.params;
 
-	let data = { user: "" };
+	// By default, we say that we have not found any user data
+	let userData = false;
 	try {
 		// host is localhost:3000 in development
-		const res = await axios.get(`http://${context.req.headers.host}/api/users/${username}`);
-		// axios returns a large JSON object with all the request and response information.
-		// We only need the data from the 'data' field that it returns. This contains the API's response.
-		// Only change the value of data if the server responded with found user data
-		if (res.data.user) data = res.data;
+		// axios returns a "response", and we're pulling the data out of it
+		const { data } = await axios.get(
+			`http://${context.req.headers.host}/api/users/${username}`
+		);
+		if (data.user) userData = data.user;
 	} catch (err) {
-		console.error({ msg: "Cannot reach api endpoint", err });
+		console.error({ error: "Cannot reach api endpoint", err });
 	}
 
 	// Note to self: When logging an object (such as the JSON data below), the object has to be the only parameter.
@@ -108,7 +117,7 @@ export async function getServerSideProps(context) {
 	// Pass data to the page via props
 	return {
 		props: {
-			user: data.user,
+			user: userData,
 			searchedUsername: username
 		}
 	};
