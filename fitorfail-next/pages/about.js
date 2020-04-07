@@ -3,14 +3,20 @@ import { Container } from "reactstrap";
 import styled, { css } from "styled-components";
 import Link from "next/link";
 
-
+const PageCenter = styled(Container) `
+	display: center;
+`
 const StyledContainer = styled(Container)`
 	text-align: left;
 	background-color: #b1a7b9;
 	border: solid 2px;
 	width: 700px;
 	margin-bottom: 30px;
+	padding: 25px;
 	font-size: 1rem;
+	@media screen and (max width: 600px) {
+		width: 400px;
+	}
 `;
 const Headers = styled.body`
 text-align: center;
@@ -63,14 +69,15 @@ const StyledButton = styled.button`
 const about = () => {
 	return (
 		<Layout title="About" color="hsl(189, 78%, 39%)">
-			<Headers>About Us:</Headers>
+			<PageCenter>
+				<Headers>About Us:</Headers>
 				<StyledContainer>
 						<Container>
 							<Title>Company:</Title>
 							<p>Fitness Gurus Incorporated</p>
 							<Title>Mission:</Title>
 							<p>Fit or Fail is the newest trivia game for everyone! Its goal is to spread fitness awareness 
-								to the world and especially to the younger generations. With this goal in mind, Fit-or-Fail has 
+								to the world and especially to the younger generations. With this goal in mind, Fit or Fail has 
 								dedicated its questions to the world of fitness. 
 							</p>
 							<Title>Founders:</Title>
@@ -85,13 +92,10 @@ const about = () => {
 							</p> 
 							<Title>Location:</Title>
 							<p>Address: 7800 York Road, Towson, MD 21252</p>  
-							<img
-							src="/assets/images/Towson.jpg"
-							alt="Fit or Fail logo"
-							style={{
-								height: "300px", 
-								marginRight: "50rem",
-								border: "1px solid black"
+							<img src="/assets/images/Towson.jpg"
+							style = {{
+							height: "250px",
+							border: "1px solid black"
 							}}/>
 							<ButtonContainer>
 								<Link href="Index">
@@ -100,6 +104,7 @@ const about = () => {
 							</ButtonContainer>	
 						</Container>
 					</StyledContainer>
+			</PageCenter>	
 		</Layout>
 	);
 };
