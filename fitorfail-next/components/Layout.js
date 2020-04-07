@@ -22,8 +22,6 @@ const Layout = ({ children, title = "Untitled 🤔", color = "none" }) => (
 	<Wrapper color={color}>
 		<Head>
 			<title>{`${title} | Fit or Fail`}</title>
-			<meta charSet="utf-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		</Head>
 		<Topbar />
 		<Main>
