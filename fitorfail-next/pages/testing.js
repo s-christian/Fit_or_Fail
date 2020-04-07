@@ -4,6 +4,9 @@ import { useState } from "react";
 function Test() {
 	// Declare a new state variable "count" and set its initial value to 0
 	const [count, setCount] = useState(0);
+	console.log("test");
+	console.log(res);
+	console.log(req);
 
 	return (
 		<>

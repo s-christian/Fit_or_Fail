@@ -11,7 +11,7 @@ const User = require("../models/User");
 // @desc    Authenticate user (log in)
 // @access  Public
 router.post("/", (req, res) => {
-	const { usernameOrEmail, password } = req.body;
+	const { usernameOrEmail, password, redirect } = req.body;
 
 	// Simple validation
 	if (!usernameOrEmail || !password)
@@ -29,6 +29,7 @@ router.post("/", (req, res) => {
 		bcrypt.compare(password, user.password).then((isMatch) => {
 			if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
 			issueToken(req, res, user);
+			if (redirect) return res.redirect(redirect);
 		});
 	});
 });

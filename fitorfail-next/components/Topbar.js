@@ -126,9 +126,9 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link href="/game" passHref>
+							<a href="/game">
 								<TopbarPlay as="button">Play!</TopbarPlay>
-							</Link>
+							</a>
 						</NavLink>
 					</NavItem>
 				</CenteredNav>

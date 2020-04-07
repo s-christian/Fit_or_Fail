@@ -5,10 +5,11 @@
 
 require("dotenv").config();
 const express = require("express");
-const next = require("next");
 const mongoose = require("mongoose");
 const axios = require("axios");
+const cookieParser = require("cookie-parser");
 
+const next = require("next");
 const PORT = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -21,6 +22,8 @@ app.prepare().then(() => {
 
 	// Used to parse the body (replaces the body-parser package)
 	server.use(express.json());
+	// Used to access browser cookies
+	server.use(cookieParser());
 
 	// DB config
 	const db = process.env.DB_URI;
@@ -65,8 +68,8 @@ app.prepare().then(() => {
 
 	// Routes that require authentication
 	// TODO: FINISH THIS! User must be logged in to access the game page, otherwise they're redirected to the login page.
-	server.get(["/game/solo", "/game/online"], auth, (req, res) => {
-		console.log(req.user);
+	server.get(["/game", "/game/solo", "/game/online"], auth, (req, res) => {
+		console.log(req.user.id);
 		// default
 		return handle(req, res);
 	});

@@ -94,9 +94,10 @@ const Index = () => {
 					<Title>Fit or Fail!</Title>
 					<Subtitle>The new revolutionary fitness trivia game</Subtitle>
 					<ButtonContainer>
-						<Link href="/game">
+						{/* Have to use regular anchor tag to have protected routes redirect correctly */}
+						<a href="/game">
 							<StyledButton>PLAY</StyledButton>
-						</Link>
+						</a>
 						<Link href="/register">
 							<StyledButton secondary>Register</StyledButton>
 						</Link>

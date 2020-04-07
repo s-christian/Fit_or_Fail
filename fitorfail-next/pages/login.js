@@ -62,7 +62,7 @@ const Login = () => {
 	const [password, setPassword] = useState("");
 
 	const [message, setMessage] = useState(null);
-	const [error, setError] = useState(true);
+	const [error, setError] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	function handleSubmit(event) {
