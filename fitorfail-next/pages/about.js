@@ -4,12 +4,13 @@ import styled, { css } from "styled-components";
 import Link from "next/link";
 
 
-const StyledContainment = styled(Container)`
+const StyledContainer = styled(Container)`
 	text-align: left;
 	background-color: #b1a7b9;
 	border: solid 2px;
 	width: 700px;
 	margin-bottom: 30px;
+	font-size: 1rem;
 `;
 const Headers = styled.body`
 text-align: center;
@@ -19,24 +20,11 @@ color: white;
 font-weight: 900;
 text-shadow: 2px 2px gray;
 `;
-const H1s = styled.h1 `
+const Title = styled.h1 `
 	text-align: left;
 	color: black;
 	font-size: 2rem;
 	font-weight: 500;
-`
-
-const Subtitle = styled.p`
-	font-size: 1.25rem;
-	font-weight: 600;
-	color: white;
-	font-style: italic;
-	text-align: left;
-	${(props) =>
-		props.secondary &&
-		css`
-			font-size: 1rem;
-		`}
 `;
 
 const ButtonContainer = styled.div`
@@ -74,30 +62,29 @@ const StyledButton = styled.button`
 
 const about = () => {
 	return (
-		<Layout title="About">
-			<body style={{backgroundColor: "hsl(189, 78%, 39%)"}}>
-				<Headers>About Us:</Headers>
-					<StyledContainment>
+		<Layout title="About" color="hsl(189, 78%, 39%)">
+			<Headers>About Us:</Headers>
+				<StyledContainer>
 						<Container>
-							<H1s>Company:</H1s>
-							<Subtitle>Fitness-Gurus Incorporated</Subtitle>
-							<H1s>Mission:</H1s>
-							<Subtitle>Fit-or-Fail is the newest trivia game for Everyone! It's goal is to spread fitness awareness 
-								to the world and especially to younger generations. With this goal in mind, Fit-or-Fail has 
-								dedicated it's questions to the world of fitness. 
-							</Subtitle>
-							<H1s>Founders:</H1s>
-							<Subtitle>
+							<Title>Company:</Title>
+							<p>Fitness Gurus Incorporated</p>
+							<Title>Mission:</Title>
+							<p>Fit or Fail is the newest trivia game for everyone! Its goal is to spread fitness awareness 
+								to the world and especially to the younger generations. With this goal in mind, Fit-or-Fail has 
+								dedicated its questions to the world of fitness. 
+							</p>
+							<Title>Founders:</Title>
+							<p>
 								<ul>
-									<li>Christian Saul</li>
+									<li>Christian Sauls</li>
 									<li>Travis Scott</li>
-									<li>Mkafui Dzeze</li>
+									<li>Makafui Dzeze</li>
 									<li>Adamma Neumann</li>
 									<li>Joshua Shevitz</li>
 								</ul>
-							</Subtitle> 
-							<H1s>Location:</H1s>
-							<Subtitle>Address: 7800 York Road Towson Md, 21252</Subtitle>  
+							</p> 
+							<Title>Location:</Title>
+							<p>Address: 7800 York Road, Towson, MD 21252</p>  
 							<img
 							src="/assets/images/Towson.jpg"
 							alt="Fit or Fail logo"
@@ -107,16 +94,12 @@ const about = () => {
 								border: "1px solid black"
 							}}/>
 							<ButtonContainer>
-								<Link href="Index.js">
+								<Link href="Index">
 									<StyledButton>Home</StyledButton>
-								</Link>
-								<Link href="/register">
-									<StyledButton secondary>Register</StyledButton>
 								</Link>
 							</ButtonContainer>	
 						</Container>
-					</StyledContainment>
-			</body>
+					</StyledContainer>
 		</Layout>
 	);
 };
