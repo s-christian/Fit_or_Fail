@@ -3,7 +3,7 @@ import Head from "next/head";
 import Topbar from "./Topbar";
 
 const Wrapper = styled.main`
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: ${(props) =>
