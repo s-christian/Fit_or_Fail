@@ -3,30 +3,35 @@ import { Container } from "reactstrap";
 import styled, { css } from "styled-components";
 import Link from "next/link";
 
-const PageCenter = styled(Container) `
-	display: center;
-`
+const PageCenter = styled(Container)`
+	display: center; // This isn't even valid CSS... Use flex or something to center it.
+`;
+
 const StyledContainer = styled(Container)`
 	text-align: left;
 	background-color: #b1a7b9;
 	border: solid 2px;
 	width: 700px;
 	margin-bottom: 30px;
-	padding: 25px;
+	padding: 1.5rem; // I think it's best practice to make this 1.5rem instead of 25px
 	font-size: 1rem;
 	@media screen and (max width: 600px) {
+		// All you did was make the image smaller by default, lol. You should actually scale the image dynamically.
 		width: 400px;
 	}
 `;
-const Headers = styled.body`
-text-align: center;
-background-COlor: hsl(189, 78%, 39%);
-font-size: 5rem;
-color: white;
-font-weight: 900;
-text-shadow: 2px 2px gray;
+
+const Headers = styled.h1`
+	// Dear Lord, why is this a BODY????? THIS is what's affecting everything in the page! LOL. Changed to an h1.
+	text-align: center;
+	// Fixed typo (background-COlor), but also just removed it entirely because there's no need for a background-color here
+	font-size: 5rem;
+	color: white;
+	font-weight: 900;
+	text-shadow: 2px 2px gray;
 `;
-const Title = styled.h1 `
+
+const Title = styled.h1`
 	text-align: left;
 	color: black;
 	font-size: 2rem;
@@ -50,7 +55,7 @@ const StyledButton = styled.button`
 	margin: 0.5rem 1rem;
 	padding: 0.5rem 0;
 	&:hover {
-		background-color:hsl(189, 78%, 39%) ;
+		background-color: hsl(189, 78%, 39%);
 		transition: 500ms;
 	}
 
@@ -66,47 +71,53 @@ const StyledButton = styled.button`
 		`}
 `;
 
-const about = () => {
+// Just some other notes: I'm personally not a fan of using the same background-color here as I used on the homepage. Try something lighter and new?
+// Also the home button was still broken so I corrected the href.
+const About = () => {
 	return (
 		<Layout title="About" color="hsl(189, 78%, 39%)">
 			<PageCenter>
 				<Headers>About Us:</Headers>
 				<StyledContainer>
-						<Container>
-							<Title>Company:</Title>
-							<p>Fitness Gurus Incorporated</p>
-							<Title>Mission:</Title>
-							<p>Fit or Fail is the newest trivia game for everyone! Its goal is to spread fitness awareness 
-								to the world and especially to the younger generations. With this goal in mind, Fit or Fail has 
-								dedicated its questions to the world of fitness. 
-							</p>
-							<Title>Founders:</Title>
-							<p>
-								<ul>
-									<li>Christian Sauls</li>
-									<li>Travis Scott</li>
-									<li>Makafui Dzeze</li>
-									<li>Adamma Neumann</li>
-									<li>Joshua Shevitz</li>
-								</ul>
-							</p> 
-							<Title>Location:</Title>
-							<p>Address: 7800 York Road, Towson, MD 21252</p>  
-							<img src="/assets/images/Towson.jpg"
-							style = {{
-							height: "250px",
-							border: "1px solid black"
-							}}/>
-							<ButtonContainer>
-								<Link href="Index">
-									<StyledButton>Home</StyledButton>
-								</Link>
-							</ButtonContainer>	
-						</Container>
-					</StyledContainer>
-			</PageCenter>	
+					<Container>
+						<Title>Company:</Title>
+						<p>Fitness Gurus Incorporated</p>
+						<Title>Mission:</Title>
+						<p>
+							Fit or Fail is the newest trivia game for everyone! Its goal is to
+							spread fitness awareness to the world and especially to the younger
+							generations. With this goal in mind, Fit or Fail has dedicated its
+							questions to the world of fitness.
+						</p>
+						<Title>Founders:</Title>
+						<p>
+							<ul>
+								<li>Christian Sauls</li>
+								<li>Travis Scott</li>
+								<li>Makafui Dzeze</li>
+								<li>Adamma Neumann</li>
+								<li>Joshua Shevitz</li>
+							</ul>
+						</p>
+						<Title>Location:</Title>
+						<p>Address: 7800 York Road, Towson, MD 21252</p>
+						<img
+							src="/assets/images/Towson.jpg"
+							style={{
+								height: "250px",
+								border: "1px solid black"
+							}}
+						/>
+						<ButtonContainer>
+							<Link href="/">
+								<StyledButton>Home</StyledButton>
+							</Link>
+						</ButtonContainer>
+					</Container>
+				</StyledContainer>
+			</PageCenter>
 		</Layout>
 	);
 };
 
-export default about;
+export default About;
