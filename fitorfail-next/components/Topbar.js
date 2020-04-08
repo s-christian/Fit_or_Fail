@@ -47,6 +47,7 @@ const TopbarPlay = styled(TopbarLink)`
 	color: white;
 
 	&:hover {
+		text-decoration: none;
 		color: hsl(0, 75%, 60%);
 		background-color: white;
 		transition: 300ms;
