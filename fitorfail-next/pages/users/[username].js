@@ -66,9 +66,7 @@ export async function getServerSideProps(context) {
 	try {
 		// host is localhost:3000 in development
 		// axios returns a "response", and we're pulling the data out of it
-		const { data } = await axios.get(
-			`http://${context.req.headers.host}/api/users/username/${username}`
-		);
+		const { data } = await axios.get(`${process.env.BASE_URL}/api/users/username/${username}`);
 		if (data.user) userData = data.user;
 	} catch (err) {
 		console.error({ error: "Cannot reach api endpoint", err });

@@ -19,12 +19,22 @@ router.get("/", (req, res) => {
 // @route   GET api/users/:username
 // @desc    Get user data
 // @access  Public
-router.get("/:username", (req, res) => {
+router.get("/username/:username", (req, res) => {
 	User.findOne({ username_lower: req.params.username.toLowerCase() })
 		.select("-password -email") // don't get the password or email (minus sign means exclude)
 		.then((user) => {
-			if (user) return res.json({ user: user });
-			return res.json({ error: `User ${req.params.username} does not exist` });
+			if (user) return res.json({ user });
+			return res.json({ error: `User with username ${req.params.username} does not exist` });
+		})
+		.catch((err) => res.json(err));
+});
+
+router.get("/id/:id", (req, res) => {
+	User.findOne({ _id: req.params.id })
+		.select("-password -email") // don't get the password or email (minus sign means exclude)
+		.then((user) => {
+			if (user) return res.json({ user });
+			return res.json({ error: `User with ID ${req.params.id} does not exist` });
 		})
 		.catch((err) => res.json(err));
 });
