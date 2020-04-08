@@ -13,7 +13,7 @@ import { useState } from "react";
 // IDEAS:
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
 // Make form pop in from the bottom of the page, for extra fancy points.
-// If mobile devices have significantly less vertical space, just center the form instead of giving it a top margin.
+// If mobile devices have significantly less vertical space, just vertically center the form instead of giving it a top margin.
 const StyledContainer = styled(Container)`
 	font-size: 1.25rem;
 	padding: 4rem 2rem;
@@ -73,7 +73,7 @@ const Login = () => {
 
 		// For below, a "response" always contains "data", "status", "statusText", "headers", "config", and "request".
 		axios
-			.post("http://localhost:3000/login", {
+			.post("/login", {
 				usernameOrEmail,
 				password
 			})

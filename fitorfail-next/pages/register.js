@@ -76,7 +76,7 @@ const Register = () => {
 
 		// For below, a "response" always contains "data", "status", "statusText", "headers", "config", and "request".
 		axios
-			.post("http://localhost:3000/register", {
+			.post("/register", {
 				username,
 				email,
 				password,
