@@ -6,6 +6,12 @@
 -   Ask someone for the information that goes in the `.env` file which contains our database connection w/ password, and our password hashing password
 -   After all this, run the project with `npm run dev` from the root directory
 
+### Miscellaneous Notes
+
+-   Cookies can only be set over HTTPS in production
+    -   For some reason my phone connected over HTTP and I was wondering why the login wasn't working; I had to manually correct to HTTPS
+-   Cookies should be set to expire in two hours, the same expiration time as the JWT
+
 _Everything below this line is the default Next.js README_
 
 ---
