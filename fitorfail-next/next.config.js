@@ -3,8 +3,8 @@
  */
 
 // Needed to modify this file to add support for environment variables
-
-if (process.env.NODE_ENV !== "production") const Dotenv = require("dotenv-webpack");
+let Dotenv = null;
+if (process.env.NODE_ENV !== "production") Dotenv = require("dotenv-webpack");
 
 module.exports = {
 	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
