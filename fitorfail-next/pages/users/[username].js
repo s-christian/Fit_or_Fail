@@ -24,21 +24,6 @@ const Userpage = ({ user, searchedUsername }) => {
 					<h1>
 						User <span id="username">{searchedUsername}</span> does not exist!
 					</h1>
-
-					{/* Temporary CSS styling */}
-					{/* <style jsx>{`
-						.container {
-							display: flex;
-							align-items: center;
-							justify-content: center;
-						}
-
-						#username {
-							color: white;
-							font-weight: 900;
-							text-shadow: 2px 2px gray;
-						}
-					`}</style> */}
 				</div>
 			</Layout>
 		);
@@ -62,27 +47,6 @@ const Userpage = ({ user, searchedUsername }) => {
 				<p>Team: {data.team}</p>
 				<p>Member since: {data.register_date}</p>
 				<p>Account type: {data.account_type}</p>
-
-				{/* Temporary CSS styling */}
-				{/* <style jsx>{`
-					.container {
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-						justify-content: center;
-						width: 500px;
-						height: 500px;
-						background-color: lightgreen;
-						border-radius: 5%;
-						border: 2px solid black;
-					}
-
-					#username {
-						color: white;
-						font-weight: 900;
-						text-shadow: 2px 2px gray;
-					}
-				`}</style> */}
 			</div>
 		</Layout>
 	);
@@ -103,7 +67,7 @@ export async function getServerSideProps(context) {
 		// host is localhost:3000 in development
 		// axios returns a "response", and we're pulling the data out of it
 		const { data } = await axios.get(
-			`http://${context.req.headers.host}/api/users/${username}`
+			`http://${context.req.headers.host}/api/users/username/${username}`
 		);
 		if (data.user) userData = data.user;
 	} catch (err) {

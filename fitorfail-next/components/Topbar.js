@@ -47,7 +47,6 @@ const TopbarPlay = styled(TopbarLink)`
 	color: white;
 
 	&:hover {
-		text-decoration: none;
 		color: hsl(0, 75%, 60%);
 		background-color: white;
 		transition: 300ms;
@@ -127,7 +126,7 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<a href="/game">
+							<a href="/game" style={{ textDecoration: "none" }}>
 								<TopbarPlay as="button">Play!</TopbarPlay>
 							</a>
 						</NavLink>
