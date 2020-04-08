@@ -3,7 +3,7 @@
  * https://github.com/zeit/next.js/tree/master/examples/custom-server-express
  */
 
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const axios = require("axios");
@@ -51,7 +51,7 @@ app.prepare().then(() => {
 	server.get("/users/:username", (req, res) => {
 		const username = req.params.username;
 		axios
-			.get(`${req.protocol}://${req.get("host")}/api/users/${username}`)
+			.get(`${req.protocol}://${req.get("host")}/api/users/username/${username}`)
 			.then((apiRes) => {
 				// If user is found but requested username does not match the case of the user's username, change the URL to the case-corrected username
 				// URL redirect before page load
@@ -70,7 +70,9 @@ app.prepare().then(() => {
 	// TODO: FINISH THIS! User must be logged in to access the game page, otherwise they're redirected to the login page.
 	server.get(["/game", "/game/solo", "/game/online"], auth, (req, res) => {
 		console.log(req.user.id);
-		// default
+		res.user = req.user.id;
+		// I THINK I JUST HAVE TO CREATE A PUBLIC API THAT VALIDATES A JWT AND RETURNS THE DECODED INFORMATION, THEN FETCH THAT WITHIN SSR IN THE PAGES
+		// Theoretically, the userId should now be available these pages in their request or response headers, I HOPE
 		return handle(req, res);
 	});
 
