@@ -2,6 +2,9 @@ import Layout from "../../components/Layout";
 import Link from "next/link";
 
 function Game() {
+	// TODO:
+	// Figure out how to do CSR to simply display the authenticated user's username at the top of the page (Welcome, <name>!).
+	// I don't want the entire page to be SSR just to display the name.
 	return (
 		<Layout title="Game">
 			<h1>Pick Your Gamemode</h1>

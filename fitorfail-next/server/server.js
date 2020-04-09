@@ -43,6 +43,7 @@ app.prepare().then(() => {
 	server.use("/logout", require("./routes/logout"));
 	server.use("/register", require("./routes/register"));
 	server.use("/api/users", require("./routes/api/users"));
+	server.use("/api/auth", require("./routes/api/auth"));
 
 	// Special serving for user pages to account for case differences in the URL (ex: route to the correct user 'Christian' if somebody attempts to go to "CHRISTIAN")
 	// Note: I can't believe this actually works. I'm dumbfounded at how long it took me to figure this out vs how relatively simple it ended up being.
@@ -67,10 +68,9 @@ app.prepare().then(() => {
 	});
 
 	// Routes that require authentication
-	// TODO: FINISH THIS! User must be logged in to access the game page, otherwise they're redirected to the login page.
 	server.get(["/game", "/game/solo", "/game/online"], auth, (req, res) => {
-		console.log(req.user.id);
-		res.user = req.user.id;
+		// console.log(req.user.id);
+		// res.user = req.user.id;
 		// I THINK I JUST HAVE TO CREATE A PUBLIC API THAT VALIDATES A JWT AND RETURNS THE DECODED INFORMATION, THEN FETCH THAT WITHIN SSR IN THE PAGES
 		// Theoretically, the userId should now be available these pages in their request or response headers, I HOPE
 		return handle(req, res);
