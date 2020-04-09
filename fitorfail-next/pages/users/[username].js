@@ -5,9 +5,10 @@
  * https://github.com/zeit/swr#ssr-with-nextjs
  */
 
-import useSWR from "swr";
+//import useSWR from "swr";
 import axios from "axios";
 import cookies from "next-cookies";
+import Router from "next/router";
 
 import Layout from "../../components/Layout";
 
@@ -30,25 +31,26 @@ const Userpage = ({ user, searchedUsername, authenticated }) => {
 		);
 
 	// If user exists
-	// ISSUE: Data is cleared from page on refocus, even though supposedly none of the data was touched! Something to do with rendering it?
+
+	// ISSUE USING SWR: Data is cleared from page on refocus, even though supposedly none of the data was touched! Something to do with rendering it?
 	// Have to at least temporarily disallow revalidation on focus.
-	const initialUserInfo = user;
-	const { data } = useSWR(`http://localhost:3000/api/users/${searchedUsername}`, {
-		initialData: initialUserInfo,
-		revalidateOnFocus: false
-	});
+	// const initialUserInfo = user;
+	// const { data } = useSWR(`${process.env.BASE_URL}/api/users/username/${searchedUsername}`, {
+	//	revalidateOnFocus: false,
+	// 	initialData: initialUserInfo
+	// });
 
 	return (
-		<Layout title={`${data.username} · player info`}>
+		<Layout title={`${user.username} · player info`}>
 			<div className="container">
 				{authenticated && <h3>YOU ARE LOGGED IN!</h3>}
-				<img src={data.profile_picture_url} alt={`${data.username}'s profile picture`} />
-				<h1 id="username">{data.username}</h1>
-				<p>Points: {data.points}</p>
-				<p>Wins: {data.wins}</p>
-				<p>Team: {data.team}</p>
-				<p>Member since: {data.register_date}</p>
-				<p>Account type: {data.account_type}</p>
+				<img src={user.profile_picture_url} alt={`${user.username}'s profile picture`} />
+				<h1 id="username">{user.username}</h1>
+				<p>Points: {user.points}</p>
+				<p>Wins: {user.wins}</p>
+				<p>Team: {user.team}</p>
+				<p>Member since: {user.register_date}</p>
+				<p>Account type: {user.account_type}</p>
 			</div>
 		</Layout>
 	);
