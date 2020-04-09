@@ -44,15 +44,16 @@ app.prepare().then(() => {
 	server.use("/register", require("./routes/register"));
 	server.use("/api/users", require("./routes/api/users"));
 	server.use("/api/auth", require("./routes/api/auth"));
+	server.use("/api/decodeToken", require("./routes/api/decodeToken"));
 
 	// Special serving for user pages to account for case differences in the URL (ex: route to the correct user 'Christian' if somebody attempts to go to "CHRISTIAN")
 	// Note: I can't believe this actually works. I'm dumbfounded at how long it took me to figure this out vs how relatively simple it ended up being.
 	// It's been hours. I finally had the thought to try custom routing on the back end, and it worked. I'm very glad I don't have to think about this any more.
 	// I tried every option under the sun for Next's Router (import "next/router"), and nothing worked.
 	server.get("/users/:username", (req, res) => {
-		const username = req.params.username;
+		const { username } = req.params;
 		axios
-			.get(`${req.protocol}://${req.get("host")}/api/users/username/${username}`)
+			.post(`${process.env.BASE_URL}/api/users/username/${username}`)
 			.then((apiRes) => {
 				// If user is found but requested username does not match the case of the user's username, change the URL to the case-corrected username
 				// URL redirect before page load

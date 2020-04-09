@@ -15,7 +15,7 @@ import Layout from "../../components/Layout";
 // Notice that this is a function that does stuff other than immediately return HTML data.
 // I need to check if the user exists or not in order to deliver the correct HTML content,
 // so I start this function with the proper {} instead of ().
-const Userpage = ({ user, searchedUsername, auth }) => {
+const Userpage = ({ user, searchedUsername, authenticated }) => {
 	// If user does not exist, return that the user was not found
 	if (!user)
 		return (
@@ -41,7 +41,7 @@ const Userpage = ({ user, searchedUsername, auth }) => {
 	return (
 		<Layout title={`${data.username} · player info`}>
 			<div className="container">
-				{auth && <h3>YOU ARE LOGGED IN!</h3>}
+				{authenticated && <h3>YOU ARE LOGGED IN!</h3>}
 				<img src={data.profile_picture_url} alt={`${data.username}'s profile picture`} />
 				<h1 id="username">{data.username}</h1>
 				<p>Points: {data.points}</p>
@@ -59,46 +59,45 @@ export async function getServerSideProps(context) {
 	// 'context' contains a bunch of information.
 	// We're extracting the dynamic route 'params' from 'context'.
 	// In our case, we only care about the username from our dynamic route.
-	// We use this username to send a GET request to the API on our backend
-	// to get all of that user's information in order to populate the page.
+	// We use this username to send a POST request to the API on our backend (POST because we're passing data to the API)
+	// to get all of that User's information in order to populate the page.
 
 	const { username } = context.params;
-	let userData = false;
+	let userInfo = false;
 
 	const { token } = cookies(context);
 	let authenticated = false;
 
 	if (token) {
 		try {
-			const { data } = await axios.post(`${process.env.BASE_URL}/api/auth`, { token });
+			const tokenData = await axios.post(`${process.env.BASE_URL}/api/decodeToken`, {
+				token
+			});
+			const tokenInfo = tokenData.data.decoded;
 			// Need to check if the page being served is the one that belongs to the authenticated user.
-			if (data.user && data.user.username_lower === username.toLowerCase()) {
-				userData = data.user;
-				authenticated = true;
-			}
+			if (tokenInfo.username === username) authenticated = true;
 		} catch (err) {
-			console.error({ error: "Cannot reach api endpoint", err });
+			console.error({ error: "Cannot reach api endpoint for decodeToken", err });
 		}
 	}
 
-	// If the User wasn't authenticated to their own profile page, get the searched-for User's page content like normal
-	if (!authenticated) {
-		try {
-			const { data } = await axios.get(
-				`${process.env.BASE_URL}/api/users/username/${username}`
-			);
-			if (data.user) userData = data.user;
-		} catch (err) {
-			console.error({ error: "Cannot reach api endpoint", err });
-		}
+	// Retrieve the User's information. If the User is authenticated to their own profile page, the userInfo will also contain their email address.
+	try {
+		const userData = await axios.post(
+			`${process.env.BASE_URL}/api/users/username/${username}`,
+			{ authenticated }
+		);
+		if (userData.data.user) userInfo = userData.data.user; // if authenticated, we should always find the User's information since we already guaranteed they exist
+	} catch (err) {
+		console.error({ error: "Cannot reach api endpoint for username", err });
 	}
 
 	// Pass data to the page via props
 	return {
 		props: {
-			user: userData,
+			user: userInfo,
 			searchedUsername: username,
-			auth: authenticated
+			authenticated: authenticated
 		}
 	};
 }
