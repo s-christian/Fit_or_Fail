@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Container, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 // IDEAS:
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
@@ -67,6 +67,7 @@ const Register = () => {
 	const [messages, setMessages] = useState([]);
 	const [error, setError] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const textInput = useRef(null);
 
 	function handleSubmit(event) {
 		// Necessary to prevent default HTML form submission
@@ -93,6 +94,7 @@ const Register = () => {
 					// that falls out of the range of 2xx (ex: 400 is likely in our case)
 					setError(true);
 					setMessages(error.response.data.error);
+					textInput.current.focus();
 				} else if (error.request) {
 					// The request was made but no response was received
 					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -146,6 +148,7 @@ const Register = () => {
 						<Label for="username">Username</Label>
 						<Input
 							type="text"
+							innerRef={textInput}
 							id="username"
 							name="username"
 							placeholder="FitMaster27"

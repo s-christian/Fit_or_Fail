@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Container, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 // IDEAS:
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
@@ -64,6 +64,7 @@ const Login = () => {
 	const [message, setMessage] = useState(null);
 	const [error, setError] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const textInput = useRef(null);
 
 	function handleSubmit(event) {
 		// Necessary to prevent default HTML form submission
@@ -87,6 +88,7 @@ const Login = () => {
 					// that falls out of the range of 2xx (ex: 400 is likely in our case)
 					setError(true);
 					setMessage(error.response.data.error);
+					textInput.current.focus();
 				} else if (error.request) {
 					// The request was made but no response was received
 					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -123,8 +125,11 @@ const Login = () => {
 					</StyledAlert>
 					<FormGroup>
 						<Label for="usernameOrEmail">Username or Email</Label>
+						{/* Must use innerRef because <input> is underneath the reactstrap <Input> */}
+						{/* This is used for autofocusing to the usernameOrEmail field after a failed login. See its use in handleSubmit(). */}
 						<Input
 							type="text"
+							innerRef={textInput}
 							id="usernameOrEmail"
 							name="usernameOrEmail"
 							placeholder="FitMaster27 / YourEmail@email.com"

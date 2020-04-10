@@ -8,7 +8,6 @@
 //import useSWR from "swr";
 import axios from "axios";
 import cookies from "next-cookies";
-import Router from "next/router";
 
 import Layout from "../../components/Layout";
 
