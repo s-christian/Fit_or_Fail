@@ -6,11 +6,29 @@
 -   Ask someone for the information that goes in the `.env` file which contains our database connection w/ password, and our password hashing password
 -   After all this, run the project with `npm run dev` from the root directory
 
+---
+
+# TODO
+
+-   Create the Solo game!
+    -   Learn CSR methods within Next.js
+    -   Create a list of questions on the back end
+        -   Create an authenticated API route that allows for the creation of a question with an answer, where the creator must be an "admin" or "gov" account_type
+-   General site analytics (refer to the README in the `server` directory)
+-   Allow "appropriate government officials and designated personel" ("admin" and "gov") to contribute input (add/remove questions)
+-   Faciliate advertising and donations
+-   Mobile optimizations
+    -   Media display queries to resize elements, make it fit perfectly on mobile screens
+-   User profile dashboard that's editable. For proof-of-concept purposes, can allow for the editing and display of a bio section
+    -   This new User bio would have to be added to the User Model and would require a new API route with input validation
+
 ### Miscellaneous Notes
 
 -   Cookies can only be set over HTTPS in production
     -   For some reason my phone connected over HTTP and I was wondering why the login wasn't working; I had to manually correct to HTTPS
 -   Cookies should be set to expire in two hours, the same expiration time as the JWT
+
+---
 
 _Everything below this line is the default Next.js README_
 

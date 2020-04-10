@@ -10,7 +10,7 @@ function issueToken(req, res, user) {
 	// All information in a JWT is PUBLIC, meaning anybody can read the contents of the token if they know it. Don't store sensitive information.
 	// JWTs contain three sections of information: Header, Payload, Signature
 	jwt.sign(
-		{ id: user.id, username: user.username },
+		{ id: user.id, username: user.username, account_type: user.account_type },
 		process.env.JWT_SECRET,
 		{ expiresIn: 7200 }, // expires in two hours
 		(err, token) => {
