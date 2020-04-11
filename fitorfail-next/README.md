@@ -14,9 +14,10 @@
     -   Learn CSR methods within Next.js
     -   Create a list of questions on the back end
         -   Create an authenticated API route that allows for the creation of a question with an answer, where the creator must be an "admin" or "gov" account_type
--   General site analytics (refer to the README in the `server` directory)
 -   Allow "appropriate government officials and designated personel" ("admin" and "gov") to contribute input (add/remove questions)
 -   Faciliate advertising and donations
+-   General site analytics (refer to the README in the `server` directory)
+-   If a User is logged in, place their profile pic in the navbar so that having them click on it will bring them to their profile page
 -   Mobile optimizations
     -   Media display queries to resize elements, make it fit perfectly on mobile screens
 -   User profile dashboard that's editable. For proof-of-concept purposes, can allow for the editing and display of a bio section

@@ -46,6 +46,7 @@ app.prepare().then(() => {
 	server.use("/api/users", require("./routes/api/users"));
 	//server.use("/api/auth", require("./routes/api/auth"));
 	server.use("/api/decodeToken", require("./routes/api/decodeToken"));
+	server.use("/api/questions", require("./routes/api/questions"));
 
 	// --- Protected Routes ---
 	// Set up predefined authentication mechanisms for all three of our possible User account_types
@@ -53,7 +54,10 @@ app.prepare().then(() => {
 	const authGov = authRole("gov");
 	const authAdmin = authRole("admin");
 
-	server.get(["/game", "/game/solo", "/game/online"], authUser, (req, res) => {
+	server.all(["/game", "/game/solo", "/game/online"], authUser, (req, res) => {
+		return handle(req, res);
+	});
+	server.all(["/contribute/questions"], authGov, (req, res) => {
 		return handle(req, res);
 	});
 
