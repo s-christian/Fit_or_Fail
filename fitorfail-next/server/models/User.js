@@ -30,12 +30,17 @@ const UserSchema = new Schema({
 		default: Date.now
 	},
 	account_type: {
+		// three possible types: user < gov < admin
 		type: String,
 		default: "user"
 	},
 	profile_picture_url: {
 		type: String,
 		default: "/assets/images/default_profile.jpg" // could also be an external link
+	},
+	profile_bio: {
+		type: String,
+		default: ""
 	},
 	points: {
 		type: Number,

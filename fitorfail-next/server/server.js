@@ -15,12 +15,13 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const auth = require("./middleware/auth");
+const authRole = require("./middleware/authRole");
 
 app.prepare().then(() => {
 	const server = express();
 
-	// Used to parse the body (replaces the body-parser package)
+	// --- Setup ---
+	// Used to parse the body of requests
 	server.use(express.json());
 	// Used to access browser cookies
 	server.use(cookieParser());
@@ -28,7 +29,7 @@ app.prepare().then(() => {
 	// DB config
 	const db = process.env.DB_URI;
 
-	// Connect to Mongo
+	// --- Connect to our MongoDB ---
 	mongoose
 		.connect(db, {
 			useUnifiedTopology: true,
@@ -38,14 +39,25 @@ app.prepare().then(() => {
 		.then(() => console.log("MongoDB Connected...")) // .then and .catch exist because mongoose.connect() is "promise-based"
 		.catch((err) => console.log(err));
 
-	// Use API routes
+	// --- Use API Routes ---
 	server.use("/login", require("./routes/login"));
 	server.use("/logout", require("./routes/logout"));
 	server.use("/register", require("./routes/register"));
 	server.use("/api/users", require("./routes/api/users"));
-	server.use("/api/auth", require("./routes/api/auth"));
+	//server.use("/api/auth", require("./routes/api/auth"));
 	server.use("/api/decodeToken", require("./routes/api/decodeToken"));
 
+	// --- Protected Routes ---
+	// Set up predefined authentication mechanisms for all three of our possible User account_types
+	const authUser = authRole("user");
+	const authGov = authRole("gov");
+	const authAdmin = authRole("admin");
+
+	server.get(["/game", "/game/solo", "/game/online"], authUser, (req, res) => {
+		return handle(req, res);
+	});
+
+	// --- Special ---
 	// Special serving for user pages to account for case differences in the URL (ex: route to the correct user 'Christian' if somebody attempts to go to "CHRISTIAN")
 	// Note: I can't believe this actually works. I'm dumbfounded at how long it took me to figure this out vs how relatively simple it ended up being.
 	// It's been hours. I finally had the thought to try custom routing on the back end, and it worked. I'm very glad I don't have to think about this any more.
@@ -68,21 +80,13 @@ app.prepare().then(() => {
 		return handle(req, res);
 	});
 
-	// Routes that require authentication
-	server.get(["/game", "/game/solo", "/game/online"], auth, (req, res) => {
-		// console.log(req.user.id);
-		// res.user = req.user.id;
-		// I THINK I JUST HAVE TO CREATE A PUBLIC API THAT VALIDATES A JWT AND RETURNS THE DECODED INFORMATION, THEN FETCH THAT WITHIN SSR IN THE PAGES
-		// Theoretically, the userId should now be available these pages in their request or response headers, I HOPE
-		return handle(req, res);
-	});
-
+	// --- Final Config ---
 	// Let Next.js handle serving pages like it usually does
 	server.all("*", (req, res) => {
 		return handle(req, res);
 	});
 
-	// Start the server, listening on port <PORT>
+	// Start the server, listening on our specified port
 	server.listen(PORT, (err) => {
 		if (err) throw err;
 		console.log(`Server started on port ${PORT}`);
