@@ -74,7 +74,7 @@ const Userpage = ({ user, searchedUsername, authenticated }) => {
 					<UIcard>
 						<ProfileBox>
 							<img
-							src="/assets/images/DefaultPPic.jpg"
+							src="/assets/images/oopsNoExist.jpg"
 							style={{
 								height: "250px",
 								borderRadius: "60%",
