@@ -25,7 +25,7 @@ const StyledContainer = styled(Container)`
 
 	// Make the box slimmer on small screens (phones)
 	@media screen and (max-width: 600px) {
-		width: 450px !important;
+		width: 350px !important;
 	}
 `;
 

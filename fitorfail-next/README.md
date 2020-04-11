@@ -3,7 +3,7 @@
 -   Navigate to the `fitorfail-next` folder within a command prompt
 -   Run `npm i` to install all the dependencies
 -   Create a `.env` file in the root directory of the `fitorfail-next` folder
--   Ask someone for the information that goes in the `.env` file which contains our database connection w/ password, and our password hashing password
+-   Ask someone for the information that goes in the `.env` file which contains our database connection w/ password, and our password-hashing password
 -   After all this, run the project with `npm run dev` from the root directory
 
 ---

@@ -2,6 +2,8 @@
  * Or, if no token cookie is detected, the user is redirected to the login page.
  */
 
+// This is currently not in use by anything
+
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");

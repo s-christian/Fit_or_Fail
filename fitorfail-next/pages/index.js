@@ -108,7 +108,7 @@ const Index = () => {
 				<Container fluid="lg">
 					<Title secondary>Leaderboard</Title>
 					<Subtitle secondary>There's gonna be a cool leaderboard, woohoo</Subtitle>
-					<StyledLink href="/leaderboard">Leaderboard</StyledLink>
+					<StyledLink href="/leaderboard">Leaderboard</StyledLink>{" "}
 					<StyledLink href="/testing">Link to test page</StyledLink>
 				</Container>
 			</StyledJumbo>

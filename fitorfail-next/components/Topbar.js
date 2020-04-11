@@ -54,6 +54,10 @@ const TopbarPlay = styled(TopbarLink)`
 	}
 `;
 
+// The topbar throws some nasty errors since TopbarLink is inside either a NavbarBrand or NavLink,
+// both of which are ultimately anchor tags, which means an <a> is inside of an <a>, and that's
+// not allowed. I tried to reformat it to get rid of those occurrences, but I can't figure out how
+// to do so and make it look the same. It doesn't break anything, but still try to fix it if you want.
 const Topbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);

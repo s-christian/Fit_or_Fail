@@ -6,6 +6,6 @@ This is the repository for our group's semester-long web development project.
 
 ---
 
-# Technologies Ussed
+# Technologies Used
 
 *To be listed soon*

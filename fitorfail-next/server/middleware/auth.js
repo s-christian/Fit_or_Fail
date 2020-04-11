@@ -1,4 +1,4 @@
-/* Used in API routes for automatic redirects to the login page if no/invalid JWT is detected. */
+/* Middleware used to send user to the login page if no token or an invalid token is detected */
 
 const jwt = require("jsonwebtoken");
 

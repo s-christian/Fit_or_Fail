@@ -5,103 +5,103 @@
  * https://github.com/zeit/swr#ssr-with-nextjs
  */
 
-
 import axios from "axios";
 import cookies from "next-cookies";
-import React, { useState } from "react";
-import styled, {} from "styled-components";
+import { useState } from "react";
+import styled, { css } from "styled-components";
 import Layout from "../../components/Layout";
 
-const ContainerWrapper = styled.div`
-	margin:auto;
-	width: 100%;
-    height: 100%;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-	font-size: 16px;
-	position: fixed;
-`;
 const ProfileBox = styled.div`
-text-align:center;
-`
-const Header = styled.div`
-margin-bottom: 20px;
+	text-align: center;
+`;
+const ColorSelector = styled.div`
+	margin-top: 5rem;
+	text-align: center;
 
-`
+	& input {
+		padding: 0.25rem;
+	}
+`;
 //this component includes colors and padding to fallback on for older web browsers.
 const UIcard = styled.div`
-border:1px solid black;
-height:75%;
-width:60%;
-overflow:scroll;
-justify-content:center;
-align-items:center;
-margin-bottom: 100px;
-padding: 20px;
-background: #fc4a1a; 
-background: -webkit-linear-gradient(to right,
-    #f7b733,
-    #fc4a1a); 
-background: linear-gradient(to right, 
-    #f7b733, 
-    #fc4a1a); 
+	align-self: center;
+	margin-top: 10vh;
+	border: 1px solid black;
+	height: 75%;
+	width: 50%;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	background: #fc4a1a;
+	background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);
+	background: linear-gradient(to right, #f7b733, #fc4a1a);
+
+	// Make the box slimmer on small screens (phones)
+	@media screen and (max-width: 600px) {
+		margin-top: 5%;
+		height: 90%;
+		width: 90%;
+		overflow: scroll;
+	}
+`;
+const ProfilePicture = styled.img`
+	height: 250px;
+	width: 250px;
+	border-radius: 50%;
+	margin-right: auto;
+	border: 1px solid black;
+
+	${(props) =>
+		props.notFound &&
+		css`
+			border: 1px solid white;
+		`}
 `;
 // Component function only takes parameter "props" (passed by getServerSideProps())
 // Notice that this is a function that does stuff other than immediately return HTML data.
 // I need to check if the user exists or not in order to deliver the correct HTML content,
 // so I start this function with the proper {} instead of ().
 
-   
 const Userpage = ({ user, searchedUsername, authenticated }) => {
-//this is the array. first input is the current color, the second is the color to be. useState is the current state
-	const [color, setColor] =useState('Orange');
-//this component is the changee handler. it takes any event and sets color to that value
-    const onChangeHandler = e => {
-     //code below is making set color the target value (input value in text box)
-        setColor(e.target.value);
-		}; 
-		//component used to turn the background color to the new value(color gets set to setcolor in useState)
-    const styleObj = {
-        background: color
-		};
-		
+	// This creates a "color" variable within the component with a default value of "Orange", and "setColor" is used to change this value
+	const [color, setColor] = useState("orange");
+	// This is the function used to change the color, after a certain "event" ("e" for short) is passed to it.
+	const handleColor = (e) => {
+		// e.target.value says, "give me the event, give me the target of that event (the actual DOM element that called it, like <input>), and give me that target's value".
+		// It then sets our "color" variable to whatever the value of that target is. In this case, it's the color that the user types into the input box.
+		setColor(e.target.value);
+	};
+
+	// Object that holds all our style data
+	// Not currently needed since we're only concerned with the background-color, which we need to pass to Layout
+	// const styleObj = {
+	// 	backgroundColor: color
+	// };
+
+	//
+	// USER DOES NOT EXIST
+	//
 	if (!user)
 		return (
-			<Layout title="User not found"> 
-				<ContainerWrapper style={styleObj}>
-					<UIcard>
-						<ProfileBox>
-							<img
-							src="/assets/images/oopsNoExist.jpg"
-							style={{
-								height: "250px",
-								borderRadius: "60%",
-								marginRight: "auto",
-								border: "1px solid white",
-							}}
-							/>
-							<h1>
-								User <span id="username">{searchedUsername}</span> does not exist!
-							</h1>
-						</ProfileBox>
-							<Header>Backgound Color: {color}
-                            <div className="ui search">
-                                <input
-                                type="text"
-                                onChange={onChangeHandler}
-                                value={color}  
-                                />
-                            </div>
-                        	</Header>
-					</UIcard>
-				</ContainerWrapper>	
+			<Layout title="User not found" color={color}>
+				<UIcard>
+					<ProfileBox>
+						<ProfilePicture notFound src="/assets/images/oopsNoExist.jpg" />
+						<h1>
+							User <span id="username">{searchedUsername}</span> does not exist!
+						</h1>
+					</ProfileBox>
+					<ColorSelector>
+						<h4>Backgound Color: {color}</h4>
+						<div className="ui search">
+							<input type="text" onChange={handleColor} value={color} />
+						</div>
+					</ColorSelector>
+				</UIcard>
 			</Layout>
 		);
 
-		// If user exists
-
+	// I'm really only leaving this commented chunk here to use as an example for later pages. Don't forget to import useSWR.
 	// ISSUE USING SWR: Data is cleared from page on refocus, even though supposedly none of the data was touched! Something to do with rendering it?
 	// Have to at least temporarily disallow revalidation on focus.
 	// const initialUserInfo = user;
@@ -110,45 +110,35 @@ const Userpage = ({ user, searchedUsername, authenticated }) => {
 	// 	initialData: initialUserInfo
 	// });
 
+	//
+	// USER EXISTS
+	//
 	return (
-		<Layout title={`${data.username} · player info`}>
-         
-				<ContainerWrapper style={styleObj}> 
-					<UIcard>	
-						<ProfileBox>
-						{authenticated && <h3>YOU ARE LOGGED IN!</h3>}
-						<img src={data.profile_picture_url} alt={`${data.username}'s profile picture`}
-						style={{
-								height: "250px",
-								borderRadius: "60%",
-								marginRight: "0.5rem",
-								border: "1px solid black",
-								justifyContent: "center",
-								alignItems: "center"
-							}}
-							 />
-							<h1 id="username">{user.username}</h1>
-							<p>Points: {user.points}</p>
-							<p>Wins: {user.wins}</p>
-							<p>Team: {user.team}</p>
-							<p>Member since: {user.register_date}</p>
-							<p>Account type: {user.account_type}</p>
-							</ProfileBox>
-							<Header>Color: {color};
-								<div className="ui search">
-									<input
-									type="text"
-									onChange={onChangeHandler}
-									value={color} 
-									/>
-								</div>
-							</Header>	
-					</UIcard>
-				</ContainerWrapper> 	
+		<Layout title={`${user.username} · player info`} color={color}>
+			<UIcard>
+				<ProfileBox>
+					{authenticated && <h3>YOU ARE LOGGED IN!</h3>}
+					<ProfilePicture
+						src={user.profile_picture_url}
+						alt={`${user.username}'s profile picture`}
+					/>
+					<h1 id="username">{user.username}</h1>
+					<p>Points: {user.points}</p>
+					<p>Wins: {user.wins}</p>
+					<p>Team: {user.team}</p>
+					<p>Member since: {user.register_date}</p>
+					<p>Account type: {user.account_type}</p>
+				</ProfileBox>
+				<ColorSelector>
+					<h4>Color: {color}</h4>
+					<div className="ui search">
+						<input type="text" onChange={handleColor} value={color} />
+					</div>
+				</ColorSelector>
+			</UIcard>
 		</Layout>
 	);
 };
-
 
 // Marks the page to be server-side rendered on every request
 export async function getServerSideProps(context) {
