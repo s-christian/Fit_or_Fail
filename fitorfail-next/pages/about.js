@@ -9,16 +9,12 @@ const PageCenter = styled(Container)`
 
 const StyledContainer = styled(Container)`
 	text-align: left;
-	background-color: #b1a7b9;
+	background-color: #FAFAFA;
 	border: solid 2px;
 	width: 700px;
 	margin-bottom: 30px;
-	padding: 1.5rem; // I think it's best practice to make this 1.5rem instead of 25px
-	font-size: 1rem;
-	@media screen and (max width: 600px) {
-		// All you did was make the image smaller by default, lol. You should actually scale the image dynamically.
-		width: 400px;
-	}
+	padding: 1.5rem; 
+	font-size: 1rem
 `;
 
 const Headers = styled.h1`
@@ -71,11 +67,10 @@ const StyledButton = styled.button`
 		`}
 `;
 
-// Just some other notes: I'm personally not a fan of using the same background-color here as I used on the homepage. Try something lighter and new?
-// Also the home button was still broken so I corrected the href.
+
 const About = () => {
 	return (
-		<Layout title="About" color="hsl(189, 78%, 39%)">
+		<Layout title="About" color="#FFA500">
 			<PageCenter>
 				<Headers>About Us:</Headers>
 				<StyledContainer>
