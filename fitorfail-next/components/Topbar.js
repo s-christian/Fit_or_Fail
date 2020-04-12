@@ -102,8 +102,8 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link href="/users/Christian" passHref>
-								<TopbarLink>Test: User Christian</TopbarLink>
+							<Link href="/users/Christian2" passHref>
+								<TopbarLink>Test: User Christian2</TopbarLink>
 							</Link>
 						</NavLink>
 					</NavItem>
@@ -116,8 +116,8 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link href="/users/CHRISTIAN" passHref>
-								<TopbarLink>Test: User CHRISTIAN</TopbarLink>
+							<Link href="/users/CHRISTIAN2" passHref>
+								<TopbarLink>Test: User CHRISTIAN2</TopbarLink>
 							</Link>
 						</NavLink>
 					</NavItem>

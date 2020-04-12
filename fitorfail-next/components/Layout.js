@@ -10,10 +10,10 @@ const Wrapper = styled.main`
 `;
 
 const Main = styled.section`
-	background-color: ${(props) => props.color};
+	background: ${(props) => props.color};
 	display: flex;
 	flex-direction: column;
-	flex-grow: 1; // fills the rest of the page after the Topbar
+	flex: 1; // fills the rest of the page after the Topbar
 `;
 
 // Combines the Meta and Navbar components.

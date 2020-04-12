@@ -6,17 +6,53 @@
  */
 
 import axios from "axios";
+import dayjs from "dayjs";
 import cookies from "next-cookies";
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import Layout from "../../components/Layout";
 
 const ProfileBox = styled.div`
-	text-align: center;
+	border-right: 1px solid black;
+	// "flex: 1;" is equivalent to "flex-basis: 0; flex-grow: 1; flex-shrink: 1;"
+	flex: 1;
+	background-color: gray;
+
+	@media screen and (max-width: 900px) {
+		border-right: none;
+		border-bottom: 1px solid black;
+		flex: 0;
+	}
+`;
+const ProfileBoxContents = styled.div`
+	margin: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+`;
+const Stats = styled.div`
+	padding: 0.5rem;
+	width: 250px;
+	border: 1px solid black;
+	background-color: hsla(0, 0%, 100%, 0.75);
+`;
+const InfoBox = styled.div`
+	display: flex;
+	flex: 3;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-family: consolas;
+	font-size: 2rem;
+
+	@media screen and (max-width: 900px) {
+		flex: 1;
+	}
 `;
 const ColorSelector = styled.div`
-	margin-top: 5rem;
 	text-align: center;
+	margin-top: 1rem;
 
 	& input {
 		padding: 0.25rem;
@@ -24,25 +60,19 @@ const ColorSelector = styled.div`
 `;
 //this component includes colors and padding to fallback on for older web browsers.
 const UIcard = styled.div`
-	align-self: center;
-	margin-top: 10vh;
-	border: 1px solid black;
-	height: 75%;
-	width: 50%;
-	justify-content: center;
-	align-items: center;
-	padding: 20px;
-	background: #fc4a1a;
-	background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);
-	background: linear-gradient(to right, #f7b733, #fc4a1a);
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	//background: #fc4a1a;
+	//background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);
+	//background: linear-gradient(to right, #f7b733, #fc4a1a);
 
 	// Make the box slimmer on small screens (phones)
-	@media screen and (max-width: 600px) {
-		margin-top: 5%;
-		height: 90%;
-		width: 90%;
-		overflow: scroll;
+	@media screen and (max-width: 900px) {
+		flex-direction: column;
 	}
+	//@media screen and (max-width: 600px) {
+	//}
 `;
 const ProfilePicture = styled.img`
 	height: 250px;
@@ -90,13 +120,13 @@ const Userpage = ({ user, searchedUsername, authenticated }) => {
 						<h1>
 							User <span id="username">{searchedUsername}</span> does not exist!
 						</h1>
+						<ColorSelector>
+							<h4>Backgound Color: {color}</h4>
+							<div className="ui search">
+								<input type="text" onChange={handleColor} value={color} />
+							</div>
+						</ColorSelector>
 					</ProfileBox>
-					<ColorSelector>
-						<h4>Backgound Color: {color}</h4>
-						<div className="ui search">
-							<input type="text" onChange={handleColor} value={color} />
-						</div>
-					</ColorSelector>
 				</UIcard>
 			</Layout>
 		);
@@ -117,24 +147,33 @@ const Userpage = ({ user, searchedUsername, authenticated }) => {
 		<Layout title={`${user.username} · player info`} color={color}>
 			<UIcard>
 				<ProfileBox>
-					{authenticated && <h3>YOU ARE LOGGED IN!</h3>}
-					<ProfilePicture
-						src={user.profile_picture_url}
-						alt={`${user.username}'s profile picture`}
-					/>
-					<h1 id="username">{user.username}</h1>
-					<p>Points: {user.points}</p>
-					<p>Wins: {user.wins}</p>
-					<p>Team: {user.team}</p>
-					<p>Member since: {user.register_date}</p>
-					<p>Account type: {user.account_type}</p>
+					<ProfileBoxContents>
+						{authenticated && <h3>YOU ARE LOGGED IN!</h3>}
+						<div>
+							<ProfilePicture
+								src={user.profile_picture_url}
+								alt={`${user.username}'s profile picture`}
+							/>
+						</div>
+						<h1 id="username">{user.username}</h1>
+						<Stats>
+							<p>Points: {user.points}</p>
+							<p>Wins: {user.wins}</p>
+							<p>Team: {user.team}</p>
+							<p>Member since: {dayjs(user.register_date).format("MM/DD/YYYY")}</p>
+							<p>Account type: {user.account_type}</p>
+						</Stats>
+						<ColorSelector>
+							<h4>Color: {color}</h4>
+							<div className="ui search">
+								<input type="text" onChange={handleColor} value={color} />
+							</div>
+						</ColorSelector>
+					</ProfileBoxContents>
 				</ProfileBox>
-				<ColorSelector>
-					<h4>Color: {color}</h4>
-					<div className="ui search">
-						<input type="text" onChange={handleColor} value={color} />
-					</div>
-				</ColorSelector>
+				<InfoBox>
+					<p>Test</p>
+				</InfoBox>
 			</UIcard>
 		</Layout>
 	);
