@@ -26,12 +26,9 @@ app.prepare().then(() => {
 	// Used to access browser cookies
 	server.use(cookieParser());
 
-	// DB config
-	const db = process.env.DB_URI;
-
 	// --- Connect to our MongoDB ---
 	mongoose
-		.connect(db, {
+		.connect(process.env.DB_URI, {
 			useUnifiedTopology: true,
 			useNewUrlParser: true,
 			useCreateIndex: true
