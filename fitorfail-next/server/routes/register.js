@@ -8,6 +8,7 @@ const router = express.Router();
 const Validator = require("validator");
 //const isEmpty = require("is-empty");
 const bcrypt = require("bcryptjs");
+const axios = require("axios");
 const issueToken = require("../lib/issueToken");
 
 // User model
@@ -17,13 +18,24 @@ const User = require("../models/User");
 // @desc    Register new User
 // @access  Public
 router.post("/", (req, res) => {
-	let { username, email, password, confirmPassword, accountType } = req.body;
+	let { username, email, password, confirmPassword } = req.body;
+	const accountType = "user";
+
+	// Only admins can create custom account types (anything other than "user": govs or admins)
+	if (req.cookies.token) {
+		async () => {
+			const token = req.cookies.token;
+			const { data } = await axios.post("/api/decodeToken", { token });
+			// If the user initiating this request is an admin, accept their input for account_type
+			if (data.decoded.account_type === "admin") accountType = req.body.account_type;
+		};
+	}
 
 	let valid_account_types = ["user", "gov", "admin"];
 	let validation_errors = [];
 	let account_errors = [];
 
-	/* Validation */
+	/* --- Validation --- */
 	// Username checks
 	if (Validator.isEmpty(username)) {
 		validation_errors.push("Username field is required");
