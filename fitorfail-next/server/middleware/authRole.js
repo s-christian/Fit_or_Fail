@@ -8,7 +8,7 @@ function authRole(role, redirect = true) {
 		jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, decoded) => {
 			// Token could be expired or modified, or not even exist
 			if (err) {
-				if (redirect) return res.redirect("/login");
+				if (redirect) return res.redirect(`/login?redirect=${req.url}`);
 				return res.status(401).json({ error: "No valid token detected. Please log in." });
 			}
 

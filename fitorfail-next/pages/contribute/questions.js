@@ -11,11 +11,24 @@
 // Ex: "Click here to modify the question pool!" It's a privileged action.
 
 import Layout from "../../components/Layout";
+import StyledLink from "../../components/StyledLink";
 
 const Questions = () => {
 	return (
-		<Layout title="Questions Center" color="gray">
-			<h1>Questions Center</h1>
+		<Layout title="Questions Center" color="#55dd99">
+			<div className="text-center mt-5">
+				<h1>Questions Center</h1>
+				<p>
+					This area will be filled with all the questions currently in our database.
+					<br />
+					It will also contain input boxes for submitting your own questions (along with
+					their answer choices and the correct answer) directly to our database.
+					<br />
+					<StyledLink href="/contribute" hoverColor="red">
+						Back to Contribute Center
+					</StyledLink>
+				</p>
+			</div>
 		</Layout>
 	);
 };

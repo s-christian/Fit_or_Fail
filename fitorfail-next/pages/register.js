@@ -9,6 +9,7 @@ import { Container, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useRef } from "react";
+import Router from "next/router";
 
 // IDEAS:
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
@@ -87,6 +88,9 @@ const Register = () => {
 			.then((response) => {
 				setError(false);
 				setMessages(["Registered!"]);
+				setTimeout(() => {
+					Router.push(`/users/${response.data.user.username}`);
+				}, 1000);
 			})
 			.catch((error) => {
 				if (error.response) {

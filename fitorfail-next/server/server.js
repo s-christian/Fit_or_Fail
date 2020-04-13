@@ -54,7 +54,7 @@ app.prepare().then(() => {
 	server.all(["/game", "/game/solo", "/game/online"], authUser, (req, res) => {
 		return handle(req, res);
 	});
-	server.all(["/contribute/questions"], authGov, (req, res) => {
+	server.all(["/contribute", "/contribute/questions"], authGov, (req, res) => {
 		return handle(req, res);
 	});
 

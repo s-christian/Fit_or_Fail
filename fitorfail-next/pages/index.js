@@ -99,15 +99,17 @@ const Index = () => {
 							<StyledButton>PLAY</StyledButton>
 						</a>
 						<Link href="/register">
-							<StyledButton secondary>Register</StyledButton>
+							<StyledButton secondary="true">Register</StyledButton>
 						</Link>
 					</ButtonContainer>
 				</Container>
 			</StyledJumbo>
-			<StyledJumbo secondary fluid>
+			<StyledJumbo secondary="true" fluid>
 				<Container fluid="lg">
-					<Title secondary>Leaderboard</Title>
-					<Subtitle secondary>There's gonna be a cool leaderboard, woohoo</Subtitle>
+					<Title secondary="true">Leaderboard</Title>
+					<Subtitle secondary="true">
+						There's gonna be a cool leaderboard, woohoo
+					</Subtitle>
 					<StyledLink href="/leaderboard">Leaderboard</StyledLink>{" "}
 					<StyledLink href="/testing">Link to test page</StyledLink>
 				</Container>

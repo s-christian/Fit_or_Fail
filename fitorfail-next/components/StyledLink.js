@@ -5,14 +5,14 @@ const StyledAnchor = styled.a`
 	text-decoration: underline;
 	color: white;
 	&:hover {
-		color: hsl(87, 77%, 54%);
+		color: ${(props) => props.hoverColor};
 	}
 `;
 
-const StyledLink = (props) => {
+const StyledLink = ({ href, hoverColor = "hsl(87, 77%, 54%)", children }) => {
 	return (
-		<Link href={props.href} passHref>
-			<StyledAnchor>{props.children}</StyledAnchor>
+		<Link href={href} passHref>
+			<StyledAnchor hoverColor={hoverColor}>{children}</StyledAnchor>
 		</Link>
 	);
 };

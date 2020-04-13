@@ -83,7 +83,13 @@ const Login = () => {
 				setError(false);
 				setMessage("Logged in!");
 				setTimeout(() => {
-					Router.push(`/users/${response.data.user.username}`);
+					// Redirect to specified route in the query string. Or, just their userpage if nothing is specified.
+					// We don't use Router.push() here because we need a "hard" loading of the page,
+					// rather than immediately pulling the content like the Next.js Router does.
+					// Otherwise, anybody could put in their own redirect link and the page would be served without authorization!
+					window.location.href = Router.query.redirect
+						? Router.query.redirect
+						: `/users/${response.data.user.username}`;
 				}, 1000);
 			})
 			.catch((error) => {
