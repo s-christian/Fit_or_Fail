@@ -1,7 +1,7 @@
 import Topbar from "../components/Topbar";
 import { useState } from "react";
 
-function Test() {
+const Test = (props) => {
 	// Declare a new state variable "count" and set its initial value to 0
 	const [count, setCount] = useState(0);
 
@@ -13,6 +13,6 @@ function Test() {
 			<button onClick={() => setCount(count + 1)}>Click me!</button>
 		</>
 	);
-}
+};
 
 export default Test;

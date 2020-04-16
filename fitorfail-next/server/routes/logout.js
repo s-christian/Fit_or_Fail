@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-router.post("/", (req, res) => {
+router.get("/", (req, res) => {
 	res.clearCookie("token");
-	res.json({ msg: "Logged out" });
+	res.redirect("/");
 });
 
 module.exports = router;

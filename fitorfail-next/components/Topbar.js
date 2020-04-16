@@ -2,6 +2,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
 import styled, { css } from "styled-components";
+import axios from "axios";
+import { useEffect } from "react";
 
 const StyledNavbar = styled(Navbar)`
 	background-color: white;
@@ -54,13 +56,60 @@ const TopbarPlay = styled(TopbarLink)`
 	}
 `;
 
-// The topbar throws some nasty errors since TopbarLink is inside either a NavbarBrand or NavLink,
+const Logo = styled.img`
+	box-sizing: border-box;
+	padding: 1px;
+	border: 1px solid black;
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	margin-right: 0.5rem;
+`;
+
+const ProfilePic = styled(Logo)`
+	margin-right: 0;
+	margin-left: 0.5rem;
+`;
+
+const LogoutContainer = styled(NavLink)`
+	width: 10rem;
+	box-sizing: border-box;
+	padding: 0.25rem 1rem;
+	margin-right: 1rem;
+	margin-left: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	background-color: hsl(199, 69%, 64%);
+	border: 1px solid black;
+	border-radius: 3px;
+
+	& a:hover {
+		color: white;
+	}
+`;
+
+// The topbar throws some nasty errors since TopbarLink is inside either a NavbarBrand or NavLink;
 // both of which are ultimately anchor tags, which means an <a> is inside of an <a>, and that's
 // not allowed. I tried to reformat it to get rid of those occurrences, but I can't figure out how
 // to do so and make it look the same. It doesn't break anything, but still try to fix it if you want.
 const Topbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [userData, setUserData] = useState(undefined);
 	const toggle = () => setIsOpen(!isOpen);
+
+	// The useEffect() hook operates client side (CSR)
+	useEffect(() => {
+		(async function fetchDecodedToken() {
+			try {
+				const { data } = await axios.get(`${process.env.BASE_URL}/api/decodeToken`);
+				if (data.decoded) setUserData(data.decoded);
+				else if (!data.error) console.error("You should never see this!"); // has to have either "decoded" or "error" as per the API
+			} catch (error) {
+				console.log(error);
+			}
+		})(); // Immediately-invoked Function Expression (IIFE) syntax
+	}, []);
 
 	return (
 		// The second "light" is the color scheme for the hamburger icon
@@ -68,19 +117,10 @@ const Topbar = () => {
 			<NavbarBrand>
 				<Link href="/" passHref>
 					<TopbarLink primary>
-						{/* Maybe just a temporary image, but it looks nice */}
-						<img
+						<Logo
 							src="/assets/images/fitorfail_logo_svg.png"
 							alt="Fit or Fail logo"
-							style={{
-								boxSizing: "border-box",
-								padding: "1px",
-								border: "1px solid black",
-								height: "40px",
-								width: "40px",
-								borderRadius: "50%",
-								marginRight: "0.5rem"
-							}}
+							style={{}}
 						/>
 						Fit or Fail
 					</TopbarLink>
@@ -124,13 +164,34 @@ const Topbar = () => {
 							</Link>
 						</NavLink>
 					</NavItem>
-					<NavItem>
-						<NavLink>
-							<Link href="/login" passHref>
-								<TopbarLink>Log in</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
+					{userData && (
+						<NavItem>
+							<LogoutContainer style={{}}>
+								<Link href="/logout" passHref>
+									<TopbarLink style={{ display: "inline-block" }}>
+										Log out
+									</TopbarLink>
+								</Link>
+								<Link href={`/users/${userData.username}`}>
+									<a>
+										<ProfilePic
+											src={`${userData.profile_picture_url}`}
+											alt={`${userData.username}'s profile picture`}
+										/>
+									</a>
+								</Link>
+							</LogoutContainer>
+						</NavItem>
+					)}
+					{!userData && (
+						<NavItem>
+							<NavLink>
+								<Link href="/login" passHref>
+									<TopbarLink>Log in</TopbarLink>
+								</Link>
+							</NavLink>
+						</NavItem>
+					)}
 					<NavItem>
 						<NavLink>
 							<a href="/game" style={{ textDecoration: "none" }}>
