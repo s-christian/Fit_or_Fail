@@ -70,13 +70,16 @@ const Topbar = () => {
 					<TopbarLink primary>
 						{/* Maybe just a temporary image, but it looks nice */}
 						<img
-							src="/assets/images/fitorfail_logo_small.jpg"
+							src="/assets/images/fitorfail_logo_svg.png"
 							alt="Fit or Fail logo"
 							style={{
+								boxSizing: "border-box",
+								padding: "1px",
+								border: "1px solid black",
 								height: "40px",
+								width: "40px",
 								borderRadius: "50%",
-								marginRight: "0.5rem",
-								border: "1px solid black"
+								marginRight: "0.5rem"
 							}}
 						/>
 						Fit or Fail

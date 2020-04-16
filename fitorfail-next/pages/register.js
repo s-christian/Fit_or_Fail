@@ -197,7 +197,8 @@ const Register = () => {
 						{isSubmitting ? "Please wait..." : "Register"}
 					</StyledButton>
 					<div className="text-center mt-5">
-						Already have an account?{" "}
+						Already have an account?
+						<br />
 						<Link href="/login">
 							<a style={{ textDecoration: "underline" }}>Log in!</a>
 						</Link>

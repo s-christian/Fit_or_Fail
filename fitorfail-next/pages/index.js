@@ -12,14 +12,14 @@ const StyledJumbo = styled(Jumbotron)`
 	background-color: hsl(189, 78%, 39%);
 	margin-bottom: 0;
 	border-bottom: 2px solid white;
-	flex-grow: 2;
+	flex: 2;
 
 	${(props) =>
 		props.secondary &&
 		css`
 			background-color: hsl(112, 57%, 42%);
 			border-bottom: 0;
-			flex-grow: 1;
+			flex: 1;
 		`}
 `;
 

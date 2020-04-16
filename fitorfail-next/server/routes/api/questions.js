@@ -19,7 +19,7 @@ router.get("/", authGovNoRedirect, (req, res) => {
 
 // Add or Delete a Question
 router.post("/", authGovNoRedirect, (req, res) => {
-	const { question, choices, correctIndex, points } = req.body;
+	let { question, choices, correctIndex, points } = req.body;
 	// Set the points to the default value of 10 if no point value was provided
 	if (points === undefined) points = 10;
 
@@ -30,7 +30,8 @@ router.post("/", authGovNoRedirect, (req, res) => {
 		correctIndex === undefined ||
 		correctIndex > 3 ||
 		correctIndex < 0 ||
-		points > 1000
+		points > 1000 ||
+		points < 10
 	)
 		return res.json({
 			error:

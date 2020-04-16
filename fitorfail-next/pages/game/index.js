@@ -19,54 +19,57 @@ const ButtonBox = styled.div`
 
 const ButtonDesign = styled.button`
 	border: 2px solid gray;
-	background-color: #1E90FF;
+	background-color: #1e90ff;
 	color: white;
 	font-size: 32px;
 	width: 15rem;
 	margin: 1rem 1.5rem;
 	padding: 1rem 1rem;
-	&:hover{
-		background-color: #9D50BB;
+	&:hover {
+		background-color: #9d50bb;
 		transition: 200ms;
 	}
 	${(props) =>
 		props.secondary &&
 		css`
-			background-color: #9D50BB;
+			background-color: #9d50bb;
 			font-size: 32px;
-			&:hover{
-				background-color: #1E90FF;
+			&:hover {
+				background-color: #1e90ff;
 				transition: 200ms;
 			}
 		`}
 `;
 
 const SecondHeader = styled.h2`
-text-align: center;
-color: white;
-font-size: 2rem;
-font-weight: 900;
-text-shadow: 2px 2px gray;
+	text-align: center;
+	color: white;
+	font-size: 2rem;
+	font-weight: 900;
+	text-shadow: 2px 2px gray;
 `;
-
 
 function Game() {
 	// TODO:
 	// Figure out how to do CSR to simply display the authenticated user's username at the top of the page (Welcome, <name>!).
 	// I don't want the entire page to be SSR just to display the name.
 	return (
-		<Layout title="Game" color = "#E100FF">
+		<Layout title="Game" color="#E100FF">
 			<GameHeader>Pick Your Gamemode</GameHeader>
 			<SecondHeader>Buttons to pick Solo or Online</SecondHeader>
 			<ButtonBox>
-			<p>
-				<Link href="/game/solo">
-					<a href ="/"><ButtonDesign>Solo</ButtonDesign></a>
-				</Link>{" "}
-				<Link href="/game/online">
-					<a href="/"><ButtonDesign secondary>Online</ButtonDesign></a>
-				</Link>
-			</p>
+				<p>
+					<Link href="/game/solo">
+						<a>
+							<ButtonDesign>Solo</ButtonDesign>
+						</a>
+					</Link>{" "}
+					<Link href="/game/online">
+						<a>
+							<ButtonDesign secondary="true">Online</ButtonDesign>
+						</a>
+					</Link>
+				</p>
 			</ButtonBox>
 		</Layout>
 	);
