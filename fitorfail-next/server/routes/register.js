@@ -24,7 +24,7 @@ router.post("/", (req, res) => {
 	// Only admins can create custom account types (anything other than "user": govs or admins)
 	if (req.cookies.token) {
 		async () => {
-			const { data } = await axios.get("/api/decodeToken");
+			const { data } = await axios.get(`${process.env.BASE_URL}/api/decodeToken`);
 			// If the user initiating this request is an admin, accept their input for account_type
 			if (data.decoded.account_type === "admin") accountType = req.body.account_type;
 		};
