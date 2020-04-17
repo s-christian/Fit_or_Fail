@@ -9,12 +9,12 @@ const PageCenter = styled(Container)`
 
 const StyledContainer = styled(Container)`
 	text-align: left;
-	background-color: #FAFAFA;
+	background-color: #fafafa;
 	border: solid 2px;
 	width: 700px;
 	margin-bottom: 30px;
-	padding: 1.5rem; 
-	font-size: 1rem
+	padding: 1.5rem;
+	font-size: 1rem;
 `;
 
 const Headers = styled.h1`
@@ -67,8 +67,7 @@ const StyledButton = styled.button`
 		`}
 `;
 
-
-const About = () => {
+const About = (props) => {
 	return (
 		<Layout title="About" color="#FFA500">
 			<PageCenter>

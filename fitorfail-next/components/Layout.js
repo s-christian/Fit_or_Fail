@@ -16,21 +16,23 @@ const Main = styled.section`
 	flex: 1; // fills the rest of the page after the Topbar
 `;
 
-// Combines the Meta and Navbar components.
+// Combines the Head and Navbar components.
 // Think of this as the shell around everything else in a page.
-const Layout = ({ children, title = "Untitled 🤔", color = "white" }) => (
-	<Wrapper>
-		<Head>
-			<title>{`${title} | Fit or Fail`}</title>
-		</Head>
-		<Topbar />
-		<Main color={color}>
-			{/* props.children contains all of the nodes in between the <Layout></Layout> tags.
-				If not for the below line, nothing inside those tags would be rendered.
-				This line just puts them into place. */}
-			{children}
-		</Main>
-	</Wrapper>
-);
+const Layout = ({ children, title = "Untitled 🤔", color = "white" }) => {
+	return (
+		<Wrapper>
+			<Head>
+				<title>{`${title} | Fit or Fail`}</title>
+			</Head>
+			<Topbar />
+			<Main color={color}>
+				{/* props.children contains all of the nodes in between the <Layout></Layout> tags.
+					If not for the below line, nothing inside those tags would be rendered.
+					This line just puts them into place. */}
+				{children}
+			</Main>
+		</Wrapper>
+	);
+};
 
 export default Layout;

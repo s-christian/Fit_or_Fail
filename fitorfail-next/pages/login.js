@@ -8,8 +8,9 @@ import Link from "next/link";
 import { Container, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import Router from "next/router";
+import { UserContext } from "../components/UserContext";
 
 // IDEAS:
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
@@ -67,6 +68,8 @@ const Login = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const textInput = useRef(null);
 
+	const { userData, setUserData } = useContext(UserContext);
+
 	function handleSubmit(event) {
 		// Necessary to prevent default HTML form submission
 		event.preventDefault();
@@ -81,6 +84,9 @@ const Login = () => {
 			})
 			.then((response) => {
 				setError(false);
+				//setUserData(response.data.user); // Store User data returned from API call to UserContext
+				// We don't do the above because it's strange to have the "Log out" button pop up immediately after pressing "login",
+				// and the page we're redirecting to will set the userData itself anyway
 				setMessage("Logged in!");
 				setTimeout(() => {
 					// Redirect to specified route in the query string. Or, just their userpage if nothing is specified.

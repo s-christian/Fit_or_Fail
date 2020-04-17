@@ -86,7 +86,6 @@ const StyledButton = styled.button`
 `;
 
 const Index = (props) => {
-	// Trying to add our fitorfail_logo.png behind the main text, but can't figure out how to
 	return (
 		<Layout title="Welcome">
 			<StyledJumbo fluid>

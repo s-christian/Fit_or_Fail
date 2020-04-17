@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
 import styled, { css } from "styled-components";
-import axios from "axios";
-import { useEffect } from "react";
+import { UserContext } from "../components/UserContext";
 
 const StyledNavbar = styled(Navbar)`
 	background-color: white;
@@ -94,22 +93,10 @@ const LogoutContainer = styled(NavLink)`
 // not allowed. I tried to reformat it to get rid of those occurrences, but I can't figure out how
 // to do so and make it look the same. It doesn't break anything, but still try to fix it if you want.
 const Topbar = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const [userData, setUserData] = useState(undefined);
-	const toggle = () => setIsOpen(!isOpen);
+	const { userData } = useContext(UserContext);
 
-	// The useEffect() hook operates client side (CSR)
-	useEffect(() => {
-		(async function fetchDecodedToken() {
-			try {
-				const { data } = await axios.get(`${process.env.BASE_URL}/api/decodeToken`);
-				if (data.decoded) setUserData(data.decoded);
-				else if (!data.error) console.error("You should never see this!"); // has to have either "decoded" or "error" as per the API
-			} catch (error) {
-				console.log(error);
-			}
-		})(); // Immediately-invoked Function Expression (IIFE) syntax
-	}, []);
+	const [isOpen, setIsOpen] = useState(false);
+	const toggle = () => setIsOpen(!isOpen);
 
 	return (
 		// The second "light" is the color scheme for the hamburger icon
@@ -164,7 +151,7 @@ const Topbar = () => {
 							</Link>
 						</NavLink>
 					</NavItem>
-					{userData && (
+					{userData ? (
 						<NavItem>
 							<LogoutContainer style={{}}>
 								<Link href="/logout" passHref>
@@ -182,8 +169,7 @@ const Topbar = () => {
 								</Link>
 							</LogoutContainer>
 						</NavItem>
-					)}
-					{!userData && (
+					) : (
 						<NavItem>
 							<NavLink>
 								<Link href="/login" passHref>
