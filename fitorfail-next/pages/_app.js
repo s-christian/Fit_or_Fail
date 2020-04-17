@@ -33,8 +33,7 @@ const MyApp = ({ Component, pageProps }) => {
 	useLayoutEffect(() => {
 		(async function fetchDecodedToken() {
 			try {
-				console.log("BASE_URL is:");
-				console.log(process.env.BASE_URL);
+				// Note to self: environment variables are not accessible on the client side, unless explicity defined in next.config.js
 				const { data } = await axios.get(`${process.env.BASE_URL}/api/decodeToken`);
 				if (data.decoded) setUserData(data.decoded);
 				else if (!data.error) console.error("You should never see this!"); // has to have either "decoded" or "error" as per the API
