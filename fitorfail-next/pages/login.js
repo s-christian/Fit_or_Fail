@@ -8,9 +8,8 @@ import Link from "next/link";
 import { Container, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef } from "react";
 import Router from "next/router";
-import { UserContext } from "../components/UserContext";
 
 // IDEAS:
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
@@ -67,8 +66,6 @@ const Login = () => {
 	const [error, setError] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const textInput = useRef(null);
-
-	const { userData, setUserData } = useContext(UserContext);
 
 	function handleSubmit(event) {
 		// Necessary to prevent default HTML form submission
