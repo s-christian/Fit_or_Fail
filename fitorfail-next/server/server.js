@@ -41,8 +41,8 @@ app.prepare().then(() => {
 	server.use("/logout", require("./routes/logout"));
 	server.use("/register", require("./routes/register"));
 	server.use("/api/users", require("./routes/api/users"));
-	//server.use("/api/auth", require("./routes/api/auth"));
 	server.use("/api/decodeToken", require("./routes/api/decodeToken"));
+	server.use("/api/updateToken", require("./routes/api/updateToken"));
 	server.use("/api/questions", require("./routes/api/questions"));
 
 	// --- Protected Routes ---
@@ -66,7 +66,7 @@ app.prepare().then(() => {
 	server.get("/users/:username", (req, res) => {
 		const { username } = req.params;
 		axios
-			.post(`${process.env.BASE_URL}/api/users/username/${username}`)
+			.get(`${process.env.BASE_URL}/api/users/username/${username}`)
 			.then((apiRes) => {
 				// If user is found but requested username does not match the case of the user's username, change the URL to the case-corrected username
 				// URL redirect before page load

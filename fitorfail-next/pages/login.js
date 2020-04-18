@@ -90,6 +90,7 @@ const Login = () => {
 					// We don't use Router.push() here because we need a "hard" loading of the page,
 					// rather than immediately pulling the content like the Next.js Router does.
 					// Otherwise, anybody could put in their own redirect link and the page would be served without authorization!
+					// Router.push() is okay for the register page since it's hardcoded to only ever redirect to the newly-registered User's userpage.
 					window.location.href = Router.query.redirect
 						? Router.query.redirect
 						: `/users/${response.data.user.username}`;

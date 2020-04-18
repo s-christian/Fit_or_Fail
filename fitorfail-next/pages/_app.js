@@ -30,6 +30,7 @@ const MyApp = ({ Component, pageProps }) => {
 
 	// The useLayoutEffect() hook operates client side (CSR), and doesn't paint the screen until it has finished. Effects always run after rendering.
 	// This prevents "flickering" from dynamically hydrating the page after its first paint. This is for the case where we're adding the "Log out" button to the Topbar.
+	// --- Please ignore all "Warning: useLayoutEffect does nothing on the server" errors, because the warnings don't apply to our use case of rendering the Topbar ---
 	useLayoutEffect(() => {
 		(async function fetchDecodedToken() {
 			try {

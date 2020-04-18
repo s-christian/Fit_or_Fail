@@ -87,46 +87,52 @@ const ProfilePicture = styled.img`
 			border: 1px solid white;
 		`}
 `;
-// Component function only takes parameter "props" (passed by getServerSideProps())
+
+const NotFoundWrapper = styled.div`
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+`;
+
+const NotFound = styled.div`
+	text-align: center;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(255, 255, 255, 0.6);
+	border: 5px solid white;
+
+	font-size: 2rem;
+
+	& #username {
+		color: white;
+		text-shadow: 2px 2px 4px black;
+		font-weight: 700;
+	}
+`;
+
+// Component function only takes parameter "props" (passed by getServerSideProps() in this case)
 // Notice that this is a function that does stuff other than immediately return HTML data.
 // I need to check if the user exists or not in order to deliver the correct HTML content,
-// so I start this function with the proper {} instead of ().
-
-const Userpage = ({ user, searchedUsername, authenticated }) => {
-	// This creates a "color" variable within the component with a default value of "Orange", and "setColor" is used to change this value
-	const [color, setColor] = useState("orange");
-	// This is the function used to change the color, after a certain "event" ("e" for short) is passed to it.
-	const handleColor = (e) => {
-		// e.target.value says, "give me the event, give me the target of that event (the actual DOM element that called it, like <input>), and give me that target's value".
-		// It then sets our "color" variable to whatever the value of that target is. In this case, it's the color that the user types into the input box.
-		setColor(e.target.value);
-	};
-
-	// Object that holds all our style data
-	// Not currently needed since we're only concerned with the background-color, which we need to pass to Layout
-	// const styleObj = {
-	// 	backgroundColor: color
-	// };
-
-	//
-	// USER DOES NOT EXIST
-	//
+// so I start this function with the proper {} instead of (), where () signifies "immediately return this value".
+const Userpage = ({ user, username, authenticated }) => {
+	// --- USER DOES NOT EXIST ---
 	if (!user)
 		return (
-			<Layout title="User not found" color={color}>
+			<Layout title="User not found" color="orange">
 				<UIcard>
-					<ProfileBox>
-						<ProfilePicture notFound src="/assets/images/oopsNoExist.jpg" />
-						<h1>
-							User <span id="username">{searchedUsername}</span> does not exist!
-						</h1>
-						<ColorSelector>
-							<h4>Backgound Color: {color}</h4>
-							<div className="ui search">
-								<input type="text" onChange={handleColor} value={color} />
-							</div>
-						</ColorSelector>
-					</ProfileBox>
+					<NotFoundWrapper>
+						<NotFound>
+							<img src="/assets/images/user_not_found.png" />
+							<h1>
+								User <span id="username">{username}</span> does not exist!
+							</h1>
+						</NotFound>
+					</NotFoundWrapper>
 				</UIcard>
 			</Layout>
 		);
@@ -140,9 +146,16 @@ const Userpage = ({ user, searchedUsername, authenticated }) => {
 	// 	initialData: initialUserInfo
 	// });
 
-	//
-	// USER EXISTS
-	//
+	// --- USER EXISTS ---
+	// This creates a "color" variable within the component with a default value of "Orange", and "setColor" is used to change this value
+	const [color, setColor] = useState("orange");
+	// This is the function used to change the color, after a certain "event" ("e" for short) is passed to it.
+	const handleColor = (e) => {
+		// e.target.value says, "give me the event, give me the target of that event (the actual DOM element that called it, like <input>), and give me that target's value".
+		// It then sets our "color" variable to whatever the value of that target is. In this case, it's the color that the user types into the input box.
+		setColor(e.target.value);
+	};
+
 	return (
 		<Layout title={`${user.username} · player info`} color={color}>
 			<UIcard>
@@ -188,17 +201,17 @@ export async function getServerSideProps(context) {
 	// to get all of that User's information in order to populate the page.
 
 	const { username } = context.params;
-	let userInfo = false;
+	let user = null;
 
 	const { token } = cookies(context);
 	let authenticated = false;
 
 	if (token) {
 		try {
-			const tokenData = await axios.post(`${process.env.BASE_URL}/api/decodeToken`, {
+			const { data } = await axios.post(`${process.env.BASE_URL}/api/decodeToken`, {
 				token
 			});
-			const tokenInfo = tokenData.data.decoded;
+			const tokenInfo = data.decoded;
 			// Need to check if the page being served is the one that belongs to the authenticated user.
 			if (tokenInfo.username === username) authenticated = true;
 		} catch (err) {
@@ -206,13 +219,13 @@ export async function getServerSideProps(context) {
 		}
 	}
 
-	// Retrieve the User's information. If the User is authenticated to their own profile page, the userInfo will also contain their email address.
+	// Retrieve the User's information. If the User is authenticated to their own profile page, the user will also contain their email address.
 	try {
-		const userData = await axios.post(
+		const { data } = await axios.post(
 			`${process.env.BASE_URL}/api/users/username/${username}`,
-			{ authenticated }
+			{ token }
 		);
-		if (userData.data.user) userInfo = userData.data.user; // if authenticated, we should always find the User's information since we already guaranteed they exist
+		if (data.user) user = data.user; // if authenticated, we should always find the User's information since we already guaranteed they exist
 	} catch (err) {
 		console.error({ error: "Cannot reach api endpoint for username", err });
 	}
@@ -220,9 +233,9 @@ export async function getServerSideProps(context) {
 	// Pass data to the page via props
 	return {
 		props: {
-			user: userInfo,
-			searchedUsername: username,
-			authenticated: authenticated
+			user,
+			username,
+			authenticated
 		}
 	};
 }

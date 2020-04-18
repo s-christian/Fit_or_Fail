@@ -151,7 +151,7 @@ const Topbar = () => {
 							</Link>
 						</NavLink>
 					</NavItem>
-					{userData ? (
+					{!!userData ? (
 						<NavItem>
 							<LogoutContainer style={{}}>
 								<Link href="/logout" passHref>

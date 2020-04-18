@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const tokenIsVerified = require("../../lib/tokenIsVerified");
 
 // Item model
 const User = require("../../models/User");
@@ -26,28 +27,11 @@ function getUserInfo(req, res, query, selectOptions, errorMessage) {
 		.catch((err) => res.json(err));
 }
 
-// router.post("/username/:username", (req, res) => {
-// 	const { authenticated } = req.body;
-// 	const selectOptions = authenticated ? "-password" : "-password -email"; // authenticated user should be able to see their own email address
-// 	User.findOne({ username_lower: req.params.username.toLowerCase() })
-// 		.select(selectOptions) // don't get the password or email (minus sign means exclude)
-// 		.then((user) => {
-// 			// Could return us a user, or nothing at all if the user does not exist
-// 			if (user) return res.json({ user });
-// 			else
-// 				return res.json({
-// 					error: `User with username ${req.params.username} does not exist`
-// 				});
-// 		})
-// 		.catch((err) => res.json(err));
-// });
-
-// @route   GET api/users/:username
-// @desc    Get user data
-// @access  Public
 router.post("/username/:username", (req, res) => {
-	const { authenticated } = req.body;
-	const selectOptions = authenticated ? "-password" : "-password -email"; // authenticated user should be able to see their own email address
+	const { token } = req.body;
+	let authenticated = false;
+	if (tokenIsVerified(token)) authenticated = true;
+	const selectOptions = authenticated ? "-password" : "-password -email"; // authenticated user should be able to retrieve their own email address
 	getUserInfo(
 		req,
 		res,
@@ -68,8 +52,10 @@ router.get("/username/:username", (req, res) => {
 });
 
 router.post("/id/:id", (req, res) => {
-	const { authenticated } = req.body;
-	const selectOptions = authenticated ? "-password" : "-password -email"; // authenticated user should be able to see their own email address
+	const { token } = req.body;
+	let authenticated = false;
+	if (tokenIsVerified(token)) authenticated = true;
+	const selectOptions = authenticated ? "-password" : "-password -email"; // authenticated user should be able to retrieve their own email address
 	getUserInfo(
 		req,
 		res,
