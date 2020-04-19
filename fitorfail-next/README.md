@@ -10,7 +10,7 @@
 
 # TODO
 
--   Allow "appropriate government officials and designated personel" ("admin" and "gov") to contribute input (add/remove questions)
+-   Allow "appropriate government officials and designated personnel" ("admin" and "gov") to contribute input (add/remove questions)
     -   `/contribute` and `/contribute/questions` frontend needed. API already exists.
 -   Faciliate advertising
     -   Similar to contribute
