@@ -175,6 +175,7 @@ const Userpage = ({ user, username, authenticated }) => {
 						<h1 id="username">{user.username}</h1>
 						<Stats>
 							<p>Points: {user.points}</p>
+							<p>Total answers: {user.totalAnswers}</p>
 							<p>Correct answers: {user.correctAnswers}</p>
 							<p>Wins: {user.wins}</p>
 							<p>Team: {user.team}</p>

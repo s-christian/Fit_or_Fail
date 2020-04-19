@@ -10,8 +10,8 @@ const authUser = authRole("user");
 const User = require("../../models/User");
 
 router.post("/", authUser, (req, res) => {
-	const { correctCount, pointSum } = req.body;
-	if (correctCount > 5 || pointSum > 5000) {
+	const { numOfQuestions, correctCount, pointSum } = req.body;
+	if (numOfQuestions > 5 || correctCount > 5 || pointSum > 5000) {
 		console.error("Cheater detected");
 		return res.json({ error: "Nice try..." });
 	}
@@ -25,8 +25,9 @@ router.post("/", authUser, (req, res) => {
 			User.findById(userId)
 				.select("-password -email")
 				.then((user) => {
-					user.points = user.points + pointSum;
+					user.totalAnswers = user.totalAnswers + numOfQuestions;
 					user.correctAnswers = user.correctAnswers + correctCount;
+					user.points = user.points + pointSum;
 					user.save()
 						.then((savedUser) => res.json({ savedUser }))
 						.catch((error) => res.json({ error }));

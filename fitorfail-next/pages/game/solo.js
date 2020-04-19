@@ -102,7 +102,11 @@ const Solo = () => {
 	// Need another API router to add pints and correct answers to User total
 	const handleSubmitScores = () => {
 		axios
-			.post(`${process.env.BASE_URL}/api/submitScores`, { correctCount, pointSum })
+			.post(`${process.env.BASE_URL}/api/submitScores`, {
+				correctCount,
+				pointSum,
+				numOfQuestions
+			})
 			//.then(({ data }) => console.log(data)) // contains the updated information stored in the database for the User
 			.catch((error) => console.error(error));
 	};

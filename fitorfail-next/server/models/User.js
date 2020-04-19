@@ -51,6 +51,10 @@ const UserSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	totalAnswers: {
+		type: Number,
+		default: 0
+	},
 	wins: {
 		// for online mode
 		type: Number,

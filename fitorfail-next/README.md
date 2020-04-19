@@ -10,18 +10,26 @@
 
 # TODO
 
--   Create the Solo game!
-    -   Learn CSR methods within Next.js
-    -   Create a list of questions on the back end
-        -   Create an authenticated API route that allows for the creation of a question with an answer, where the creator must be an "admin" or "gov" account_type
 -   Allow "appropriate government officials and designated personel" ("admin" and "gov") to contribute input (add/remove questions)
--   Faciliate advertising and donations
--   General site analytics (refer to the README in the `server` directory)
--   If a User is logged in, place their profile pic in the navbar so that having them click on it will bring them to their profile page
+    -   `/contribute` and `/contribute/questions` frontend needed. API already exists.
+-   Faciliate advertising
+    -   Similar to contribute
+-   Facilitate donations
+    -   Stripe or similar third party, figure out how to use it
+-   Ability for govs/admins to get a summary of all User information
+    -   Total Users
+    -   Total questions answered
+    -   Total correct question answers
+    -   ...etc
 -   Mobile optimizations
-    -   Media display queries to resize elements, make it fit perfectly on mobile screens
--   User profile dashboard that's editable. For proof-of-concept purposes, can allow for the editing and display of a bio section
-    -   This new User bio would have to be added to the User Model and would require a new API route with input validation
+    -   Game index page
+    -   About page
+    -   Anywhere else that you see might need it
+        -   users should NEVER have to horizontally scroll for anything
+-   User profile dashboard that's editable
+    -   User bio
+    -   Userpage custom background color
+-   Multiplayer game
 
 # Current Issues (to be fixed/optimized in the near future)
 
