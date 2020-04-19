@@ -23,6 +23,15 @@
 -   User profile dashboard that's editable. For proof-of-concept purposes, can allow for the editing and display of a bio section
     -   This new User bio would have to be added to the User Model and would require a new API route with input validation
 
+# Current Issues (to be fixed/optimized in the near future)
+
+-   The Topbar has nested anchor tags which throws a lot of ugly errors, although they don't affect anything
+-   Client-side user can view the correct answers to the quiz questions they were given
+    -   This is not plainly visible; the user would have to look at the network request or similar, but this is still an issue
+    -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint to keep receiving information on four randomly-selected questions from the database
+-   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint for submitting scores
+    -   This means that anybody can increase their correctAnswers and points by a max of 5 and 5000 respectively, at any time, and however often they want, as long as their token is valid
+
 ### Miscellaneous Notes
 
 -   Cookies can only be set over HTTPS in production

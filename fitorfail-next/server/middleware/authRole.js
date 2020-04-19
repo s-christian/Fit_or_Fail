@@ -3,7 +3,7 @@
 const jwt = require("jsonwebtoken");
 
 // This is a trick used for passing extra parameters to middleware: return a function within an outer function!
-function authRole(role, redirect = true) {
+function authRole(role, redirect = false) {
 	return function(req, res, next) {
 		jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, decoded) => {
 			// Token could be expired or modified, or not even exist

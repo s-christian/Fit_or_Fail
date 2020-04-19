@@ -5,20 +5,20 @@ const express = require("express");
 const router = express.Router();
 
 const authRole = require("../../middleware/authRole");
-const authGovNoRedirect = authRole("gov", false);
+const authGov = authRole("gov");
 
 // Item model
 const Question = require("../../models/Question");
 
 // Retrieve a list of all Questions
-router.get("/", authGovNoRedirect, (req, res) => {
+router.get("/", authGov, (req, res) => {
 	Question.find()
-		.then((questions) => res.json(questions))
+		.then((questions) => res.send(questions)) // returns an array of objects by default, which is exactly what we want (no res.json() needed)
 		.catch((err) => res.json({ err }));
 });
 
 // Add or Delete a Question
-router.post("/", authGovNoRedirect, (req, res) => {
+router.post("/", authGov, (req, res) => {
 	let { question, choices, correctIndex, points } = req.body;
 	// Set the points to the default value of 10 if no point value was provided
 	if (points === undefined) points = 10;
@@ -35,7 +35,7 @@ router.post("/", authGovNoRedirect, (req, res) => {
 	)
 		return res.json({
 			error:
-				"Must provide the question, an array of four choices, the index of the correct choice in that array, and an optional point value no great than 1000 (defaults to 10). "
+				"Must provide the question, an array of four choices, the correctIndex, and a points value between 10 and 1000."
 		});
 	else {
 		new Question({
@@ -50,7 +50,7 @@ router.post("/", authGovNoRedirect, (req, res) => {
 	}
 });
 
-router.delete("/", authGovNoRedirect, (req, res) => {
+router.delete("/", authGov, (req, res) => {
 	const { id } = req.body;
 	if (id === undefined) return res.json({ error: "Must provide the Question _id to delete" });
 	else {

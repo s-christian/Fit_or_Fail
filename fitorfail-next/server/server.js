@@ -44,17 +44,19 @@ app.prepare().then(() => {
 	server.use("/api/decodeToken", require("./routes/api/decodeToken"));
 	server.use("/api/updateToken", require("./routes/api/updateToken"));
 	server.use("/api/questions", require("./routes/api/questions"));
+	server.use("/api/getQuizQuestions", require("./routes/api/getQuizQuestions"));
+	server.use("/api/submitScores", require("./routes/api/submitScores"));
 
 	// --- Protected Routes ---
 	// Set up predefined authentication mechanisms for all three of our possible User account_types
-	const authUser = authRole("user");
-	const authGov = authRole("gov");
-	const authAdmin = authRole("admin");
+	const authUserRedirect = authRole("user", true);
+	const authGovRedirect = authRole("gov", true);
+	const authAdminRedirect = authRole("admin", true);
 
-	server.all(["/game", "/game/solo", "/game/online"], authUser, (req, res) => {
+	server.all(["/game", "/game/solo", "/game/online"], authUserRedirect, (req, res) => {
 		return handle(req, res);
 	});
-	server.all(["/contribute", "/contribute/questions"], authGov, (req, res) => {
+	server.all(["/contribute", "/contribute/questions"], authGovRedirect, (req, res) => {
 		return handle(req, res);
 	});
 

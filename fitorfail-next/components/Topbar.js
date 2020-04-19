@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, memo } from "react";
 import Link from "next/link";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
 import styled, { css } from "styled-components";
@@ -191,4 +191,5 @@ const Topbar = () => {
 	);
 };
 
-export default Topbar;
+// Memoization saves us unnecessary re-renders whenever state changes in a component Topbar is part of.
+export default memo(Topbar);

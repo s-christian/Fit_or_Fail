@@ -5,12 +5,13 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
 	username: {
 		type: String,
-		required: "username required",
+		required: "username required", // error message to display if not provided
 		unique: true,
 		maxlength: 16
 	},
 	username_lower: {
 		type: String,
+		unique: true,
 		default: function() {
 			return this.username.toLowerCase();
 		}
@@ -46,7 +47,12 @@ const UserSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	correctAnswers: {
+		type: Number,
+		default: 0
+	},
 	wins: {
+		// for online mode
 		type: Number,
 		default: 0
 	},

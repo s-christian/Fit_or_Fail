@@ -103,7 +103,7 @@ const NotFound = styled.div`
 	padding: 2rem;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(255, 255, 255, 0.6);
+	background-color: hsla(0, 0%, 100%, 0.6);
 	border: 5px solid white;
 
 	font-size: 2rem;
@@ -112,6 +112,12 @@ const NotFound = styled.div`
 		color: white;
 		text-shadow: 2px 2px 4px black;
 		font-weight: 700;
+	}
+
+	@media screen and (max-width: 750px) {
+		flex: 1;
+		border-left: 0;
+		border-right: 0;
 	}
 `;
 
@@ -124,16 +130,14 @@ const Userpage = ({ user, username, authenticated }) => {
 	if (!user)
 		return (
 			<Layout title="User not found" color="orange">
-				<UIcard>
-					<NotFoundWrapper>
-						<NotFound>
-							<img src="/assets/images/user_not_found.png" />
-							<h1>
-								User <span id="username">{username}</span> does not exist!
-							</h1>
-						</NotFound>
-					</NotFoundWrapper>
-				</UIcard>
+				<NotFoundWrapper>
+					<NotFound>
+						<img src="/assets/images/user_not_found.png" />
+						<h1>
+							User <span id="username">{username}</span> does not exist!
+						</h1>
+					</NotFound>
+				</NotFoundWrapper>
 			</Layout>
 		);
 
@@ -171,6 +175,7 @@ const Userpage = ({ user, username, authenticated }) => {
 						<h1 id="username">{user.username}</h1>
 						<Stats>
 							<p>Points: {user.points}</p>
+							<p>Correct answers: {user.correctAnswers}</p>
 							<p>Wins: {user.wins}</p>
 							<p>Team: {user.team}</p>
 							<p>Member since: {dayjs(user.register_date).format("MM/DD/YYYY")}</p>

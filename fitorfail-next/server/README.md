@@ -1,4 +1,4 @@
-# TODO
+# FAR-FUTURE TODO
 
 -   Simple site analytics, categorized by month and year
     -   Number of registered accounts
