@@ -9,7 +9,8 @@ if (process.env.NODE_ENV !== "production") Dotenv = require("dotenv-webpack");
 module.exports = {
 	// Let our BASE_URL be accessible in client-side code
 	env: {
-		BASE_URL: process.env.BASE_URL
+		BASE_URL: process.env.BASE_URL,
+		STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY
 	},
 	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
 		// Add the new plugin for environment variables to the existing webpack plugins
