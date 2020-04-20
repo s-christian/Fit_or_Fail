@@ -14,13 +14,14 @@
     -   `/contribute` and `/contribute/questions` frontend needed. API already exists.
 -   Faciliate advertising
     -   Similar to contribute
--   Facilitate donations
-    -   Stripe or similar third party, figure out how to use it
+-   Public leaderboard
 -   Ability for govs/admins to get a summary of all User information
     -   Total Users
     -   Total questions answered
     -   Total correct question answers
     -   ...etc
+-   Online multiplayer kahoot-style game
+    -   Teams
 -   Mobile optimizations
     -   Game index page
     -   About page
@@ -29,7 +30,6 @@
 -   User profile dashboard that's editable
     -   User bio
     -   Userpage custom background color
--   Multiplayer game
 
 # Current Issues (to be fixed/optimized in the near future)
 
@@ -39,6 +39,13 @@
     -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint to keep receiving information on a hard-coded number (currently 5) of randomly-selected questions from the database
 -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint for submitting scores
     -   This means that anybody can increase their correctAnswers and points by a max of 5 and 5000 respectively, at any time, and however often they want, as long as their token is valid
+
+## Future TODO
+
+-   Minor animations to make for a smoother experience
+-   Donating gives you a "donor" account_type which unlocks special features
+    -   Change profile background color
+-   Friends list
 
 ### Miscellaneous Notes
 
