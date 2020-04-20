@@ -19,9 +19,6 @@ const theme = {
 	}
 };
 
-// --- Stripe ---
-const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
-
 // This default export is required in a new `pages/_app.js` file.
 // Also wraps everything in styled-components' ThemeProvider
 const MyApp = ({ Component, pageProps }) => {
@@ -53,6 +50,9 @@ const MyApp = ({ Component, pageProps }) => {
 	// I have no idea if this is the most efficient way of doing things, but as far as I can tell, it's working fine,
 	// and we now have essentially persistent global userData based on the User's token that's stored as a cookie upon login.
 	// Hopefully this continues to work for whatever it might be needed for.
+
+	// --- Stripe ---
+	const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 	return (
 		<>
