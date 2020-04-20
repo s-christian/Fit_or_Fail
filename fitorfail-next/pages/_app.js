@@ -9,6 +9,8 @@ import Head from "next/head";
 import { ThemeProvider } from "styled-components";
 import { SWRConfig } from "swr";
 import { UserContext } from "../components/UserContext";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 // Example theme with color variables
 const theme = {
@@ -49,6 +51,9 @@ const MyApp = ({ Component, pageProps }) => {
 	// and we now have essentially persistent global userData based on the User's token that's stored as a cookie upon login.
 	// Hopefully this continues to work for whatever it might be needed for.
 
+	// --- Stripe ---
+	const stripePromise = loadStripe("pk_test_u7ac49ywFWTYC55qud66jcsO00dOZSR2xr");
+
 	return (
 		<>
 			<Head>
@@ -63,7 +68,9 @@ const MyApp = ({ Component, pageProps }) => {
 			<ThemeProvider theme={theme}>
 				<SWRConfig value={{ fetcher: (url) => axios(url).then((r) => r.data) }}>
 					<UserContext.Provider value={userProvider}>
-						<Component {...pageProps} />
+						<Elements stripe={stripePromise}>
+							<Component {...pageProps} />
+						</Elements>
 					</UserContext.Provider>
 				</SWRConfig>
 			</ThemeProvider>

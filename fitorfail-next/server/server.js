@@ -46,6 +46,7 @@ app.prepare().then(() => {
 	server.use("/api/questions", require("./routes/api/questions"));
 	server.use("/api/getQuizQuestions", require("./routes/api/getQuizQuestions"));
 	server.use("/api/submitScores", require("./routes/api/submitScores"));
+	server.use("/api/stripe", require("./routes/api/stripe"));
 
 	// --- Protected Routes ---
 	// Set up predefined authentication mechanisms for all three of our possible User account_types

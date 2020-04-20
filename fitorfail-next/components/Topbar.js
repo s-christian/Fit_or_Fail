@@ -151,6 +151,13 @@ const Topbar = () => {
 							</Link>
 						</NavLink>
 					</NavItem>
+					<NavItem>
+						<NavLink>
+							<Link href="/donate" passHref>
+								<TopbarLink style={{ color: "palevioletred" }}>Donate</TopbarLink>
+							</Link>
+						</NavLink>
+					</NavItem>
 					{!!userData ? (
 						<NavItem>
 							<LogoutContainer style={{}}>
