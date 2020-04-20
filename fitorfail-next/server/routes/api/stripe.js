@@ -4,7 +4,7 @@
 
 const express = require("express");
 const router = express.Router();
-const stripe = require("stripe")("sk_test_8UmcOiEWSojrhgPEPVs2VufC00OJIJ44Iy"); // test secret key
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); // test secret key
 
 router.get("/secret", async (req, res) => {
 	const paymentIntent = await stripe.paymentIntents.create({
