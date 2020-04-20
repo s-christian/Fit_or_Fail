@@ -10,7 +10,7 @@
 
 # TODO
 
--   Allow "appropriate government officials and designated personel" ("admin" and "gov") to contribute input (add/remove questions)
+-   Allow "appropriate government officials and designated personnel" ("admin" and "gov") to contribute input (add/remove questions)
     -   `/contribute` and `/contribute/questions` frontend needed. API already exists.
 -   Faciliate advertising
     -   Similar to contribute
@@ -36,7 +36,7 @@
 -   The Topbar has nested anchor tags which throws a lot of ugly errors, although they don't affect anything
 -   Client-side user can view the correct answers to the quiz questions they were given
     -   This is not plainly visible; the user would have to look at the network request or similar, but this is still an issue
-    -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint to keep receiving information on four randomly-selected questions from the database
+    -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint to keep receiving information on a hard-coded number (currently 5) of randomly-selected questions from the database
 -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint for submitting scores
     -   This means that anybody can increase their correctAnswers and points by a max of 5 and 5000 respectively, at any time, and however often they want, as long as their token is valid
 
