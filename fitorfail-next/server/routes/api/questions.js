@@ -10,7 +10,7 @@ const authGov = authRole("gov");
 // Item model
 const Question = require("../../models/Question");
 
-// Retrieve a list of all Questions
+// Retrieve an array of all Questions
 router.get("/", authGov, (req, res) => {
 	Question.find()
 		.then((questions) => res.send(questions)) // returns an array of objects by default, which is exactly what we want (no res.json() needed)
@@ -45,7 +45,7 @@ router.post("/", authGov, (req, res) => {
 			points
 		})
 			.save()
-			.then((question) => res.json({ question }))
+			.then((question) => res.json({ msg: "Question created", question }))
 			.catch((err) => res.json({ err }));
 	}
 });
@@ -55,7 +55,11 @@ router.delete("/", authGov, (req, res) => {
 	if (id === undefined) return res.json({ error: "Must provide the Question _id to delete" });
 	else {
 		Question.findByIdAndDelete(id)
-			.then((deletedQuestion) => res.json({ deletedQuestion }))
+			.then((deletedQuestion) => {
+				if (!deletedQuestion)
+					return res.json({ error: `Question with _id ${id} not found in database` });
+				return res.json({ msg: "Question deleted", deletedQuestion });
+			})
 			.catch((err) => res.json({ err }));
 	}
 });

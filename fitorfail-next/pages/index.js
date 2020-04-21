@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import StyledLink from "../components/StyledLink";
+import AdFixedBottom from "../components/AdFixedBottom";
 import { Container, Jumbotron } from "reactstrap";
 import styled, { css } from "styled-components";
 import Link from "next/link";
@@ -88,6 +89,7 @@ const StyledButton = styled.button`
 const Index = (props) => {
 	return (
 		<Layout title="Welcome">
+			<AdFixedBottom />
 			<StyledJumbo fluid>
 				<Container fluid="lg">
 					<Title>Fit or Fail!</Title>

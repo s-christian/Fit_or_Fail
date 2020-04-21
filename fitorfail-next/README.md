@@ -10,16 +10,18 @@
 
 # TODO
 
--   Allow "appropriate government officials and designated personnel" ("admin" and "gov") to contribute input (add/remove questions)
-    -   `/contribute` and `/contribute/questions` frontend needed. API already exists.
--   Faciliate advertising
-    -   Similar to contribute
+-   `/contribute` landing page
+    -   `/contribute/questions` frontend needed. API already exists @ `/api/questions`.
+    -   `/contribute/sponsors` frontend needed. API already exists @ `/api/ads`.
 -   Public leaderboard
 -   Ability for govs/admins to get a summary of all User information
     -   Total Users
     -   Total questions answered
     -   Total correct question answers
     -   ...etc
+-   Email contact form
+    -   Front end form that collects contact information, the actual email content, etc.
+    -   Nodemailer back end
 -   Online multiplayer kahoot-style game
     -   Teams
 -   Mobile optimizations
@@ -27,11 +29,29 @@
     -   About page
     -   Anywhere else that you see might need it
         -   users should NEVER have to horizontally scroll for anything
+
+## Future TODO
+
+-   Make donations "proper" with donator names, custom donation amounts, etc.
+    -   Made an official Stripe account with real keys instead of test keys; make it ready for production
+-   Minor animations to make for a smoother experience
 -   User profile dashboard that's editable
     -   User bio
-    -   Userpage custom background color
+-   Donating gives you a "donor" account_type which unlocks special features
+    -   Change profile background color
+-   "advertiser" account_type, manually given out to those allowed to post ads to the site
+    -   Allow gov and admin users to review ads before they go live
+    -   Allow advertiser users to preview how their ads will look before they submit them
+-   Upload custom images
+    -   User profile_pictures
+    -   Ad image_urls
+-   Improve API to add/delete multiple questions or ads at once
+-   Friends list
+-   User refresh tokens to avoid the need to manually log in every two hours
+    -   Way to blacklist or revoke certain tokens/refresh tokens in order to end the theft of a user's token
+        -   Token expiration time is the minimum amount of time the thief will have with the stolen account
 
-# Current Issues (to be fixed/optimized in the near future)
+## Current Issues (to be fixed/optimized in the near future)
 
 -   The Topbar has nested anchor tags which throws a lot of ugly errors, although they don't affect anything
 -   Client-side user can view the correct answers to the quiz questions they were given
@@ -39,13 +59,6 @@
     -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint to keep receiving information on a hard-coded number (currently 5) of randomly-selected questions from the database
 -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint for submitting scores
     -   This means that anybody can increase their correctAnswers and points by a max of 5 and 5000 respectively, at any time, and however often they want, as long as their token is valid
-
-## Future TODO
-
--   Minor animations to make for a smoother experience
--   Donating gives you a "donor" account_type which unlocks special features
-    -   Change profile background color
--   Friends list
 
 ### Miscellaneous Notes
 
