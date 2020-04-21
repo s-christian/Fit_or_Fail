@@ -33,7 +33,7 @@
 ## Future TODO
 
 -   Make donations "proper" with donator names, custom donation amounts, etc.
-    -   Made an official Stripe account with real keys instead of test keys; make it ready for production
+    -   Make an official Stripe account with real keys instead of test keys; make it ready for production
 -   Minor animations to make for a smoother experience
 -   User profile dashboard that's editable
     -   User bio
