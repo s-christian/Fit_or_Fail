@@ -13,12 +13,8 @@
 -   `/contribute` landing page
     -   `/contribute/questions` frontend needed. API already exists @ `/api/questions`.
     -   `/contribute/sponsors` frontend needed. API already exists @ `/api/ads`.
--   Public leaderboard
--   Ability for govs/admins to get a summary of all User information
-    -   Total Users
-    -   Total questions answered
-    -   Total correct question answers
-    -   ...etc
+-   `/leaderboard` frontend. API already exists @ `/api/topUsers`.
+-   `/statistics` frontend. API already exists @ `/api/userStatistics/[scores, registrations]`.
 -   Email contact form
     -   Front end form that collects contact information, the actual email content, etc.
     -   Nodemailer back end
@@ -46,6 +42,10 @@
     -   User profile_pictures
     -   Ad image_urls
 -   Improve API to add/delete multiple questions or ads at once
+-   Improved site statistics
+    -   points, totalAnswers, correctAnswers, and wins counts per month
+        -   Statistics collection in MongoDB that holds totals for everything, and totals on a monthly basis
+        -   Statistics updated automatically upon submission of user scores
 -   Friends list
 -   User refresh tokens to avoid the need to manually log in every two hours
     -   Way to blacklist or revoke certain tokens/refresh tokens in order to end the theft of a user's token

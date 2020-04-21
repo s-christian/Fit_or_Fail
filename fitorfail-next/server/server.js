@@ -48,6 +48,8 @@ app.prepare().then(() => {
 	server.use("/api/submitScores", require("./routes/api/submitScores"));
 	server.use("/api/stripe", require("./routes/api/stripe"));
 	server.use("/api/ads", require("./routes/api/ads"));
+	server.use("/api/userStatistics", require("./routes/api/userStatistics"));
+	server.use("/api/topUsers", require("./routes/api/topUsers"));
 
 	// --- Protected Routes ---
 	// Set up predefined authentication mechanisms for all three of our possible User account_types
@@ -59,6 +61,9 @@ app.prepare().then(() => {
 		return handle(req, res);
 	});
 	server.all(["/contribute", "/contribute/questions"], authGovRedirect, (req, res) => {
+		return handle(req, res);
+	});
+	server.all("/statistics", authGovRedirect, (req, res) => {
 		return handle(req, res);
 	});
 
