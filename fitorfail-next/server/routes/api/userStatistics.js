@@ -30,6 +30,7 @@ router.get("/scores", authGov, (req, res) => {
 		],
 		(err, results) => {
 			if (err) return res.json({ err });
+			delete results[0]._id;
 			return res.send(results[0]);
 		}
 	);
@@ -73,29 +74,6 @@ router.get("/registrations", authGov, (req, res) => {
 			return res.json(new_results);
 		}
 	);
-
-	// User.aggregate(
-	// 	[
-	// 		{
-	// 			$group: {
-	// 				// _id is the required first first used to group documents
-	// 				// _id: <expression>,
-	// 				_id: {
-	// 					month: { $month: "$register_date" },
-	// 					year: { $year: "$register_date" }
-	// 				},
-	// 				// <field1>: { <accumulator1> : <expression1> },
-	// 				// ...
-	// 				accounts_registered: { $sum: 1 } // increment by 1 (from 0) for every document that matches this group (based off of the User's register_date)
-	// 			}
-	// 		},
-	// 		{ $sort: { "_id.month": -1, "_id.year": -1 } }
-	// 	],
-	// 	(err, results) => {
-	// 		if (err) return res.json({ err });
-	// 		return res.send(results);
-	// 	}
-	// );
 });
 
 module.exports = router;

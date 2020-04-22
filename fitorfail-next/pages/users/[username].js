@@ -11,7 +11,6 @@ import cookies from "next-cookies";
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import Layout from "../../components/Layout";
-import Link from "next/link";
 import { ButtonGroup, Button } from "reactstrap";
 
 const ProfileBox = styled.div`
@@ -41,12 +40,17 @@ const Stats = styled.div`
 `;
 const InfoBox = styled.div`
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex: 3;
 	font-family: consolas;
 	font-size: 2rem;
 
 	@media screen and (max-width: 900px) {
 		flex: 1;
+		flex-direction: column;
+		padding: 0.5rem;
 	}
 `;
 const ColorSelector = styled.div`
@@ -127,9 +131,10 @@ const AdminPanel = styled.div`
 	border: 2px solid black;
 	max-width: 700px;
 
-	@media screen and (max-width: 750px) {
-		width: 100%;
-		margin: 5px;
+	@media screen and (max-width: 900px) {
+		position: initial;
+		bottom: initial;
+		right: initial;
 	}
 `;
 
@@ -203,6 +208,7 @@ const Userpage = ({ user, username, authenticated }) => {
 					</ProfileBoxContents>
 				</ProfileBox>
 				<InfoBox>
+					<p>Test</p>
 					{authenticated &&
 						(user.account_type === "gov" || user.account_type === "admin") && (
 							<AdminPanel>
@@ -221,7 +227,6 @@ const Userpage = ({ user, username, authenticated }) => {
 								</ButtonGroup>
 							</AdminPanel>
 						)}
-					<p>Test</p>
 				</InfoBox>
 			</UIcard>
 		</Layout>
