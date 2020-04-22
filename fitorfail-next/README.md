@@ -14,7 +14,6 @@
     -   `/contribute/questions` frontend needed. API already exists @ `/api/questions`.
     -   `/contribute/sponsors` frontend needed. API already exists @ `/api/ads`.
 -   `/leaderboard` frontend. API already exists @ `/api/topUsers`.
--   Make `/statistics` look prettier
 -   Email contact form
     -   Front end form that collects contact information, the actual email content, etc.
     -   Nodemailer back end
