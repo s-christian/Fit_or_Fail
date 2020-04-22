@@ -11,6 +11,8 @@ import cookies from "next-cookies";
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import Layout from "../../components/Layout";
+import Link from "next/link";
+import { ButtonGroup, Button } from "reactstrap";
 
 const ProfileBox = styled.div`
 	border-right: 1px solid black;
@@ -38,11 +40,8 @@ const Stats = styled.div`
 	background-color: hsla(0, 0%, 100%, 0.75);
 `;
 const InfoBox = styled.div`
-	display: flex;
+	position: relative;
 	flex: 3;
-	align-items: center;
-	justify-content: center;
-	color: white;
 	font-family: consolas;
 	font-size: 2rem;
 
@@ -58,21 +57,15 @@ const ColorSelector = styled.div`
 		padding: 0.25rem;
 	}
 `;
-//this component includes colors and padding to fallback on for older web browsers.
 const UIcard = styled.div`
 	display: flex;
 	flex: 1;
 	flex-wrap: wrap;
-	//background: #fc4a1a;
-	//background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);
-	//background: linear-gradient(to right, #f7b733, #fc4a1a);
 
 	// Make the box slimmer on small screens (phones)
 	@media screen and (max-width: 900px) {
 		flex-direction: column;
 	}
-	//@media screen and (max-width: 600px) {
-	//}
 `;
 const ProfilePicture = styled.img`
 	height: 250px;
@@ -118,6 +111,25 @@ const NotFound = styled.div`
 		flex: 1;
 		border-left: 0;
 		border-right: 0;
+	}
+`;
+
+const AdminPanel = styled.div`
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+	border: 2px solid black;
+	max-width: 700px;
+
+	@media screen and (max-width: 750px) {
+		width: 100%;
+		margin: 5px;
 	}
 `;
 
@@ -191,6 +203,24 @@ const Userpage = ({ user, username, authenticated }) => {
 					</ProfileBoxContents>
 				</ProfileBox>
 				<InfoBox>
+					{authenticated &&
+						(user.account_type === "gov" || user.account_type === "admin") && (
+							<AdminPanel>
+								<p style={{ fontSize: "2.5rem" }}>Admin Panel</p>
+								<ButtonGroup vertical>
+									<a href="/statistics">
+										<Button size="lg" outline color="info">
+											User Statistics
+										</Button>
+									</a>
+									<a href="/contribute">
+										<Button size="lg" outline color="info">
+											Contribute
+										</Button>
+									</a>
+								</ButtonGroup>
+							</AdminPanel>
+						)}
 					<p>Test</p>
 				</InfoBox>
 			</UIcard>
