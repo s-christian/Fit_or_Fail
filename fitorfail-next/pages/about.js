@@ -3,11 +3,8 @@ import { Container } from "reactstrap";
 import styled, { css } from "styled-components";
 import Link from "next/link";
 
-const PageCenter = styled(Container)`
-	display: center; // This isn't even valid CSS... Use flex or something to center it.
-`;
-
 const StyledContainer = styled(Container)`
+	display:flex;
 	text-align: left;
 	background-color: #fafafa;
 	border: solid 2px;
@@ -15,16 +12,20 @@ const StyledContainer = styled(Container)`
 	margin-bottom: 30px;
 	padding: 1.5rem;
 	font-size: 1rem;
+	@media screen and (max-width: 50rem) {
+		width: 80vw;
+	}
 `;
 
 const Headers = styled.h1`
-	// Dear Lord, why is this a BODY????? THIS is what's affecting everything in the page! LOL. Changed to an h1.
 	text-align: center;
-	// Fixed typo (background-COlor), but also just removed it entirely because there's no need for a background-color here
 	font-size: 5rem;
 	color: white;
 	font-weight: 900;
 	text-shadow: 2px 2px gray;
+	@media screen and (max-width: 50rem) {
+		font-size: 3rem;
+	}
 `;
 
 const Title = styled.h1`
@@ -39,8 +40,15 @@ const ButtonContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-basis: 400px;
-`;
 
+`;
+const ImageMod =styled.img`
+height: 250px;
+border: 1px solid black;
+@media screen and (max-width: 50rem) {
+width: 60vw;
+}
+`;
 const StyledButton = styled.button`
 	width: 11rem;
 	background-color: hsl(0, 75%, 60%);
@@ -65,13 +73,13 @@ const StyledButton = styled.button`
 				background-color: hsl(0, 75%, 60%);
 			}
 		`}
+	
 `;
 
 const About = (props) => {
 	return (
 		<Layout title="About" color="#FFA500">
-			<PageCenter>
-				<Headers>About Us:</Headers>
+			<Headers>About Us:</Headers>
 				<StyledContainer>
 					<Container>
 						<Title>Company:</Title>
@@ -95,12 +103,8 @@ const About = (props) => {
 						</p>
 						<Title>Location:</Title>
 						<p>Address: 7800 York Road, Towson, MD 21252</p>
-						<img
+						<ImageMod
 							src="/assets/images/Towson.jpg"
-							style={{
-								height: "250px",
-								border: "1px solid black"
-							}}
 						/>
 						<ButtonContainer>
 							<Link href="/">
@@ -108,8 +112,7 @@ const About = (props) => {
 							</Link>
 						</ButtonContainer>
 					</Container>
-				</StyledContainer>
-			</PageCenter>
+			</StyledContainer>
 		</Layout>
 	);
 };
