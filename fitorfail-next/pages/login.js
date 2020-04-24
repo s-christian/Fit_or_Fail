@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Container, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Router from "next/router";
 
 // IDEAS:
@@ -66,6 +66,14 @@ const Login = () => {
 	const [error, setError] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const textInput = useRef(null);
+
+	useEffect(() => {
+		if (!message && Router.query.redirect) {
+			setMessage("Please log in");
+			setError(true);
+		}
+		console.log("Rendered!");
+	});
 
 	function handleSubmit(event) {
 		// Necessary to prevent default HTML form submission
