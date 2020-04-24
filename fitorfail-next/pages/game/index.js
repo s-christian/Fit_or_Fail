@@ -8,6 +8,10 @@ const GameHeader = styled.h1`
 	font-size: 5rem;
 	font-weight: 900;
 	text-shadow: 2px 2px gray;
+
+	@media screen and (max-width: 50rem) {
+		font-size: 3rem;
+	}
 `;
 
 const ButtonBox = styled.div`
@@ -38,7 +42,11 @@ const ButtonDesign = styled.button`
 				background-color: #1e90ff;
 				transition: 200ms;
 			}
-		`}
+		`} 
+	@media screen and (max-width: 50rem) {
+		width: 5rem;
+		font-size: 15px;
+	}	
 `;
 
 const SecondHeader = styled.h2`
@@ -47,6 +55,9 @@ const SecondHeader = styled.h2`
 	font-size: 2rem;
 	font-weight: 900;
 	text-shadow: 2px 2px gray;
+	@media screen and (max-width: 50rem) {
+		font-size: 1rem;
+	}
 `;
 
 function Game() {
