@@ -49,6 +49,7 @@
 -   User refresh tokens to avoid the need to manually log in every two hours
     -   Way to blacklist or revoke certain tokens/refresh tokens in order to end the theft of a user's token
         -   Token expiration time is the minimum amount of time the thief will have with the stolen account
+-   Better and more diverse typography
 
 ## Current Issues (to be fixed/optimized in the near future)
 
