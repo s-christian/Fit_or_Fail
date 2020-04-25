@@ -231,6 +231,17 @@ const Solo = () => {
 													>
 														Play Again
 													</Button>
+													<Button
+														size="lg"
+														color="secondary"
+														href="/game"
+														style={{
+															width: "100%",
+															marginTop: "0.5rem"
+														}}
+													>
+														Back to game selection
+													</Button>
 												</QuestionHeading>
 											</>
 										)}

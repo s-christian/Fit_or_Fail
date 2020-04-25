@@ -1,0 +1,5 @@
+To update:
+	- Remove dev dependencies
+		- Only include dependencies needed to strictly DEPLOY and interact with the product
+			- Node
+			- "Support Browser:"
