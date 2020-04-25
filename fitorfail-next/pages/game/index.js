@@ -77,7 +77,7 @@ function Game() {
 					</Link>{" "}
 					<Link href="/game/online">
 						<a>
-							<ButtonDesign secondary="true">Online</ButtonDesign>
+							<ButtonDesign secondary="true">Online</ButtonDesign> 
 						</a>
 					</Link>
 				</p>
