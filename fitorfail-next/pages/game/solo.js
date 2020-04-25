@@ -3,7 +3,7 @@
  */
 
 import Layout from "../../components/Layout";
-import { Spinner, Fade, ListGroup, ListGroupItem } from "reactstrap";
+import { Spinner, Fade, Alert, Button, ListGroup, ListGroupItem, Table } from "reactstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
@@ -27,11 +27,33 @@ const QuestionBox = styled(FlexWrapper)`
 	border-radius: 1rem;
 	width: 700px;
 
+	transition: opacity 500ms ease;
+	animation: popOut 1s;
+
+	@keyframes popOut {
+		from {
+			transform: scale(0);
+		}
+		to {
+			transform: scale(1);
+		}
+	}
+
 	@media screen and (max-width: 750px) {
 		width: 100%;
 		border-radius: 0;
 		border-left: 0;
 		border-right: 0;
+	}
+
+	& .threed {
+		transition: all 0.25s ease;
+
+		&:hover {
+			box-shadow: 1px 1px hsl(120, 100%, 35%), 2px 2px hsl(120, 100%, 35%),
+				3px 3px hsl(120, 100%, 35%);
+			transform: translate(-3px);
+		}
 	}
 `;
 
@@ -47,8 +69,9 @@ const Solo = () => {
 	const [quizQuestions, setQuizQuestions] = useState([]);
 	const [numOfQuestions, setNumOfQuestions] = useState(0);
 	const [currentQuestion, setCurrentQuestion] = useState({});
-	const [error, setError] = useState(null);
+	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [start, setStart] = useState(false);
 
 	const fetchQuestions = () => {
 		axios
@@ -57,10 +80,14 @@ const Solo = () => {
 				setQuizQuestions(data);
 				setNumOfQuestions(data.length);
 				setCurrentQuestion(data[0]);
+				setQuestionCount(0);
+				setStart(false);
 				setLoading(false);
 			})
 			.catch((error) => {
-				setError(error);
+				console.log(error);
+				setError(true);
+				setQuestionCount(0);
 				setLoading(false);
 			});
 	};
@@ -91,9 +118,6 @@ const Solo = () => {
 	};
 
 	const handlePlayAgain = () => {
-		setLoading(true);
-		setCurrentQuestion({});
-		setQuestionCount(0);
 		setCorrectCount(0);
 		setPointSum(0);
 		fetchQuestions();
@@ -118,41 +142,100 @@ const Solo = () => {
 			<Layout title="Game · solo" color="hsl(156, 80%, 86%)">
 				<FlexWrapper>
 					<QuestionBox>
-						{error && <p>{error}</p>}
-						{questionCount < numOfQuestions ? (
-							<>
-								<QuestionHeading>
-									<h4>Question {questionCount + 1}</h4>
-									<h3>{currentQuestion.question}</h3>
-								</QuestionHeading>
-								<ListGroup style={{ width: "100%" }}>
-									{currentQuestion.choices.map((choice) => (
-										<ListGroupItem
-											tag="button"
-											style={{}}
-											key={currentQuestion.choices.indexOf(choice)}
-											value={currentQuestion.choices.indexOf(choice)}
-											onClick={handleAnswer}
-											action
-										>
-											{choice}
-										</ListGroupItem>
-									))}
-								</ListGroup>
-							</>
+						{error ? (
+							<Alert
+								color="danger"
+								style={{
+									width: "100%",
+									fontSize: "1.25rem",
+									textAlign: "center"
+								}}
+							>
+								Cannot fetch questions. Try{" "}
+								<a href="/login?redirect=/game/solo" className="alert-link">
+									logging in
+								</a>{" "}
+								again.
+							</Alert>
 						) : (
 							<>
-								{handleSubmitScores()}
-								<div>
-									<h4>Your Score:</h4>
-									<ul>
-										<li>Correct answers: {correctCount}</li>
-										<li>Points: {pointSum}</li>
-									</ul>
-								</div>
-								<div>
-									<button onClick={handlePlayAgain}>Play Again</button>
-								</div>
+								{!start ? (
+									<>
+										<QuestionHeading>
+											<h4>Are you ready?!</h4>
+
+											<Button
+												size="lg"
+												color="success"
+												onClick={() => setStart(true)}
+												style={{ width: "100%", marginTop: "0.5rem" }}
+											>
+												START
+											</Button>
+										</QuestionHeading>
+									</>
+								) : (
+									<>
+										{questionCount < numOfQuestions ? (
+											<>
+												<QuestionHeading>
+													<h4>
+														Question {questionCount + 1} of{" "}
+														{numOfQuestions}
+													</h4>
+													<h3>{currentQuestion.question}</h3>
+												</QuestionHeading>
+												<ListGroup style={{ width: "100%" }}>
+													{currentQuestion.choices.map((choice) => (
+														<ListGroupItem
+															tag="button"
+															className="threed"
+															key={currentQuestion.choices.indexOf(
+																choice
+															)}
+															value={currentQuestion.choices.indexOf(
+																choice
+															)}
+															onClick={handleAnswer}
+															action
+														>
+															{choice}
+														</ListGroupItem>
+													))}
+												</ListGroup>
+											</>
+										) : (
+											<>
+												{handleSubmitScores()}
+												<QuestionHeading>
+													<h4>Your Score:</h4>
+													<Table borderless size="sm">
+														<tr>
+															<th>Correct answers:</th>
+															<th className="text-right">
+																{correctCount}
+															</th>
+														</tr>
+														<tr>
+															<th>Points:</th>
+															<th className="text-right">
+																{pointSum}
+															</th>
+														</tr>
+													</Table>
+													<Button
+														size="lg"
+														color="info"
+														onClick={handlePlayAgain}
+														style={{ width: "100%" }}
+													>
+														Play Again
+													</Button>
+												</QuestionHeading>
+											</>
+										)}
+									</>
+								)}
 							</>
 						)}
 					</QuestionBox>
