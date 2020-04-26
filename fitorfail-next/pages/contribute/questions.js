@@ -12,12 +12,85 @@
 
 import Layout from "../../components/Layout";
 import StyledLink from "../../components/StyledLink";
+import Styled, {css} from "styled-components";
+
+import {Container,Form,FormGroup,Input,Label} from "reactstrap";
+
+const Box = Styled(Container)     
+`  
+border:2px solid black;
+height: 75vh;
+background-color:#FFB6C1;
+
+
+`;
+
+const Questionbox = Styled(Input)
+`
+width: 600px;
+
+
+`;
+
+const Inputbox = Styled(Container)
+`
+width: 40vw;
+justify-content: center;
+align-items:center;
+
+`;
+
+const Answer = Styled(Input)
+`
+width: 40vw;
+
+`;
+
+
+
 
 const Questions = () => {
 	return (
 		<Layout title="Questions Center" color="#55dd99">
-			<div className="text-center mt-5">
-				<h1>Questions Center</h1>
+			<Box className="text-center mt-5">
+				<Form style={{textAlign:'center'}}>
+					<h1>
+						Questions Submission Form
+					</h1>
+					<FormGroup>
+						<Label for= "questionSubmission">
+							
+							Question here:
+						</Label>
+						<Inputbox>
+
+			
+						<Questionbox type = "text"
+						
+						id ="questionSubmission"	
+						name="questionSubmission"
+						placeholder= "Enter Quesiton Here"
+						/>
+
+						<Label for= "answerSubmission">
+							
+							Answer:
+						</Label>
+						<Answer type = "text"
+						
+						id ="answerSubmission"	
+						name="answerSubmission"
+						placeholder= "Answer"
+						/>
+
+						</Inputbox>
+					</FormGroup>
+
+				</Form>
+				
+
+
+		
 				<p>
 					This area will be filled with all the questions currently in our database.
 					<br />
@@ -28,7 +101,7 @@ const Questions = () => {
 						Back to Contribute Center
 					</StyledLink>
 				</p>
-			</div>
+			</Box>
 		</Layout>
 	);
 };
