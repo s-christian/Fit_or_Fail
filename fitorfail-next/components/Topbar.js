@@ -158,13 +158,6 @@ const Topbar = () => {
 							</Link>
 						</NavLink>
 					</NavItem>
-					<NavItem>
-						<NavLink>
-							<Link href="/contribute/questions" passHref>
-								<TopbarLink style={{ color: "#64E169" }}>Contribute</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
 					{!!userData ? (
 						<NavItem>
 							<LogoutContainer style={{}}>

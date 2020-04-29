@@ -1,12 +1,12 @@
 import Layout from "../components/Layout";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Badge} from 'reactstrap';
+import { Container, Row, Col, Badge,ListGroup, ListGroupItem, Button} from 'reactstrap';
 import styled from "styled-components";
 
 const MediaContainer = styled(Container)`
-justify-content: center;
-align-text: center;
+width: 100vw;
+height: 100vh;
 @media screen and (max-width: 50rem) {
 	font-size: 3rem;
 	margin-bottom: 200px;
@@ -37,12 +37,14 @@ background-color:#fd943f;
 const BadgeStyle = styled(Badge)`
 border: 1px solid purple;
 margin-bottom: 2px;
+padding: 5px;
 color: purple;
 @media screen and (max-width: 50rem) {
-	font-size: 3rem;
+	font-size: 1.5rem;
+	Background-color: rgba(249,208,129,1);
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled(Button)`
 	border: 5px solid;
 	position: absolute;
 	bottom: -250px;
@@ -94,7 +96,7 @@ const StyledButton = styled.button`
 	@media screen and (max-width: 43rem) {
 		
 		position: absolute; 
-		bottom: -1450px;
+		bottom: -1050px;
 		
 	}
 	
@@ -108,7 +110,7 @@ color: purple;
 width: 25vw;
 background: linear-gradient(70deg, #5ac8fa 70%, #ff6464 70%);
 @media screen and (max-width: 50rem) {
-	font-size: 3rem;
+	font-size: 1.7rem;
 }
 `;
 const Leaderboard = () =>  {
@@ -137,6 +139,8 @@ const Leaderboard = () =>  {
 						  alignItems: 'center'
 						  }}>
 							  <HeaderStyle>Leaderboard<BadgeStyle href='/leaderboard' color="">Refresh</BadgeStyle></HeaderStyle>
+					<ListGroup style={{background: 'opacity 1'}}>
+					
 					<BoardStyle>
 						<Row>
 							<Col>Name</Col>
@@ -145,6 +149,7 @@ const Leaderboard = () =>  {
 						</Row>
 						
 						{users.map((data)=>(
+						
 						<ul>
 							<li>
 								<RowStyle >
@@ -158,9 +163,13 @@ const Leaderboard = () =>  {
 						</ul>
 						))}
 					</BoardStyle>
+					
+					
 					<a href="/game">
 							<StyledButton>PLAY</StyledButton>
 						</a>
+						
+					</ListGroup>
 		</MediaContainer>
 		</Layout>
 	);
