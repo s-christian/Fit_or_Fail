@@ -17,7 +17,13 @@ router.get("/", (req, res) => {
 					points: 1,
 					totalAnswers: 1,
 					correctAnswers: 1,
-					percentageCorrect: { $divide: ["$correctAnswers", "$totalAnswers"] },
+					percentageCorrect: {
+						$cond: {
+							if: { $eq: ["$totalAnswers", 0] },
+							then: 0,
+							else: { $divide: ["$correctAnswers", "$totalAnswers"] }
+						}
+					},
 					wins: 1
 				}
 			},
