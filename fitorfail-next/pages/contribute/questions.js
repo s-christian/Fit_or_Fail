@@ -12,11 +12,11 @@
 
 import Layout from "../../components/Layout";
 import StyledLink from "../../components/StyledLink";
-import Styled, {css} from "styled-components";
+import Styled, { css } from "styled-components";
 
-import {Container,Form,FormGroup,Input,Label} from "reactstrap";
+import { Container, Form, FormGroup, Input, Label } from "reactstrap";
 
-const Box = Styled(Container)     
+const Box = Styled(Container)
 `  
 border:2px solid black;
 height: 75vh;
@@ -27,7 +27,7 @@ background-color:#FFB6C1;
 
 const Questionbox = Styled(Input)
 `
-width: 600px;
+width: 612px;
 
 
 `;
@@ -45,9 +45,21 @@ const Answer = Styled(Input)
 width: 40vw;
 
 `;
+const Answer1 = Styled(Input)
+`
+width: 40vw;
 
+`;
+const Answer2 = Styled(Input)
+`
+width: 40vw;
 
+`;
+const Answer3 = Styled(Input)
+`
+width: 40vw;
 
+`;
 
 const Questions = () => {
 	return (
@@ -55,7 +67,7 @@ const Questions = () => {
 			<Box className="text-center mt-5">
 				<Form style={{textAlign:'center'}}>
 					<h1>
-						Questions Submission Form
+						Question Submission Form
 					</h1>
 					<FormGroup>
 						<Label for= "questionSubmission">
@@ -74,7 +86,7 @@ const Questions = () => {
 
 						<Label for= "answerSubmission">
 							
-							Answer:
+							Answer: (1 point)
 						</Label>
 						<Answer type = "text"
 						
@@ -83,6 +95,53 @@ const Questions = () => {
 						placeholder= "Answer"
 						/>
 
+
+
+						<Label for= "answerSubmission">
+							
+							Answer:(1 point)
+						</Label>
+						<Answer1 type = "text"
+						
+						id ="answerSubmission"	
+						name="answerSubmission"
+						placeholder= "Answer"
+						/>
+
+
+
+
+						
+					<Label for= "answerSubmission">
+							
+							Answer:(1 point)
+						</Label>
+						<Answer2 type = "text"
+						
+						id ="answerSubmission"	
+						name="answerSubmission"
+						placeholder= "Answer"
+						/>
+
+
+
+
+						
+					<Label for= "answerSubmission">
+							
+							Correct Answer:(1 point)
+						</Label>
+						<Answer3 type = "text"
+						
+						id ="answerSubmission"	
+						name="answerSubmission"
+						placeholder= "Answer"
+						/>
+
+
+
+						
+					
 						</Inputbox>
 					</FormGroup>
 

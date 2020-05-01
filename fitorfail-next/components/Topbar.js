@@ -4,12 +4,13 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } f
 import styled, { css } from "styled-components";
 import { UserContext } from "../components/UserContext";
 
-const StyledNavbar = styled(Navbar)`
+const StyledNavbar = styled(Navbar)
+`
 	background-color: white;
 	border-bottom: 1px solid black;
 `;
 
-const TopbarLink = styled.a`
+const TopbarLink = styled.a `
 	height: 100%;
 	display: flex;
 	align-items: center;
@@ -148,6 +149,13 @@ const Topbar = () => {
 						<NavLink>
 							<Link href="/users/CHRISTIAN2" passHref>
 								<TopbarLink>Test: User CHRISTIAN2</TopbarLink>
+							</Link>
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink>
+							<Link href="/contribute/questions" passHref>
+								<TopbarLink style={{ color: "#64E169" }}>Contribute</TopbarLink>
 							</Link>
 						</NavLink>
 					</NavItem>
