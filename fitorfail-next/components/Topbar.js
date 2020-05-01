@@ -154,13 +154,6 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link href="/contribute/questions" passHref>
-								<TopbarLink style={{ color: "#64E169" }}>Contribute</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink>
 							<Link href="/donate" passHref>
 								<TopbarLink style={{ color: "palevioletred" }}>Donate</TopbarLink>
 							</Link>

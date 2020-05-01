@@ -95,8 +95,6 @@ const Questions = () => {
 						placeholder= "Answer"
 						/>
 
-
-
 						<Label for= "answerSubmission">
 							
 							Answer:(1 point)
@@ -107,9 +105,6 @@ const Questions = () => {
 						name="answerSubmission"
 						placeholder= "Answer"
 						/>
-
-
-
 
 						
 					<Label for= "answerSubmission">
@@ -123,9 +118,6 @@ const Questions = () => {
 						placeholder= "Answer"
 						/>
 
-
-
-
 						
 					<Label for= "answerSubmission">
 							
@@ -137,9 +129,6 @@ const Questions = () => {
 						name="answerSubmission"
 						placeholder= "Answer"
 						/>
-
-
-
 						
 					
 						</Inputbox>
