@@ -97,7 +97,7 @@ const Questions = () => {
 
 						<Label for= "answerSubmission">
 							
-							Answer:(1 point)
+							Answer: (1 point)
 						</Label>
 						<Answer1 type = "text"
 						
@@ -109,7 +109,7 @@ const Questions = () => {
 						
 					<Label for= "answerSubmission">
 							
-							Answer:(1 point)
+							Answer: (1 point)
 						</Label>
 						<Answer2 type = "text"
 						
@@ -121,7 +121,7 @@ const Questions = () => {
 						
 					<Label for= "answerSubmission">
 							
-							Correct Answer:(1 point)
+							Correct Answer: (1 point)
 						</Label>
 						<Answer3 type = "text"
 						
