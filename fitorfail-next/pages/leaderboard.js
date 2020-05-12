@@ -14,19 +14,16 @@ const MediaContainer = styled(Container)`
 `;
 
 const BoardStyle = styled(Container)`
-	background-color: white;
-	border: 2px solid black;
-	background-color: rgba(255, 0, 0, 0.5);
 	@media screen and (max-width: 50rem) {
 		font-size: 2.5rem;
 	}
 `;
 
 const RowStyle = styled(Row)`
-	background-color: colorGenerator;
+	background-color: ;rgba(255, 0, 0, 0.5)
 	border: 1px solid black;
 	margin: 2px;
-	border-radius: 30% 75% 75% 30%;
+	
 	background-color: #fd943f;
 	@media screen and (max-width: 50rem) {
 		font-size: 2rem;
@@ -34,10 +31,14 @@ const RowStyle = styled(Row)`
 `;
 
 const BadgeStyle = styled(Badge)`
-	border: 1px solid purple;
+	border: 1px solid rgba(255, 0, 0, 0.8);
 	margin-bottom: 2px;
 	padding: 5px;
-	color: purple;
+	color: rgba(255, 0, 0, 0.8);
+	&:hover {
+		color: rgba(249, 208, 129, 1);
+		border: 2px solid rgba(249, 208, 129, 1);
+	}
 	@media screen and (max-width: 50rem) {
 		font-size: 1.5rem;
 		background-color: rgba(249, 208, 129, 1);
@@ -47,79 +48,20 @@ const BadgeStyle = styled(Badge)`
 const StyledButton = styled(Button)`
 	border: 5px solid;
 	position: absolute;
-	bottom: -250px;
+	bottom: -300px;
 	z-index: 1;
 	display: block;
 	top: calc(50% - 2.5rem - 5px);
 	left: calc(50% - 6rem - 5px);
-	height: 5rem;
-	width: 12rem;
+	height: 3rem;
+	width: 9rem;
 	margin: auto;
-	background: transparent
-		linear-gradient(
-			to top left,
-			rgba(249, 208, 129, 0.2) 0%,
-			rgba(227, 2, 62, 0.2) 40%,
-			rgba(49, 128, 135, 0.2) 100%
-		);
-	border-image-source: linear-gradient(
-		to top left,
-		rgba(249, 208, 129, 1) 0%,
-		rgba(227, 2, 62, 1) 40%,
-		rgba(49, 128, 135, 1) 100%
-	);
-	border-image-slice: 1;
-	transition: transform 0.25s;
-	letter-spacing: 0.2rem;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 1.25rem;
-	font-weight: 300;
-	text-align: center;
-	text-decoration: none;
-	text-transform: uppercase;
-	color: #333;
+	background-color: rgba(249, 208, 129, 1);
 
-	&::after {
-		z-index: -1;
-		background: transparent
-			linear-gradient(
-				to bottom left,
-				rgba(249, 208, 129, 0.25) 10%,
-				rgba(227, 2, 62, 0.25) 30%,
-				rgba(49, 128, 135, 0.25) 90%
-			);
-		border-image-source: 3px
-			linear-gradient(
-				to bottom left,
-				rgba(249, 208, 129, 1) 10%,
-				rgba(227, 2, 62, 1) 30%,
-				rgba(49, 128, 135, 1) 90%
-			);
-		transition: opacity 1s;
-	}
-
-	&:active {
-		transform: scale(0.96);
-
-		&::before {
-			opacity: 1;
-		}
-	}
-
-	&::before {
-		z-index: 0;
-		border-image-source: 3px
-			linear-gradient(
-				to bottom left,
-				rgba(249, 208, 129, 1) 20%,
-				rgba(227, 2, 62, 1) 40%,
-				rgba(49, 128, 135, 1) 70%
-			);
-		transition: opacity 0.5s;
-	}
-
-	&:hover::after {
+	&:hover {
 		opacity: 1;
+		background-color: rgba(255, 0, 0, 0.8);
+		border: 5px solid rgba(249, 208, 129, 1);
 	}
 
 	@media screen and (max-width: 43rem) {
@@ -132,9 +74,9 @@ const HeaderStyle = styled.h1`
 	border: 2px solid;
 	margin-bottom: 3px;
 	font-weight: 600;
-	color: purple;
+	color: rgba(255, 0, 0, 0.8);
 	width: 25vw;
-	background: linear-gradient(70deg, #5ac8fa 70%, #ff6464 70%);
+	
 	@media screen and (max-width: 50rem) {
 		font-size: 1.7rem;
 	}
@@ -143,18 +85,18 @@ const Leaderboard = () => {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		axios.get(`${process.env.BASE_URL}/api/topUsers`).then(({ data }) => {
-			setUsers(data);
+		axios.get(`${process.env.BASE_URL}/api/topUsers`)
+		.then(({ data }) => {setUsers(data);
 		});
 	}, []);
 
 	return (
 		<Layout
 			title="Leaderboard"
-			color="  background: -webkit-linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
-		background: -o-linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
-		background: -moz-linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
-		background: linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
+			color="  background: -webkit-linear-gradient(180deg, #ff6464 50%, #5ac8fa 50%);
+		background: -o-linear-gradient(180deg, #ff6464 50%, #5ac8fa 50%);
+		background: -moz-linear-gradient(180deg, #ff6464 50%, #5ac8fa 50%);
+		background: linear-gradient(1800deg, #ff6464 50%, #5ac8fa 50%);
 	  }"
 		>
 			<MediaContainer
@@ -171,24 +113,27 @@ const Leaderboard = () => {
 						Refresh
 					</BadgeStyle>
 				</HeaderStyle>
-				<ListGroup style={{ background: "opacity 1" }}>
+				<ListGroup >
 					<BoardStyle>
+						<ListGroupItem style={{backgroundColor:"rgba(255, 0, 0, 0.5)"}}>
 						<Row>
 							<Col>Name</Col>
 							<Col>Points</Col>
 							<Col>team</Col>
 						</Row>
-						<ul>
+						</ListGroupItem>
+						
+						<ListGroupItem style={{backgroundColor:"rgba(255, 0, 0, 0.5)"}}>
 							{users.map((user) => (
-								<li>
+								
 									<RowStyle>
 										<Col>{user.username}</Col>
 										<Col>{user.points} </Col>
 										<Col>{user.team}</Col>
 									</RowStyle>
-								</li>
-							))}
-						</ul>
+								
+							))}</ListGroupItem>
+						
 					</BoardStyle>
 
 					<a href="/game">
