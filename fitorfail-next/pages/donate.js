@@ -39,7 +39,7 @@ const CARD_ELEMENT_OPTIONS = {
 	}
 };
 
-// For some reason the default styles aren't being automatically applied to the Stripe CardElement, so I have to specify them myself
+// For some reason the default styles aren't being automatically applied to the Stripe CardElement, so I have to explicitly declare them
 const StyleProvider = styled.div`
 	.StripeElement {
 		height: 40px;
@@ -112,8 +112,8 @@ const Donate = () => {
 		(async () => {
 			const { data } = await axios.get(`${process.env.BASE_URL}/api/stripe/secret`);
 			if (data.client_secret) {
-				setClientSecret(data.client_secret);
 				// Call stripe.confirmCardPayment() with the client secret.
+				setClientSecret(data.client_secret);
 			} else console.error("Stripe API is misbehaving");
 		})();
 	}, []);
@@ -170,7 +170,7 @@ const Donate = () => {
 						<CardSection />
 						<Button
 							outline
-							color="primary"
+							color={!paymentSuccessful ? "primary" : "secondary"}
 							size="lg"
 							block
 							className="mt-2"
