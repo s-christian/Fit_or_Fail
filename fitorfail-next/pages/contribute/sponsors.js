@@ -60,9 +60,9 @@ const StyledButton = styled(Button)`
 	}
 `;
 
-const Contribute = () => {
+const Sponsors = () => {
 	return (
-		<Layout title="Contribute" color="hsl(156, 73%, 46%)">
+		<Layout title="Sponsors" color="hsl(156, 73%, 46%)">
 			<CenterWrapper>
 				<SelectionPanel>
 					<Authenticated>Coming Soon!</Authenticated>
@@ -84,4 +84,4 @@ const Contribute = () => {
 	);
 };
 
-export default Contribute;
+export default Sponsors;

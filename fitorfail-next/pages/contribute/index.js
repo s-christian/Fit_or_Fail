@@ -89,7 +89,7 @@ const Contribute = () => {
 								Questions
 							</StyledButton>
 						</Link>
-						<Link href="/contribute/ads">
+						<Link href="/contribute/sponsors">
 							<StyledButton
 								block
 								outline
@@ -99,7 +99,7 @@ const Contribute = () => {
 									textDecoration: "line-through"
 								}}
 							>
-								Ads
+								Sponsors
 							</StyledButton>
 						</Link>
 					</ButtonBox>

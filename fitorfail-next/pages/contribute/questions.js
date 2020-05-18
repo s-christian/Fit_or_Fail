@@ -35,8 +35,13 @@ const CenterWrapper = styled.div`
 	justify-content: space-around;
 	padding: 2rem;
 
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 1400px) {
 		flex-direction: column;
+		align-items: center;
+	}
+
+	@media screen and (max-width: 600px) {
+		padding: 1rem;
 	}
 `;
 
@@ -47,9 +52,14 @@ const QuestionPanel = styled.div`
 	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
 	width: 500px;
 
+	@media screen and (max-width: 1400px) {
+		margin-bottom: 2rem;
+	}
+
 	@media screen and (max-width: 600px) {
 		border-radius: 0;
 		width: 100%;
+		margin-bottom: 1rem;
 
 		& h1 {
 			font-size: 2rem;
@@ -79,15 +89,25 @@ const TablePanel = styled.div`
 	padding: 2rem;
 	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
 
+	@media screen and (max-width: 1400px) {
+		& #choiceNum {
+			display: none;
+		}
+	}
+
 	@media screen and (max-width: 600px) {
 		border-radius: 0;
 		width: 100%;
+		padding: 1rem;
 
 		& h1 {
 			font-size: 2rem;
 		}
 		& h3 {
 			font-size: 1rem;
+		}
+		& table {
+			font-size: 0.75rem;
 		}
 	}
 `;
@@ -364,6 +384,7 @@ const Questions = () => {
 					</Form>
 				</QuestionPanel>
 				<TablePanel>
+					<PanelHeading>All Questions</PanelHeading>
 					<Table>
 						<thead>
 							<tr>
@@ -375,7 +396,7 @@ const Questions = () => {
 						<tbody>
 							{allQuestions.map((question, index) => (
 								<tr key={index + 20}>
-									<th scope="row">#{index + 1}</th>
+									<th scope="row">{question.question}</th>
 									<td>
 										<ListGroup>
 											{question.choices.map((choice, index) => (
@@ -383,6 +404,7 @@ const Questions = () => {
 													key={index + 10}
 													style={{
 														display: "flex",
+														alignItems: "center",
 														justifyContent: "space-between",
 														backgroundColor:
 															index === question.correctIndex
@@ -391,6 +413,7 @@ const Questions = () => {
 													}}
 												>
 													<span
+														id="choiceNum"
 														style={{
 															fontSize: "0.75rem",
 															fontWeight: "300"
@@ -404,7 +427,7 @@ const Questions = () => {
 											))}
 										</ListGroup>
 									</td>
-									<td>{question.points}</td>
+									<td style={{ textAlign: "right" }}>{question.points}</td>
 								</tr>
 							))}
 						</tbody>
