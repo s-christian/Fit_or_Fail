@@ -1,135 +1,97 @@
 import Layout from "../components/Layout";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Container, Row, Col, ListGroup, ListGroupItem, Button } from "reactstrap";
+import Link from "next/link";
+import { Table } from "reactstrap";
 import styled from "styled-components";
 
-const MediaContainer = styled(Container)`
-	width: 100vw;
-	height: 100vh;
-	@media screen and (max-width: 50rem) {
-		font-size: 3rem;
-		margin-bottom: 200px;
+const CenterWrapper = styled.div`
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	& thead tr {
+		background-color: hsl(0, 75%, 60%);
+	}
+
+	& tbody tr {
+		background-color: hsl(119, 0%, 95%);
+		cursor: pointer;
+
+		& :hover {
+			color: white;
+			background-color: hsl(308, 76%, 22%);
+
+			animation: popOut 500ms forwards;
+
+			@keyframes popOut {
+				from {
+					transform: scale(1);
+				}
+				to {
+					transform: scale(1.25);
+				}
+			}
+		}
+
+		& :active {
+			background-color: hsl(308, 76%, 44%);
+		}
 	}
 `;
 
-const BoardStyle = styled(Container)`
-	@media screen and (max-width: 50rem) {
-		font-size: 2.5rem;
-	}
-`;
-
-const LeaderBoardColumnHeader = styled(Row) `
-@media screen and (max-width: 50rem) {
-	font-size: 1.4rem;
-	
-}
-`;
-
-const RowStyle = styled(Row)`
-	background-color: ;rgba(255, 0, 0, 0.5)
-	border: 1px solid black;
-	margin: 2px;
-	
-	background-color: #fd943f;
-	@media screen and (max-width: 50rem) {
-		font-size: 1rem;
-	}
-`;
-
-const StyledButton = styled(Button)`
-	border: 5px solid;
-	float: bottom;
-	display:flex;
-	z-index: 1;
-	display: block;
-	top: calc(50% - 2.5rem - 5px);
-	left: calc(50% - 6rem - 5px);
-	height: 3rem;
-	width: 9rem;
-	margin: auto;
-	background-color: #5ac8fa;
-
-	&:hover {
-		opacity: 1;
-		background-color: rgba(255, 0, 0, 0.8);
-		border: 5px solid rgba(249, 208, 129, 1);
-	}
-
-	@media screen and (max-width: 40rem) {
-		position: absolute;
-		bottom: 0;
-		margin-top: 250px;
-	}
-`;
-
-const HeaderStyle = styled.h1`
-	
-	margin-bottom: 3px;
-	font-weight: 600;
-	color: rgba(255, 0, 0, 0.8);;
-	width: 25vw;
-	
-	@media screen and (max-width: 50rem) {
-		font-size: 1.7rem;
-	}
-`;
 const Leaderboard = () => {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		axios.get(`${process.env.BASE_URL}/api/topUsers`)
-		.then(({ data }) => {setUsers(data);
+		axios.get(`${process.env.BASE_URL}/api/topUsers`).then(({ data }) => {
+			setUsers(data);
 		});
 	}, []);
 
+	console.log(users);
+
 	return (
-		<Layout
-			title="Leaderboard"
-			color="  background: -webkit-linear-gradient(180deg, #7fff00 50%, #5ac8fa 50%);
-		background: -o-linear-gradient(180deg, #7fff00 50%, #5ac8fa 50%);
-		background: -moz-linear-gradient(180deg, #7fff00 50%, #5ac8fa 50%);
-		background: linear-gradient(1800deg, #7fff00 50%, #5ac8fa 50%);
-	  }"
-		>
-			<MediaContainer
-				style={{
-					width: "100%",
-					height: "100%",
-					justifyContent: "center",
-					alignItems: "center"
-				}}
-			>
-				<HeaderStyle>
-					Leaderboard
-				</HeaderStyle>
-				<ListGroup >
-					<BoardStyle>
-						<ListGroupItem style={{backgroundColor:"red"}}>
-						<LeaderBoardColumnHeader>
-							<Col>Name</Col>
-							<Col>Points</Col>
-							<Col>team</Col>
-						</LeaderBoardColumnHeader>
-						</ListGroupItem>
-						
-						<ListGroupItem style={{backgroundColor:"red"}}>
-							{users.map((user) => (
-									<RowStyle>
-										<Col>{user.username}</Col>
-										<Col>{user.points} </Col>
-										<Col>{user.team}</Col>
-									</RowStyle>
-								
-							))}</ListGroupItem>
-						
-						</BoardStyle>
-					</ListGroup>
-					
-					<a href="/game">
-						<StyledButton>PLAY</StyledButton>
-					</a>
-			</MediaContainer>
+		<Layout title="Leaderboard" color="hsl(276, 61%, 75%)">
+			<CenterWrapper>
+				<div id="tableWrapper">
+					<h1>Solo Leaderboard</h1>
+					<Table>
+						<thead>
+							<tr>
+								<th>Global Rank</th>
+								<th>Username</th>
+								<th>Total Answers</th>
+								<th>Correct Rate</th>
+							</tr>
+						</thead>
+						<tbody>
+							{users.map((user, index) => (
+								<Link href={`/users/${user.username}`}>
+									<tr>
+										<th scope="row">#{index + 1}</th>
+										<td>{user.username}</td>
+										<td style={{ textAlign: "center" }}>{user.totalAnswers}</td>
+										<td style={{ textAlign: "right" }}>
+											{(user.percentageCorrect * 100).toFixed(2)}%
+										</td>
+									</tr>
+								</Link>
+							))}
+						</tbody>
+					</Table>
+
+					<h1>Multiplayer Leaderboard</h1>
+					<Table striped hover>
+						<thead>
+							<tr style={{ textAlign: "center" }}>
+								<th>Coming soon!</th>
+							</tr>
+						</thead>
+					</Table>
+				</div>
+			</CenterWrapper>
 		</Layout>
 	);
 };
