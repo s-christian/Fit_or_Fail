@@ -62,6 +62,7 @@ const Leaderboard = () => {
 							<tr>
 								<th>Global Rank</th>
 								<th>Username</th>
+								<th>Points</th>
 								<th>Total Answers</th>
 								<th>Correct Rate</th>
 							</tr>
@@ -72,6 +73,7 @@ const Leaderboard = () => {
 									<tr>
 										<th scope="row">#{index + 1}</th>
 										<td>{user.username}</td>
+										<td>{user.points}</td>
 										<td style={{ textAlign: "center" }}>{user.totalAnswers}</td>
 										<td style={{ textAlign: "right" }}>
 											{(user.percentageCorrect * 100).toFixed(2)}%
