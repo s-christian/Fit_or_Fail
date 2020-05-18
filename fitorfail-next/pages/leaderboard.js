@@ -19,6 +19,13 @@ const BoardStyle = styled(Container)`
 	}
 `;
 
+const LeaderBoardColumnHeader = styled(Row) `
+@media screen and (max-width: 50rem) {
+	font-size: 1.4rem;
+	
+}
+`;
+
 const RowStyle = styled(Row)`
 	background-color: ;rgba(255, 0, 0, 0.5)
 	border: 1px solid black;
@@ -26,29 +33,14 @@ const RowStyle = styled(Row)`
 	
 	background-color: #fd943f;
 	@media screen and (max-width: 50rem) {
-		font-size: 2rem;
-	}
-`;
-
-const BadgeStyle = styled(Badge)`
-	border: 1px solid rgba(255, 0, 0, 0.8);
-	margin-bottom: 2px;
-	padding: 5px;
-	color: rgba(255, 0, 0, 0.8);
-	&:hover {
-		color: rgba(249, 208, 129, 1);
-		border: 2px solid rgba(249, 208, 129, 1);
-	}
-	@media screen and (max-width: 50rem) {
-		font-size: 1.5rem;
-		background-color: rgba(249, 208, 129, 1);
+		font-size: 1rem;
 	}
 `;
 
 const StyledButton = styled(Button)`
 	border: 5px solid;
-	position: absolute;
-	bottom: -300px;
+	float: bottom;
+	display:flex;
 	z-index: 1;
 	display: block;
 	top: calc(50% - 2.5rem - 5px);
@@ -56,7 +48,7 @@ const StyledButton = styled(Button)`
 	height: 3rem;
 	width: 9rem;
 	margin: auto;
-	background-color: rgba(249, 208, 129, 1);
+	background-color: #5ac8fa;
 
 	&:hover {
 		opacity: 1;
@@ -64,17 +56,18 @@ const StyledButton = styled(Button)`
 		border: 5px solid rgba(249, 208, 129, 1);
 	}
 
-	@media screen and (max-width: 43rem) {
+	@media screen and (max-width: 40rem) {
 		position: absolute;
-		bottom: -1050px;
+		bottom: 0;
+		margin-top: 250px;
 	}
 `;
 
 const HeaderStyle = styled.h1`
-	border: 2px solid;
+	
 	margin-bottom: 3px;
 	font-weight: 600;
-	color: rgba(255, 0, 0, 0.8);
+	color: rgba(255, 0, 0, 0.8);;
 	width: 25vw;
 	
 	@media screen and (max-width: 50rem) {
@@ -93,10 +86,10 @@ const Leaderboard = () => {
 	return (
 		<Layout
 			title="Leaderboard"
-			color="  background: -webkit-linear-gradient(180deg, #ff6464 50%, #5ac8fa 50%);
-		background: -o-linear-gradient(180deg, #ff6464 50%, #5ac8fa 50%);
-		background: -moz-linear-gradient(180deg, #ff6464 50%, #5ac8fa 50%);
-		background: linear-gradient(1800deg, #ff6464 50%, #5ac8fa 50%);
+			color="  background: -webkit-linear-gradient(180deg, #7fff00 50%, #5ac8fa 50%);
+		background: -o-linear-gradient(180deg, #7fff00 50%, #5ac8fa 50%);
+		background: -moz-linear-gradient(180deg, #7fff00 50%, #5ac8fa 50%);
+		background: linear-gradient(1800deg, #7fff00 50%, #5ac8fa 50%);
 	  }"
 		>
 			<MediaContainer
@@ -109,23 +102,19 @@ const Leaderboard = () => {
 			>
 				<HeaderStyle>
 					Leaderboard
-					<BadgeStyle href="/leaderboard" color="">
-						Refresh
-					</BadgeStyle>
 				</HeaderStyle>
 				<ListGroup >
 					<BoardStyle>
-						<ListGroupItem style={{backgroundColor:"rgba(255, 0, 0, 0.5)"}}>
-						<Row>
+						<ListGroupItem style={{backgroundColor:"red"}}>
+						<LeaderBoardColumnHeader>
 							<Col>Name</Col>
 							<Col>Points</Col>
 							<Col>team</Col>
-						</Row>
+						</LeaderBoardColumnHeader>
 						</ListGroupItem>
 						
-						<ListGroupItem style={{backgroundColor:"rgba(255, 0, 0, 0.5)"}}>
+						<ListGroupItem style={{backgroundColor:"red"}}>
 							{users.map((user) => (
-								
 									<RowStyle>
 										<Col>{user.username}</Col>
 										<Col>{user.points} </Col>
@@ -134,12 +123,12 @@ const Leaderboard = () => {
 								
 							))}</ListGroupItem>
 						
-					</BoardStyle>
-
+						</BoardStyle>
+					</ListGroup>
+					
 					<a href="/game">
 						<StyledButton>PLAY</StyledButton>
 					</a>
-				</ListGroup>
 			</MediaContainer>
 		</Layout>
 	);
