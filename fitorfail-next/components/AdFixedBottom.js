@@ -25,12 +25,14 @@ const FixedBottom = styled.div`
 	${(props) => {
 		if (props.display)
 			return css`
+				z-index: 1;
 				opacity: 1;
-				transition: opacity 500ms linear;
+				transition: opacity 500ms ease-in;
 			`;
 		return css`
 			opacity: 0;
-			transition: opacity 500ms linear;
+			z-index: -1; // allow us to click through this element after it fades out
+			transition: 500ms ease-out;
 		`;
 	}}
 

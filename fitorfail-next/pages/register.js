@@ -15,6 +15,16 @@ import Router from "next/router";
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
 // Make form pop in from the bottom of the page, for extra fancy points.
 // If mobile devices have significantly less vertical space, just center the form instead of giving it a top margin.
+const Wrapper = styled.div`
+	flex: 1;
+
+	@media screen and (max-width: 600px) {
+		padding: 1rem;
+		display: flex;
+		align-items: center;
+	}
+`;
+
 const StyledContainer = styled(Container)`
 	font-size: 1.25rem;
 	padding: 4rem 2rem;
@@ -24,9 +34,38 @@ const StyledContainer = styled(Container)`
 	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
 	margin-top: 10vh;
 
-	// Make the box slimmer on small screens (phones)
+	& #formTop {
+		margin-top: 1rem;
+	}
+
+	& #loginRedirect {
+		margin-top: 2rem;
+	}
+
+	// Make the box slimmer and center it on small screens (phones)
 	@media screen and (max-width: 600px) {
-		width: 350px !important;
+		font-size: 1rem;
+		padding: 1rem 2rem;
+		margin-top: 0;
+		width: 100%;
+
+		& #formTop {
+			margin-top: 0;
+		}
+
+		& #loginRedirect {
+			margin-top: 1rem;
+		}
+	}
+`;
+
+const AlertBox = styled.div`
+	width: 100%;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+
+	@media screen and (max-width: 600px) {
+		margin: 0;
 	}
 `;
 
@@ -35,8 +74,7 @@ const StyledAlert = styled(Alert)`
 	display: ${(props) => (props.message ? "inline-block" : "none")};
 	width: 100%;
 	text-align: center;
-	margin-top: 0;
-	margin-bottom: 0;
+	margin: 0;
 `;
 
 const StyledButton = styled.button`
@@ -63,7 +101,6 @@ const Register = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const [accountType, setAccountType] = useState("user");
 
 	const [messages, setMessages] = useState([]);
 	const [error, setError] = useState(true);
@@ -82,8 +119,7 @@ const Register = () => {
 				username,
 				email,
 				password,
-				confirmPassword,
-				accountType
+				confirmPassword
 			})
 			.then((response) => {
 				setError(false);
@@ -131,80 +167,82 @@ const Register = () => {
 
 	return (
 		<Layout title="Register" color="hsla(108, 52%, 56%)">
-			<StyledContainer>
-				<Form className="login-form" onSubmit={handleSubmit}>
-					<h2 className="text-center" style={{ marginBottom: "1rem" }}>
-						Register
-					</h2>
-					{/* Generates alerts based on errors or a successful registration */}
-					{messages.map((message) => {
-						return (
-							<StyledAlert
-								key={message}
-								message={message}
-								color={error ? "danger" : "success"}
-							>
-								{message}
-							</StyledAlert>
-						);
-					})}
-					<FormGroup style={{ marginTop: "1rem" }}>
-						<Label for="username">Username</Label>
-						<Input
-							type="text"
-							innerRef={textInput}
-							id="username"
-							name="username"
-							placeholder="FitMaster27"
-							onChange={handleChange}
-							value={username}
-						/>
-					</FormGroup>
-					<FormGroup>
-						<Label for="email">Email</Label>
-						<Input
-							type="email"
-							id="email"
-							name="email"
-							placeholder="YourEmail@email.com"
-							onChange={handleChange}
-							value={email}
-						/>
-					</FormGroup>
-					<FormGroup>
-						<Label for="password">Password</Label>
-						<Input
-							type="password"
-							id="password"
-							name="password"
-							placeholder="Password"
-							onChange={handleChange}
-							value={password}
-						/>
-					</FormGroup>
-					<FormGroup>
-						<Label for="confirmPassword">Confirm Password</Label>
-						<Input
-							type="password"
-							id="confirmPassword"
-							name="confirmPassword"
-							placeholder="Retype your password"
-							onChange={handleChange}
-							value={confirmPassword}
-						/>
-					</FormGroup>
-					<StyledButton type="submit" disabled={isSubmitting}>
-						{isSubmitting ? "Please wait..." : "Register"}
-					</StyledButton>
-					<div className="text-center mt-5">
-						Already have an account?
-						<br />
-						<Link href="/login">
-							<a style={{ textDecoration: "underline" }}>Log in!</a>
-						</Link>
-					</div>
-				</Form>
-			</StyledContainer>
+			<Wrapper>
+				<StyledContainer>
+					<Form className="login-form" onSubmit={handleSubmit}>
+						<h2 className="text-center">Register</h2>
+						{/* Generates alerts based on errors or a successful registration */}
+						<AlertBox>
+							{messages.map((message) => {
+								return (
+									<StyledAlert
+										key={message}
+										message={message}
+										color={error ? "danger" : "success"}
+									>
+										{message}
+									</StyledAlert>
+								);
+							})}
+						</AlertBox>
+						<FormGroup id="formTop">
+							<Label for="username">Username</Label>
+							<Input
+								type="text"
+								innerRef={textInput}
+								id="username"
+								name="username"
+								placeholder="FitMaster27"
+								onChange={handleChange}
+								value={username}
+							/>
+						</FormGroup>
+						<FormGroup>
+							<Label for="email">Email</Label>
+							<Input
+								type="email"
+								id="email"
+								name="email"
+								placeholder="YourEmail@email.com"
+								onChange={handleChange}
+								value={email}
+							/>
+						</FormGroup>
+						<FormGroup>
+							<Label for="password">Password</Label>
+							<Input
+								type="password"
+								id="password"
+								name="password"
+								placeholder="Password"
+								onChange={handleChange}
+								value={password}
+							/>
+						</FormGroup>
+						<FormGroup>
+							<Label for="confirmPassword">Confirm Password</Label>
+							<Input
+								type="password"
+								id="confirmPassword"
+								name="confirmPassword"
+								placeholder="Retype your password"
+								onChange={handleChange}
+								value={confirmPassword}
+							/>
+						</FormGroup>
+						<StyledButton type="submit" disabled={isSubmitting}>
+							{isSubmitting ? "Please wait..." : "Register"}
+						</StyledButton>
+						<div id="loginRedirect" className="text-center">
+							Already have an account?
+							<br />
+							<Link href="/login">
+								<a style={{ textDecoration: "underline" }}>Log in!</a>
+							</Link>
+						</div>
+					</Form>
+				</StyledContainer>
+			</Wrapper>
 		</Layout>
 	);
 };

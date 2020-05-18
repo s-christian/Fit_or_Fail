@@ -1,7 +1,7 @@
 import Layout from "../components/Layout";
 import StyledLink from "../components/StyledLink";
 import AdFixedBottom from "../components/AdFixedBottom";
-import { Container, Jumbotron } from "reactstrap";
+import { Container, Jumbotron, Button } from "reactstrap";
 import styled, { css } from "styled-components";
 import Link from "next/link";
 
@@ -111,8 +111,11 @@ const Index = (props) => {
 					<Subtitle secondary="true">
 						There's gonna be a cool leaderboard, woohoo
 					</Subtitle>
-					<StyledLink href="/leaderboard">Leaderboard</StyledLink>{" "}
-					<StyledLink href="/testing">Link to test page</StyledLink>
+					<Link href="/leaderboard">
+						<Button color="success" style={{ border: "2px solid white" }} size="lg">
+							Leaderboard
+						</Button>
+					</Link>
 				</Container>
 			</StyledJumbo>
 		</Layout>
