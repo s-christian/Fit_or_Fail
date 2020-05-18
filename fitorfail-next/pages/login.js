@@ -15,18 +15,43 @@ import Router from "next/router";
 // Not sure how this will actually end up looking on a phone. Adjust accordingly.
 // Make form pop in from the bottom of the page, for extra fancy points.
 // If mobile devices have significantly less vertical space, just vertically center the form instead of giving it a top margin.
+const Wrapper = styled.div`
+	flex: 1;
+
+	@media screen and (max-width: 600px) {
+		padding: 1rem;
+		display: flex;
+		align-items: center;
+	}
+`;
+
 const StyledContainer = styled(Container)`
 	font-size: 1.25rem;
 	padding: 4rem 2rem;
-	width: 550px !important;
+	max-width: 550px;
 	background-color: white;
 	border-radius: 3px;
 	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
 	margin-top: 10vh;
 
-	// Make the box slimmer on small screens (phones)
+	& #formTop {
+		margin-top: 1rem;
+	}
+
+	& #registerRedirect {
+		margin-top: 2rem;
+	}
+
+	// Make the box slimmer and center it on small screens (phones)
 	@media screen and (max-width: 600px) {
-		width: 350px !important;
+		font-size: 1rem;
+		padding: 2rem 2rem;
+		margin-top: 0;
+		width: 100%;
+
+		& #formTop {
+			margin-top: 0;
+		}
 	}
 `;
 
@@ -37,6 +62,10 @@ const StyledAlert = styled(Alert)`
 	text-align: center;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+
+	@media screen and (max-width: 600px) {
+		margin: 0;
+	}
 `;
 
 const StyledButton = styled.button`
@@ -72,7 +101,6 @@ const Login = () => {
 			setMessage("Please log in");
 			setError(true);
 		}
-		console.log("Rendered!");
 	});
 
 	function handleSubmit(event) {
@@ -139,49 +167,51 @@ const Login = () => {
 
 	return (
 		<Layout title="Log in" color="hsl(0, 75%, 60%)">
-			<StyledContainer>
-				<Form className="login-form" onSubmit={handleSubmit}>
-					<h2 className="text-center">Log in</h2>
-					<StyledAlert message={message} color={error ? "danger" : "success"}>
-						{message}
-					</StyledAlert>
-					<FormGroup>
-						<Label for="usernameOrEmail">Username or Email</Label>
-						{/* Must use innerRef because <input> is underneath the reactstrap <Input> */}
-						{/* This is used for autofocusing to the usernameOrEmail field after a failed login. See its use in handleSubmit(). */}
-						<Input
-							type="text"
-							innerRef={textInput}
-							id="usernameOrEmail"
-							name="usernameOrEmail"
-							placeholder="FitMaster27 / YourEmail@email.com"
-							onChange={handleChange}
-							value={usernameOrEmail}
-						/>
-					</FormGroup>
-					<FormGroup>
-						<Label for="password">Password</Label>
-						<Input
-							type="password"
-							id="password"
-							name="password"
-							placeholder="Password"
-							onChange={handleChange}
-							value={password}
-						/>
-					</FormGroup>
-					<StyledButton type="submit" disabled={isSubmitting}>
-						{isSubmitting ? "Please wait..." : "Log in"}
-					</StyledButton>
-					<div className="text-center mt-5">
-						Don't have an account yet?
-						<br />
-						<Link href="/register">
-							<a style={{ textDecoration: "underline" }}>Create one!</a>
-						</Link>
-					</div>
-				</Form>
-			</StyledContainer>
+			<Wrapper>
+				<StyledContainer>
+					<Form className="login-form" onSubmit={handleSubmit}>
+						<h2 className="text-center">Log in</h2>
+						<StyledAlert message={message} color={error ? "danger" : "success"}>
+							{message}
+						</StyledAlert>
+						<FormGroup id="formTop">
+							<Label for="usernameOrEmail">Username or Email</Label>
+							{/* Must use innerRef because <input> is underneath the reactstrap <Input> */}
+							{/* This is used for autofocusing to the usernameOrEmail field after a failed login. See its use in handleSubmit(). */}
+							<Input
+								type="text"
+								innerRef={textInput}
+								id="usernameOrEmail"
+								name="usernameOrEmail"
+								placeholder="FitMaster27 / YourEmail@email.com"
+								onChange={handleChange}
+								value={usernameOrEmail}
+							/>
+						</FormGroup>
+						<FormGroup>
+							<Label for="password">Password</Label>
+							<Input
+								type="password"
+								id="password"
+								name="password"
+								placeholder="Password"
+								onChange={handleChange}
+								value={password}
+							/>
+						</FormGroup>
+						<StyledButton type="submit" disabled={isSubmitting}>
+							{isSubmitting ? "Please wait..." : "Log in"}
+						</StyledButton>
+						<div id="registerRedirect" className="text-center">
+							Don't have an account yet?
+							<br />
+							<Link href="/register">
+								<a style={{ textDecoration: "underline" }}>Create one!</a>
+							</Link>
+						</div>
+					</Form>
+				</StyledContainer>
+			</Wrapper>
 		</Layout>
 	);
 };

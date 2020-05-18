@@ -19,7 +19,6 @@ const ProfileWrapper = styled.div`
 	flex-wrap: wrap;
 	justify-content: flex-start;
 	padding: 2rem;
-	overflow: scroll;
 
 	@media screen and (max-width: 900px) {
 		flex-direction: column;
@@ -209,7 +208,7 @@ const Userpage = ({ user, username, authenticated }) => {
 	// --- USER DOES NOT EXIST ---
 	if (!user)
 		return (
-			<Layout title="User not found" color="orange">
+			<Layout title="User not found" color="hsl(189, 67%, 49%)">
 				<NotFoundWrapper>
 					<NotFound>
 						<img src="/assets/images/user_not_found.png" />
