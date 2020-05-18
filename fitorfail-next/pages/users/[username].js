@@ -11,7 +11,7 @@ import cookies from "next-cookies";
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import Layout from "../../components/Layout";
-import { Button, Table } from "reactstrap";
+import { Button, Table, Input } from "reactstrap";
 
 const ProfileWrapper = styled.div`
 	display: flex;
@@ -221,8 +221,9 @@ const Userpage = ({ user, username, authenticated }) => {
 		);
 
 	// --- USER EXISTS ---
-	const [color, setColor] = useState("hsl(189, 67%, 49%)");
+	const [color, setColor] = useState("#29b8d1");
 	const handleColor = (e) => {
+		console.log(e.target);
 		setColor(e.target.value);
 	};
 
@@ -277,7 +278,12 @@ const Userpage = ({ user, username, authenticated }) => {
 							<ColorSelector>
 								<h4>Color: {color}</h4>
 								<div className="ui search">
-									<input type="text" onChange={handleColor} value={color} />
+									<Input
+										type="color"
+										placeholder={color}
+										onChange={handleColor}
+										value={color}
+									/>
 								</div>
 							</ColorSelector>
 						)}
