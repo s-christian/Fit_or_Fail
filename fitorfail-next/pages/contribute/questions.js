@@ -12,24 +12,32 @@
 
 import Layout from "../../components/Layout";
 import StyledLink from "../../components/StyledLink";
-import Styled, { css } from "styled-components";
-
-import { Container, Form, FormGroup, Input, Label } from "reactstrap";
-
+import Styled from "styled-components";
+import { useState, useEffect } from "react";
+import axios from 'axios';
+import { Container, Form, FormGroup, Input, Label, Table } from "reactstrap";
+import { set } from "mongoose";
+import Router from "next/router";s
 const Box = Styled(Container)
 `  
-border:2px solid black;
-height: 75vh;
-background-color:#FFB6C1;
-
-
+flex: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 25vh;;
+overflow: auto;
+& thead {
+	background-color: hsl(119, 0%, 95%);
+}
+& tbody tr {
+	background-color: hsl(119, 0%, 95%);
+}
 `;
 
 const Questionbox = Styled(Input)
 `
-width: 612px;
-
-
+width: 40vw;
+overflow: hidden;
 `;
 
 const Inputbox = Styled(Container)
@@ -62,16 +70,48 @@ width: 40vw;
 `;
 
 const Questions = () => {
+	const [questions, setQuestions] = useState([]);
+	const [newQuestion, setNewQuestion] = useState([])
+	const [answerOne, setAnswerOne] = useState("");
+	const [answerTwo, setAnswerTwo] = useState("");
+	const [answerThree, setAnswerThree] = useState("");
+	const [answerFour, setAnswerFour] = useState("");
+	
+	function handleSubmit(e) {
+		e.preventDefault();
+		axios
+			.post("/questions", {
+				newQuestion,
+				answerOne,
+				answerTwo,
+				answerThree,
+				answerFour
+			
+			})
+			.catch((error) => {
+				if (error.response) {
+					console.log(error.response.data.error);
+	}
+})
+	}
+	function onChange(e) {
+		
+	}
+
+	useEffect(() => {
+		axios.get(`${process.env.BASE_URL}/api/getQuizQuestions`)
+		.then(({ data }) => {setQuestions(data);
+		});
+	}, []);
 	return (
 		<Layout title="Questions Center" color="#55dd99">
-			<Box className="text-center mt-5">
+			
 				<Form style={{textAlign:'center'}}>
 					<h1>
 						Question Submission Form
 					</h1>
 					<FormGroup>
 						<Label for= "questionSubmission">
-							
 							Question here:
 						</Label>
 						<Inputbox>
@@ -129,27 +169,36 @@ const Questions = () => {
 						name="answerSubmission"
 						placeholder= "Answer"
 						/>
-						
-					
 						</Inputbox>
 					</FormGroup>
 
 				</Form>
-				
-
-
-		
-				<p>
-					This area will be filled with all the questions currently in our database.
-					<br />
-					It will also contain input boxes for submitting your own questions (along with
-					their answer choices and the correct answer) directly to our database.
-					<br />
+				<Box>
+					<Table >
+					<thead>
+							 <tr>
+								 <th>Questions</th>
+								 <th>Choices</th>
+								 <th></th>
+								 <th></th>
+								 <th></th>
+							 </tr>
+					</thead>
+						{questions.map((quest, index) => (
+						 <tbody>
+							<tr>
+							<th scope="row">{index + 1}: {quest.question} </th>
+								{quest.choices.map((choice => (
+							<td>{choice}</td>
+						)))}	
+							</tr>
+						 </tbody>
+					))}
+					</Table>
+					</Box>
 					<StyledLink href="/contribute" hoverColor="red">
 						Back to Contribute Center
 					</StyledLink>
-				</p>
-			</Box>
 		</Layout>
 	);
 };

@@ -155,6 +155,13 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
+							<Link href="/contribute/questions" passHref>
+								<TopbarLink>Contribute (temporary for easy access)</TopbarLink>
+							</Link>
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink>
 							<Link href="/users/Christian2" passHref>
 								<TopbarLink>DEV: User Christian2</TopbarLink>
 							</Link>
