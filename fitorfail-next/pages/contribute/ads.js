@@ -2,8 +2,6 @@ import Layout from "../../components/Layout";
 import Link from "next/link";
 import { Button } from "reactstrap";
 import styled from "styled-components";
-import { useContext } from "react";
-import { UserContext } from "../../components/UserContext";
 
 const CenterWrapper = styled.div`
 	flex: 1;
@@ -63,43 +61,20 @@ const StyledButton = styled(Button)`
 `;
 
 const Contribute = () => {
-	const { userData } = useContext(UserContext);
-
 	return (
-		<Layout title="Contribute" color="palevioletred">
+		<Layout title="Contribute" color="hsl(156, 73%, 46%)">
 			<CenterWrapper>
 				<SelectionPanel>
-					<Authenticated>
-						{/* Takes time for the userData to load */}
-						WELCOME, {userData ? userData.username.toUpperCase() : "USER"}
-					</Authenticated>
-					<h1>Contribute Center</h1>
-					<h3>
-						Below are the links to everything that you can contribute directly to the
-						site.
-					</h3>
+					<Authenticated>Coming Soon!</Authenticated>
 					<ButtonBox>
-						<Link href="/contribute/questions">
+						<Link href="/contribute">
 							<StyledButton
 								block
 								outline
 								size="lg"
-								style={{ color: "hsl(156, 80%, 36%)" }}
+								style={{ color: "palevioletred" }}
 							>
-								Questions
-							</StyledButton>
-						</Link>
-						<Link href="/contribute/ads">
-							<StyledButton
-								block
-								outline
-								size="lg"
-								style={{
-									color: "hsl(186, 40%, 32%)",
-									textDecoration: "line-through"
-								}}
-							>
-								Ads
+								Back to Contribute Center
 							</StyledButton>
 						</Link>
 					</ButtonBox>
