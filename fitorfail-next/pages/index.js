@@ -1,5 +1,4 @@
 import Layout from "../components/Layout";
-import StyledLink from "../components/StyledLink";
 import AdFixedBottom from "../components/AdFixedBottom";
 import { Container, Jumbotron, Button } from "reactstrap";
 import styled, { css } from "styled-components";
