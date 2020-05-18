@@ -33,7 +33,7 @@ const SelectionPanel = styled.div`
 	}
 `;
 
-const Authenticated = styled.div`
+const PanelHeading = styled.div`
 	border: 1px 1px 0 1px solid black;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
@@ -69,10 +69,10 @@ const Contribute = () => {
 		<Layout title="Contribute" color="palevioletred">
 			<CenterWrapper>
 				<SelectionPanel>
-					<Authenticated>
+					<PanelHeading>
 						{/* Takes time for the userData to load */}
 						WELCOME, {userData ? userData.username.toUpperCase() : "USER"}
-					</Authenticated>
+					</PanelHeading>
 					<h1>Contribute Center</h1>
 					<h3>
 						Below are the links to everything that you can contribute directly to the

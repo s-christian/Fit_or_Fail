@@ -24,7 +24,7 @@ router.post("/", authGov, (req, res) => {
 	if (points === undefined) points = 10;
 
 	if (
-		question === undefined ||
+		!question ||
 		choices === undefined ||
 		choices.length !== 4 ||
 		correctIndex === undefined ||
@@ -33,7 +33,7 @@ router.post("/", authGov, (req, res) => {
 		points > 1000 ||
 		points < 10
 	)
-		return res.json({
+		return res.status(400).json({
 			error:
 				"Must provide the question, an array of four choices, the correctIndex, and a points value between 10 and 1000."
 		});
