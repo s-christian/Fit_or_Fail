@@ -273,12 +273,14 @@ const Userpage = ({ user, username, authenticated }) => {
 								</tr>
 							</tbody>
 						</StyledTable>
-						<ColorSelector>
-							<h4>Color: {color}</h4>
-							<div className="ui search">
-								<input type="text" onChange={handleColor} value={color} />
-							</div>
-						</ColorSelector>
+						{authenticated && (
+							<ColorSelector>
+								<h4>Color: {color}</h4>
+								<div className="ui search">
+									<input type="text" onChange={handleColor} value={color} />
+								</div>
+							</ColorSelector>
+						)}
 					</ProfileBox>
 					{authenticated &&
 						(user.account_type === "gov" || user.account_type === "admin") && (
