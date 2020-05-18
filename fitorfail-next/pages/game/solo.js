@@ -26,6 +26,7 @@ const QuestionBox = styled(FlexWrapper)`
 	border: 5px solid black;
 	border-radius: 1rem;
 	width: 700px;
+	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
 
 	transition: opacity 500ms ease;
 	animation: popOut 1s;

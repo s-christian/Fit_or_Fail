@@ -1,89 +1,82 @@
 import Layout from "../../components/Layout";
 import Link from "next/link";
-import styled, { css } from "styled-components";
+import { Button } from "reactstrap";
+import styled from "styled-components";
 
-const GameHeader = styled.h1`
+const CenterWrapper = styled.div`
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	text-align: center;
-	color: white;
-	font-size: 5rem;
-	font-weight: 900;
-	text-shadow: 2px 2px gray;
+`;
 
-	@media screen and (max-width: 50rem) {
-		font-size: 3rem;
+const SelectionPanel = styled.div`
+	background-color: white;
+	border-radius: 3px;
+	padding: 4rem 2rem;
+	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
+
+	@media screen and (max-width: 600px) {
+		border-radius: 0;
+		width: 100%;
 	}
 `;
 
 const ButtonBox = styled.div`
+	display: flex;
+	flex-direction: column;
 	align-items: center;
-	display: grid;
-	justify-content: center;
-	margin-top: 5rem;
 `;
 
-const ButtonDesign = styled.button`
-	border: 2px solid gray;
-	background-color: #1e90ff;
-	color: white;
-	font-size: 32px;
-	width: 15rem;
-	margin: 1rem 1.5rem;
-	padding: 1rem 1rem;
+const StyledButton = styled(Button)`
+	font-size: 1.5rem;
+	font-weight: 600;
+
 	&:hover {
-		background-color: #9d50bb;
-		transition: 200ms;
-	}
-	${(props) =>
-		props.secondary &&
-		css`
-			background-color: #9d50bb;
-			font-size: 32px;
-			&:hover {
-				background-color: #1e90ff;
-				transition: 200ms;
-			}
-		`} 
-	@media screen and (max-width: 50rem) {
-		width: 5rem;
-		font-size: 15px;
-	}	
-`;
-
-const SecondHeader = styled.h2`
-	text-align: center;
-	color: white;
-	font-size: 2rem;
-	font-weight: 900;
-	text-shadow: 2px 2px gray;
-	@media screen and (max-width: 50rem) {
-		font-size: 1rem;
+		color: white !important;
+		background-color: hsl(0, 0%, 17%);
 	}
 `;
 
-function Game() {
+function GameSelection() {
 	// TODO:
 	// Figure out how to do CSR to simply display the authenticated user's username at the top of the page (Welcome, <name>!).
 	// I don't want the entire page to be SSR just to display the name.
 	return (
 		<Layout title="Game" color="#E100FF">
-			<GameHeader>Pick Your Gamemode</GameHeader>
-			<SecondHeader>Buttons to pick Solo or Online</SecondHeader>
-			<ButtonBox>
-				<p>
-					<Link href="/game/solo">
-						<a>
-							<ButtonDesign>Solo</ButtonDesign>
-						</a>
-					</Link>{" "}
-					<Link href="/game/online">
-						<a>
-							<ButtonDesign secondary="true">Online</ButtonDesign> 
-						</a>
-					</Link>
-				</p>
-			</ButtonBox>
+			<CenterWrapper>
+				<SelectionPanel>
+					<h1>Pick Your Gamemode</h1>
+					<ButtonBox>
+						<Link href="/game/solo">
+							<StyledButton
+								block
+								outline
+								size="lg"
+								style={{ color: "hsl(156, 80%, 36%)" }}
+							>
+								Solo
+							</StyledButton>
+						</Link>
+						<Link href="/game/online">
+							<StyledButton
+								block
+								outline
+								size="lg"
+								style={{
+									color: "hsl(186, 40%, 32%)",
+									textDecoration: "line-through"
+								}}
+							>
+								Online
+							</StyledButton>
+						</Link>
+					</ButtonBox>
+				</SelectionPanel>
+			</CenterWrapper>
 		</Layout>
 	);
 }
 
-export default Game;
+export default GameSelection;
