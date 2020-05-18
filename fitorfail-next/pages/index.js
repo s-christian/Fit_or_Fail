@@ -107,9 +107,7 @@ const Index = (props) => {
 			<StyledJumbo secondary="true" fluid>
 				<Container fluid="lg">
 					<Title secondary="true">Leaderboard</Title>
-					<Subtitle secondary="true">
-						There's gonna be a cool leaderboard, woohoo
-					</Subtitle>
+					<Subtitle secondary="true">See a list of our top 10 users</Subtitle>
 					<Link href="/leaderboard">
 						<Button color="success" style={{ border: "2px solid white" }} size="lg">
 							Leaderboard

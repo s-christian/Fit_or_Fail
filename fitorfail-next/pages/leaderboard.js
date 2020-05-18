@@ -50,8 +50,6 @@ const Leaderboard = () => {
 		});
 	}, []);
 
-	console.log(users);
-
 	return (
 		<Layout title="Leaderboard" color="hsl(276, 61%, 75%)">
 			<CenterWrapper>
