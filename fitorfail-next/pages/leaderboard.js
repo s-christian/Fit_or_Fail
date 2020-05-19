@@ -114,7 +114,7 @@ const Leaderboard = () => {
 		<Layout title="Leaderboard" color="hsl(276, 61%, 75%)">
 			<CenterWrapper>
 				<TableWrapper>
-					<div id="soloTable" class="tableContainer">
+					<div id="soloTable" className="tableContainer">
 						<h1 id="soloHeading">Solo Leaderboard</h1>
 						<Table>
 							<thead>
@@ -128,7 +128,11 @@ const Leaderboard = () => {
 							</thead>
 							<tbody>
 								{users.map((user, index) => (
-									<Link href={`/users/${user.username}`} key={index}>
+									<Link
+										href="/users/[username]"
+										as={`/users/${user.username}`}
+										key={index}
+									>
 										<tr>
 											<th scope="row">#{index + 1}</th>
 											<td>{user.username}</td>
@@ -145,7 +149,7 @@ const Leaderboard = () => {
 							</tbody>
 						</Table>
 					</div>
-					<div id="onlineTable" class="tableContainer">
+					<div id="onlineTable" className="tableContainer">
 						<h1 id="onlineHeading">Multiplayer Leaderboard</h1>
 						<Table striped hover>
 							<thead>

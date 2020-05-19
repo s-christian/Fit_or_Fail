@@ -58,10 +58,6 @@ const ProfileBox = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
-
-	@media screen and (max-width: 900px) {
-		margin-bottom: 1rem;
-	}
 `;
 const Authenticated = styled.div`
 	border: 1px 1px 0 1px solid black;
@@ -170,7 +166,7 @@ const InfoBox = styled.div`
 		flex: 1;
 		flex-direction: column;
 		padding: 0.5rem;
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 	}
 `;
 

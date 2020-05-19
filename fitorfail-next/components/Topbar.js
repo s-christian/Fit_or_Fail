@@ -171,7 +171,7 @@ const Topbar = () => {
 								<Link href="/logout" passHref>
 									<TopbarLink id="logout">Log out</TopbarLink>
 								</Link>
-								<Link href={`/users/${userData.username}`}>
+								<Link href="/users/[username]" as={`/users/${userData.username}`}>
 									<a>
 										<ProfilePic
 											src={`${userData.profile_picture_url}`}
