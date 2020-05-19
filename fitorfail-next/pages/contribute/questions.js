@@ -149,9 +149,6 @@ const Questions = () => {
 		getQuestions();
 	}, []);
 
-	console.log("ALL QUESTIONS:");
-	console.log(allQuestions);
-
 	function handleSubmit(e) {
 		e.preventDefault();
 

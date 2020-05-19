@@ -222,7 +222,6 @@ const Userpage = ({ user, username, authenticated }) => {
 	// --- USER EXISTS ---
 	const [color, setColor] = useState("#29b8d1");
 	const handleColor = (e) => {
-		console.log(e.target);
 		setColor(e.target.value);
 	};
 
