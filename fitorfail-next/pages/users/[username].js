@@ -39,7 +39,7 @@ const FirstColumn = styled.div`
 	@media screen and (max-width: 900px) {
 		margin-right: 0;
 		width: 100%;
-		margin-bottom: 1rem;
+		margin-bottom: 2rem;
 		justify-content: center;
 		flex: 0;
 	}
@@ -130,14 +130,15 @@ const AdminPanel = styled.div`
 	border-radius: 3px;
 
 	@media screen and (max-width: 900px) {
-		margin-top: 0;
-
 		& h1 {
 			font-size: 2rem;
 		}
 		& button {
 			font-size: 1rem;
 		}
+	}
+	@media screen and (max-width: 600px) {
+		margin-top: 1rem;
 	}
 `;
 const ButtonContainer = styled.div`
