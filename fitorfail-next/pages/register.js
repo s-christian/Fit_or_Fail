@@ -125,7 +125,7 @@ const Register = () => {
 				setError(false);
 				setMessages(["Registered!"]);
 				setTimeout(() => {
-					Router.push(`/users/${response.data.user.username}`);
+					Router.push("/users/[username]", `/users/${response.data.user.username}`);
 				}, 1000);
 			})
 			.catch((error) => {
