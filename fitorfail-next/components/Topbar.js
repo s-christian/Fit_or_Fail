@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
 import styled, { css } from "styled-components";
 import { UserContext } from "../components/UserContext";
+import axios from "axios";
 
 const StyledNavbar = styled(Navbar)`
 	background-color: white;
@@ -89,9 +90,15 @@ const ProfileContainer = styled(NavLink)`
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	& #logout {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: #212121;
 
-	& #logout:hover {
-		color: hsl(0, 75%, 60%);
+		&:hover {
+			cursor: pointer;
+			color: hsl(0, 75%, 60%);
+		}
 	}
 `;
 
@@ -168,9 +175,14 @@ const Topbar = () => {
 					{!!userData ? (
 						<NavItem>
 							<ProfileContainer>
-								<Link href="/logout" passHref>
-									<TopbarLink id="logout">Log out</TopbarLink>
-								</Link>
+								<span
+									id="logout"
+									onClick={() => {
+										window.location.href = `${process.env.BASE_URL}/logout`;
+									}}
+								>
+									Log out
+								</span>
 								<Link href="/users/[username]" as={`/users/${userData.username}`}>
 									<a>
 										<ProfilePic
