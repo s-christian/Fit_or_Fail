@@ -83,8 +83,13 @@ const TableWrapper = styled.div`
 	}
 	@media screen and (max-width: 500px) {
 		padding: 1rem 0;
+
 		& .tableContainer {
 			width: 100%;
+			border-left: none;
+			border-right: none;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
 		}
 		& h1 {
 			text-align: center;
