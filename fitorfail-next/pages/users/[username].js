@@ -35,8 +35,6 @@ const FirstColumn = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
-	min-width: 350px;
 
 	@media screen and (max-width: 900px) {
 		margin-right: 0;
@@ -78,19 +76,19 @@ const Authenticated = styled.div`
 const ProfileHeading = styled.div`
 	width: 100%;
 	padding: 1rem;
-	margin-right: -2rem;
-	margin-left: -2rem;
 	background-color: hsla(0, 0%, 100%, 0.5);
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	font-size: 3rem;
+	font-size: 2rem;
+	color: hsl(0, 0%, 17%);
+	text-shadow: 0 0 5px black;
 `;
 const ProfilePicture = styled.img`
-	height: 250px;
-	width: 250px;
+	height: 150px;
+	width: 150px;
 	border-radius: 50%;
 	margin: auto;
 	border: 1px solid black;
@@ -100,15 +98,9 @@ const ProfilePicture = styled.img`
 		css`
 			border: 1px solid white;
 		`}
-
-	@media screen and (max-width: 600px) {
-		height: 150px;
-		width: 150px;
-	}
 `;
 const StyledTable = styled(Table)`
 	margin: 1rem 0;
-	width: 50%;
 	th.text-right {
 		color: hsl(0, 0%, 17%);
 		font-weight: 600;
@@ -132,7 +124,6 @@ const AdminPanel = styled.div`
 	text-align: center;
 	margin-top: 2rem;
 	width: 100%;
-	height: 100%;
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
@@ -144,6 +135,13 @@ const AdminPanel = styled.div`
 
 	@media screen and (max-width: 900px) {
 		margin-top: 0;
+
+		& h1 {
+			font-size: 2rem;
+		}
+		& button {
+			font-size: 1rem;
+		}
 	}
 `;
 const ButtonContainer = styled.div`
@@ -151,6 +149,10 @@ const ButtonContainer = styled.div`
 	align-items: center;
 	justify-content: space-around;
 	width: 20rem;
+
+	@media screen and (max-width: 400px) {
+		width: 100%;
+	}
 `;
 
 const InfoBox = styled.div`
@@ -280,6 +282,7 @@ const Userpage = ({ user, username, authenticated }) => {
 								<div className="ui search">
 									<Input
 										type="color"
+										style={{ cursor: "pointer" }}
 										placeholder={color}
 										onChange={handleColor}
 										value={color}

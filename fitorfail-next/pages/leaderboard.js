@@ -10,11 +10,44 @@ const CenterWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+`;
 
+const TableWrapper = styled.div`
+	display: flex;
+	width: 100%;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 1rem;
+
+	& .tableContainer {
+		border: 2px solid black;
+		border-top-left-radius: 6px;
+		border-top-right-radius: 6px;
+	}
+	& #soloTable {
+		margin-right: 1rem;
+	}
+	& h1 {
+		margin-bottom: 0;
+		text-align: center;
+		color: white;
+		padding: 1rem;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+
+		&#soloHeading {
+			background-color: hsl(189, 78%, 39%);
+		}
+		&#onlineHeading {
+			background-color: hsl(112, 57%, 42%);
+		}
+	}
+	& table {
+		margin-bottom: 0;
+	}
 	& thead tr {
 		background-color: hsl(0, 75%, 60%);
 	}
-
 	& tbody tr {
 		background-color: hsl(119, 0%, 95%);
 		cursor: pointer;
@@ -34,9 +67,36 @@ const CenterWrapper = styled.div`
 				}
 			}
 		}
-
 		& :active {
 			background-color: hsl(308, 76%, 44%);
+		}
+	}
+
+	@media screen and (max-width: 1200px) {
+		flex-direction: column;
+		align-items: center;
+
+		& #soloTable {
+			margin-right: 0;
+			margin-bottom: 1rem;
+		}
+	}
+	@media screen and (max-width: 500px) {
+		padding: 1rem 0;
+		& .tableContainer {
+			width: 100%;
+		}
+		& h1 {
+			text-align: center;
+			font-size: 1.8rem;
+		}
+		& table {
+			font-size: 0.75rem;
+		}
+	}
+	@media screen and (max-width: 400px) {
+		& table {
+			font-size: 0.5rem;
 		}
 	}
 `;
@@ -53,44 +113,49 @@ const Leaderboard = () => {
 	return (
 		<Layout title="Leaderboard" color="hsl(276, 61%, 75%)">
 			<CenterWrapper>
-				<div id="tableWrapper">
-					<h1>Solo Leaderboard</h1>
-					<Table>
-						<thead>
-							<tr>
-								<th>Global Rank</th>
-								<th>Username</th>
-								<th>Points</th>
-								<th>Total Answers</th>
-								<th>Correct Rate</th>
-							</tr>
-						</thead>
-						<tbody>
-							{users.map((user, index) => (
-								<Link href={`/users/${user.username}`}>
-									<tr>
-										<th scope="row">#{index + 1}</th>
-										<td>{user.username}</td>
-										<td>{user.points}</td>
-										<td style={{ textAlign: "center" }}>{user.totalAnswers}</td>
-										<td style={{ textAlign: "right" }}>
-											{(user.percentageCorrect * 100).toFixed(2)}%
-										</td>
-									</tr>
-								</Link>
-							))}
-						</tbody>
-					</Table>
-
-					<h1>Multiplayer Leaderboard</h1>
-					<Table striped hover>
-						<thead>
-							<tr style={{ textAlign: "center" }}>
-								<th>Coming soon!</th>
-							</tr>
-						</thead>
-					</Table>
-				</div>
+				<TableWrapper>
+					<div id="soloTable" class="tableContainer">
+						<h1 id="soloHeading">Solo Leaderboard</h1>
+						<Table>
+							<thead>
+								<tr>
+									<th>Global Rank</th>
+									<th>Username</th>
+									<th>Points</th>
+									<th>Total Answers</th>
+									<th>Correct Rate</th>
+								</tr>
+							</thead>
+							<tbody>
+								{users.map((user, index) => (
+									<Link href={`/users/${user.username}`} key={index}>
+										<tr>
+											<th scope="row">#{index + 1}</th>
+											<td>{user.username}</td>
+											<td>{user.points}</td>
+											<td style={{ textAlign: "center" }}>
+												{user.totalAnswers}
+											</td>
+											<td style={{ textAlign: "right" }}>
+												{(user.percentageCorrect * 100).toFixed(2)}%
+											</td>
+										</tr>
+									</Link>
+								))}
+							</tbody>
+						</Table>
+					</div>
+					<div id="onlineTable" class="tableContainer">
+						<h1 id="onlineHeading">Multiplayer Leaderboard</h1>
+						<Table striped hover>
+							<thead>
+								<tr style={{ textAlign: "center" }}>
+									<th>Coming soon!</th>
+								</tr>
+							</thead>
+						</Table>
+					</div>
+				</TableWrapper>
 			</CenterWrapper>
 		</Layout>
 	);

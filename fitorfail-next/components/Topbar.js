@@ -84,17 +84,14 @@ const ProfilePic = styled(Logo)`
 	margin-left: 0.5rem;
 `;
 
-const LogoutContainer = styled(NavLink)`
+const ProfileContainer = styled(NavLink)`
 	width: 10rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	background-color: hsl(199, 69%, 64%);
-	border: 1px solid black;
-	border-radius: 3px;
 
-	& a:hover {
-		color: white;
+	& #logout:hover {
+		color: hsl(0, 75%, 60%);
 	}
 `;
 
@@ -123,7 +120,7 @@ const Topbar = () => {
 
 	return (
 		// The second "light" is the color scheme for the hamburger icon
-		<StyledNavbar light expand="md">
+		<StyledNavbar light expand="lg">
 			<NavbarBrand>
 				<Link href="/" passHref>
 					<TopbarLink primary>
@@ -155,20 +152,6 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link href="/contribute/questions" passHref>
-								<TopbarLink>Contribute (temporary for easy access)</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink>
-							<Link href="/users/Christian2" passHref>
-								<TopbarLink>DEV: User Christian2</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink>
 							<Link href="/donate" passHref>
 								<TopbarLink style={{ color: "palevioletred" }}>Donate</TopbarLink>
 							</Link>
@@ -184,9 +167,9 @@ const Topbar = () => {
 					<Separator>|</Separator>
 					{!!userData ? (
 						<NavItem>
-							<LogoutContainer>
+							<ProfileContainer>
 								<Link href="/logout" passHref>
-									<TopbarLink>Log out</TopbarLink>
+									<TopbarLink id="logout">Log out</TopbarLink>
 								</Link>
 								<Link href={`/users/${userData.username}`}>
 									<a>
@@ -196,7 +179,7 @@ const Topbar = () => {
 										/>
 									</a>
 								</Link>
-							</LogoutContainer>
+							</ProfileContainer>
 						</NavItem>
 					) : (
 						<NavItem>

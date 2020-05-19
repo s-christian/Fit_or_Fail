@@ -187,22 +187,22 @@ const Solo = () => {
 													<h3>{currentQuestion.question}</h3>
 												</QuestionHeading>
 												<ListGroup style={{ width: "100%" }}>
-													{currentQuestion.choices.map((choice) => (
-														<ListGroupItem
-															tag="button"
-															className="threed"
-															key={currentQuestion.choices.indexOf(
-																choice
-															)}
-															value={currentQuestion.choices.indexOf(
-																choice
-															)}
-															onClick={handleAnswer}
-															action
-														>
-															{choice}
-														</ListGroupItem>
-													))}
+													{currentQuestion.choices.map(
+														(choice, index) => (
+															<ListGroupItem
+																tag="button"
+																className="threed"
+																key={index}
+																value={currentQuestion.choices.indexOf(
+																	choice
+																)}
+																onClick={handleAnswer}
+																action
+															>
+																{choice}
+															</ListGroupItem>
+														)
+													)}
 												</ListGroup>
 											</>
 										) : (
