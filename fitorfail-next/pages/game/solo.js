@@ -26,6 +26,7 @@ const QuestionBox = styled(FlexWrapper)`
 	border: 5px solid black;
 	border-radius: 1rem;
 	width: 700px;
+	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
 
 	transition: opacity 500ms ease;
 	animation: popOut 1s;
@@ -186,22 +187,22 @@ const Solo = () => {
 													<h3>{currentQuestion.question}</h3>
 												</QuestionHeading>
 												<ListGroup style={{ width: "100%" }}>
-													{currentQuestion.choices.map((choice) => (
-														<ListGroupItem
-															tag="button"
-															className="threed"
-															key={currentQuestion.choices.indexOf(
-																choice
-															)}
-															value={currentQuestion.choices.indexOf(
-																choice
-															)}
-															onClick={handleAnswer}
-															action
-														>
-															{choice}
-														</ListGroupItem>
-													))}
+													{currentQuestion.choices.map(
+														(choice, index) => (
+															<ListGroupItem
+																tag="button"
+																className="threed"
+																key={index}
+																value={currentQuestion.choices.indexOf(
+																	choice
+																)}
+																onClick={handleAnswer}
+																action
+															>
+																{choice}
+															</ListGroupItem>
+														)
+													)}
 												</ListGroup>
 											</>
 										) : (

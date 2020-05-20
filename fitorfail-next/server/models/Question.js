@@ -15,13 +15,16 @@ const QuestionSchema = new Schema({
 	},
 	correctIndex: {
 		type: Number,
-		required: true,
 		min: 0,
 		max: 3,
+		required: true,
 		default: 0
 	},
 	points: {
 		type: Number,
+		min: 10,
+		max: 1000,
+		required: true,
 		default: 10
 	}
 });

@@ -11,71 +11,82 @@ import cookies from "next-cookies";
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import Layout from "../../components/Layout";
-import { ButtonGroup, Button } from "reactstrap";
+import { Button, Table, Input } from "reactstrap";
 
-const ProfileBox = styled.div`
-	border-right: 1px solid black;
-	// "flex: 1;" is equivalent to "flex-basis: 0; flex-grow: 1; flex-shrink: 1;"
-	flex: 1;
-	background-color: gray;
-
-	@media screen and (max-width: 900px) {
-		border-right: none;
-		border-bottom: 1px solid black;
-		flex: 0;
-	}
-`;
-const ProfileBoxContents = styled.div`
-	margin: 1rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-`;
-const Stats = styled.div`
-	padding: 0.5rem;
-	width: 250px;
-	border: 1px solid black;
-	background-color: hsla(0, 0%, 100%, 0.75);
-`;
-const InfoBox = styled.div`
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex: 3;
-	font-family: consolas;
-	font-size: 2rem;
-
-	@media screen and (max-width: 900px) {
-		flex: 1;
-		flex-direction: column;
-		padding: 0.5rem;
-	}
-`;
-const ColorSelector = styled.div`
-	text-align: center;
-	margin-top: 1rem;
-
-	& input {
-		padding: 0.25rem;
-	}
-`;
-const UIcard = styled.div`
+const ProfileWrapper = styled.div`
 	display: flex;
 	flex: 1;
 	flex-wrap: wrap;
+	justify-content: flex-start;
+	padding: 2rem;
 
-	// Make the box slimmer on small screens (phones)
 	@media screen and (max-width: 900px) {
 		flex-direction: column;
 	}
+	@media screen and (max-width: 600px) {
+		padding: 1rem;
+	}
+`;
+
+// "flex: 1;" is equivalent to "flex-basis: 0; flex-grow: 1; flex-shrink: 1;"
+const FirstColumn = styled.div`
+	flex: 1;
+	margin-right: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	@media screen and (max-width: 900px) {
+		margin-right: 0;
+		width: 100%;
+		margin-bottom: 2rem;
+		justify-content: center;
+		flex: 0;
+	}
+	@media screen and (max-width: 600px) {
+		margin-bottom: 1rem;
+	}
+`;
+
+const ProfileBox = styled.div`
+	width: 100%;
+	background-color: hsla(0, 0%, 100%, 0.6);
+	border: 2px solid black;
+	border-radius: 3px;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+`;
+const Authenticated = styled.div`
+	border: 1px 1px 0 1px solid black;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	font-size: 2rem;
+	font-weight: 300;
+	background-color: hsla(0, 0%, 100%, 0.8);
+	width: 100%;
+	text-align: center;
+`;
+const ProfileHeading = styled.div`
+	width: 100%;
+	padding: 1rem;
+	background-color: hsla(0, 0%, 100%, 0.5);
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 2rem;
+	color: hsl(0, 0%, 17%);
+	text-shadow: 0 0 5px black;
 `;
 const ProfilePicture = styled.img`
-	height: 250px;
-	width: 250px;
+	height: 150px;
+	width: 150px;
 	border-radius: 50%;
-	margin-right: auto;
+	margin: auto;
 	border: 1px solid black;
 
 	${(props) =>
@@ -84,6 +95,81 @@ const ProfilePicture = styled.img`
 			border: 1px solid white;
 		`}
 `;
+const StyledTable = styled(Table)`
+	margin: 1rem 0;
+	th.text-right {
+		color: hsl(0, 0%, 17%);
+		font-weight: 600;
+	}
+
+	@media screen and (max-width: 600px) {
+		width: 100%;
+	}
+`;
+const ColorSelector = styled.div`
+	text-align: center;
+	color: white;
+	text-shadow: 0 3px 3px black;
+
+	& input {
+		padding: 0.25rem;
+	}
+`;
+
+const AdminPanel = styled.div`
+	text-align: center;
+	margin-top: 2rem;
+	width: 100%;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 3px;
+
+	@media screen and (max-width: 900px) {
+		& h1 {
+			font-size: 2rem;
+		}
+		& button {
+			font-size: 1rem;
+		}
+	}
+	@media screen and (max-width: 600px) {
+		margin-top: 1rem;
+	}
+`;
+const ButtonContainer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 20rem;
+
+	@media screen and (max-width: 400px) {
+		width: 100%;
+	}
+`;
+
+const InfoBox = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 3;
+	padding: 2rem;
+	font-size: 2rem;
+	background-color: hsla(0, 0%, 100%, 0.8);
+	border: 2px solid black;
+	border-radius: 3px;
+
+	@media screen and (max-width: 900px) {
+		flex: 1;
+		flex-direction: column;
+		padding: 0.5rem;
+		font-size: 1.25rem;
+	}
+`;
 
 const NotFoundWrapper = styled.div`
 	display: flex;
@@ -91,7 +177,6 @@ const NotFoundWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 `;
-
 const NotFound = styled.div`
 	text-align: center;
 	box-sizing: border-box;
@@ -118,35 +203,11 @@ const NotFound = styled.div`
 	}
 `;
 
-const AdminPanel = styled.div`
-	padding: 1rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background-color: white;
-	position: absolute;
-	bottom: 1rem;
-	right: 1rem;
-	border: 2px solid black;
-	max-width: 700px;
-
-	@media screen and (max-width: 900px) {
-		position: initial;
-		bottom: initial;
-		right: initial;
-	}
-`;
-
-// Component function only takes parameter "props" (passed by getServerSideProps() in this case)
-// Notice that this is a function that does stuff other than immediately return HTML data.
-// I need to check if the user exists or not in order to deliver the correct HTML content,
-// so I start this function with the proper {} instead of (), where () signifies "immediately return this value".
 const Userpage = ({ user, username, authenticated }) => {
 	// --- USER DOES NOT EXIST ---
 	if (!user)
 		return (
-			<Layout title="User not found" color="orange">
+			<Layout title="User not found" color="hsl(189, 67%, 49%)">
 				<NotFoundWrapper>
 					<NotFound>
 						<img src="/assets/images/user_not_found.png" />
@@ -158,62 +219,79 @@ const Userpage = ({ user, username, authenticated }) => {
 			</Layout>
 		);
 
-	// I'm really only leaving this commented chunk here to use as an example for later pages. Don't forget to import useSWR.
-	// ISSUE USING SWR: Data is cleared from page on refocus, even though supposedly none of the data was touched! Something to do with rendering it?
-	// Have to at least temporarily disallow revalidation on focus.
-	// const initialUserInfo = user;
-	// const { data } = useSWR(`${process.env.BASE_URL}/api/users/username/${searchedUsername}`, {
-	//	revalidateOnFocus: false,
-	// 	initialData: initialUserInfo
-	// });
-
 	// --- USER EXISTS ---
-	// This creates a "color" variable within the component with a default value of "Orange", and "setColor" is used to change this value
-	const [color, setColor] = useState("orange");
-	// This is the function used to change the color, after a certain "event" ("e" for short) is passed to it.
+	const [color, setColor] = useState("#29b8d1");
 	const handleColor = (e) => {
-		// e.target.value says, "give me the event, give me the target of that event (the actual DOM element that called it, like <input>), and give me that target's value".
-		// It then sets our "color" variable to whatever the value of that target is. In this case, it's the color that the user types into the input box.
 		setColor(e.target.value);
 	};
 
 	return (
-		<Layout title={`${user.username} · player info`} color={color}>
-			<UIcard>
-				<ProfileBox>
-					<ProfileBoxContents>
-						{authenticated && <h3>YOU ARE LOGGED IN!</h3>}
-						<div>
+		<Layout title={`${user.username} · player info`} color={color} style={{ padding: "20rem" }}>
+			<ProfileWrapper>
+				<FirstColumn>
+					<ProfileBox>
+						{authenticated && <Authenticated>YOU ARE LOGGED IN!</Authenticated>}
+						<ProfileHeading>
 							<ProfilePicture
 								src={user.profile_picture_url}
 								alt={`${user.username}'s profile picture`}
 							/>
-						</div>
-						<h1 id="username">{user.username}</h1>
-						<Stats>
-							<p>Points: {user.points}</p>
-							<p>Total answers: {user.totalAnswers}</p>
-							<p>Correct answers: {user.correctAnswers}</p>
-							<p>Wins: {user.wins}</p>
-							<p>Team: {user.team}</p>
-							<p>Member since: {dayjs(user.register_date).format("MM/DD/YYYY")}</p>
-							<p>Account type: {user.account_type}</p>
-						</Stats>
-						<ColorSelector>
-							<h4>Color: {color}</h4>
-							<div className="ui search">
-								<input type="text" onChange={handleColor} value={color} />
-							</div>
-						</ColorSelector>
-					</ProfileBoxContents>
-				</ProfileBox>
-				<InfoBox>
-					<p>Test</p>
+							<span>{user.username}</span>
+						</ProfileHeading>
+						<StyledTable borderless size="sm">
+							<tbody>
+								<tr>
+									<th>Points:</th>
+									<th className="text-right">{user.points}</th>
+								</tr>
+								<tr>
+									<th>Total answers:</th>
+									<th className="text-right">{user.totalAnswers}</th>
+								</tr>
+								<tr>
+									<th>Correct answers:</th>
+									<th className="text-right">{user.correctAnswers}</th>
+								</tr>
+								<tr>
+									<th>Wins:</th>
+									<th className="text-right">{user.wins}</th>
+								</tr>
+								<tr>
+									<th>Team:</th>
+									<th className="text-right">{user.team}</th>
+								</tr>
+								<tr>
+									<th>Member since:</th>
+									<th className="text-right">
+										{dayjs(user.register_date).format("MM/DD/YYYY")}
+									</th>
+								</tr>
+								<tr>
+									<th>Account type:</th>
+									<th className="text-right">{user.account_type}</th>
+								</tr>
+							</tbody>
+						</StyledTable>
+						{authenticated && (
+							<ColorSelector>
+								<h4>Color: {color}</h4>
+								<div className="ui search">
+									<Input
+										type="color"
+										style={{ cursor: "pointer" }}
+										placeholder={color}
+										onChange={handleColor}
+										value={color}
+									/>
+								</div>
+							</ColorSelector>
+						)}
+					</ProfileBox>
 					{authenticated &&
 						(user.account_type === "gov" || user.account_type === "admin") && (
 							<AdminPanel>
-								<p style={{ fontSize: "2.5rem" }}>Admin Panel</p>
-								<ButtonGroup vertical>
+								<h1 style={{ fontWeight: "300" }}>Admin Panel</h1>
+								<ButtonContainer>
 									<a href="/statistics">
 										<Button size="lg" outline color="info">
 											User Statistics
@@ -224,29 +302,35 @@ const Userpage = ({ user, username, authenticated }) => {
 											Contribute
 										</Button>
 									</a>
-								</ButtonGroup>
+								</ButtonContainer>
 							</AdminPanel>
 						)}
+				</FirstColumn>
+				<InfoBox>
+					<div>
+						Extra information goes here!
+						<ul>
+							<li>Friends list</li>
+							<li>Graph of score over time</li>
+							<li>Medals/Achievements earned</li>
+							<li>...and more!</li>
+						</ul>
+					</div>
 				</InfoBox>
-			</UIcard>
+			</ProfileWrapper>
 		</Layout>
 	);
 };
 
 // Marks the page to be server-side rendered on every request
 export async function getServerSideProps(context) {
-	// 'context' contains a bunch of information.
-	// We're extracting the dynamic route 'params' from 'context'.
-	// In our case, we only care about the username from our dynamic route.
-	// We use this username to send a POST request to the API on our backend (POST because we're passing data to the API)
-	// to get all of that User's information in order to populate the page.
-
-	const { username } = context.params;
+	const { username } = context.params; // username from dynamic route
 	let user = null;
 
-	const { token } = cookies(context);
+	const { token } = cookies(context); // grab the "token" cookie
 	let authenticated = false;
 
+	// if the user has an active token
 	if (token) {
 		try {
 			const { data } = await axios.post(`${process.env.BASE_URL}/api/decodeToken`, {

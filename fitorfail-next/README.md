@@ -10,10 +10,11 @@
 
 # TODO
 
--   `/contribute` landing page
-    -   `/contribute/questions` frontend needed. API already exists @ `/api/questions`.
+-   `/contribute`
+    -   `/contribute/questions`:
+        -   Add ability to delete and modify questions (click on questions in table)
     -   `/contribute/sponsors` frontend needed. API already exists @ `/api/ads`.
--   `/leaderboard` frontend. API already exists @ `/api/topUsers`.
+-   Separate "Log out" and the user's profile picture in the Topbar
 -   Email contact form
     -   Front end form that collects contact information, the actual email content, etc.
     -   Nodemailer back end

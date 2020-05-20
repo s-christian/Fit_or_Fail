@@ -11,145 +11,426 @@
 // Ex: "Click here to modify the question pool!" It's a privileged action.
 
 import Layout from "../../components/Layout";
-import StyledLink from "../../components/StyledLink";
-import Styled, { css } from "styled-components";
+import styled from "styled-components";
+import {
+	Alert,
+	Form,
+	FormGroup,
+	Label,
+	Col,
+	Input,
+	FormFeedback,
+	Button,
+	Table,
+	ListGroup,
+	ListGroupItem
+} from "reactstrap";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import { Container, Form, FormGroup, Input, Label } from "reactstrap";
+const CenterWrapper = styled.div`
+	flex: 1;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-around;
+	padding: 2rem;
 
-const Box = Styled(Container)
-`  
-border:2px solid black;
-height: 75vh;
-background-color:#FFB6C1;
+	@media screen and (max-width: 1400px) {
+		flex-direction: column;
+		align-items: center;
+	}
 
-
+	@media screen and (max-width: 600px) {
+		padding: 1rem;
+	}
 `;
 
-const Questionbox = Styled(Input)
-`
-width: 612px;
+const QuestionPanel = styled.div`
+	background-color: white;
+	border-radius: 3px;
+	padding: 2rem;
+	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
+	width: 500px;
 
+	@media screen and (max-width: 1400px) {
+		margin-bottom: 2rem;
+	}
 
+	@media screen and (max-width: 600px) {
+		border-radius: 0;
+		width: 100%;
+		margin-bottom: 1rem;
+
+		& h1 {
+			font-size: 2rem;
+		}
+		& h3 {
+			font-size: 1rem;
+		}
+	}
 `;
 
-const Inputbox = Styled(Container)
-`
-width: 40vw;
-justify-content: center;
-align-items:center;
-
+const PanelHeading = styled.div`
+	border: 1px 1px 0 1px solid black;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	font-size: 2rem;
+	font-weight: 300;
+	background-color: hsla(0, 0%, 100%, 0.8);
+	width: 100%;
+	text-align: center;
+	border-bottom: 1px solid hsl(0, 0%, 17%);
+	margin-bottom: 1rem;
 `;
 
-const Answer = Styled(Input)
-`
-width: 40vw;
+const TablePanel = styled.div`
+	background-color: white;
+	border-radius: 3px;
+	padding: 2rem;
+	box-shadow: 0px 15px 20px 8px hsl(0, 0%, 17%);
 
-`;
-const Answer1 = Styled(Input)
-`
-width: 40vw;
+	@media screen and (max-width: 1400px) {
+		& #choiceNum {
+			display: none;
+		}
+	}
 
-`;
-const Answer2 = Styled(Input)
-`
-width: 40vw;
+	@media screen and (max-width: 600px) {
+		border-radius: 0;
+		width: 100%;
+		padding: 1rem;
 
-`;
-const Answer3 = Styled(Input)
-`
-width: 40vw;
-
+		& h1 {
+			font-size: 2rem;
+		}
+		& h3 {
+			font-size: 1rem;
+		}
+		& table {
+			font-size: 0.75rem;
+		}
+	}
 `;
 
 const Questions = () => {
+	const [allQuestions, setAllQuestions] = useState([]);
+	const [newQuestion, setNewQuestion] = useState("");
+	const [newQuestionError, setNewQuestionError] = useState(false);
+	const [choices, setChoices] = useState({
+		choice1: {
+			answer: "",
+			error: false
+		},
+		choice2: {
+			answer: "",
+			error: false
+		},
+		choice3: {
+			answer: "",
+			error: false
+		},
+		choice4: {
+			answer: "",
+			error: false
+		}
+	});
+	const [correctChoiceIndex, setCorrectChoiceIndex] = useState(1);
+	const [newQuestionPoints, setNewQuestionPoints] = useState(10);
+	const [submitted, setSubmitted] = useState(false);
+	const [apiError, setApiError] = useState("");
+
+	function getQuestions() {
+		axios.get(`${process.env.BASE_URL}/api/questions`).then(({ data }) => {
+			setAllQuestions(data);
+		});
+	}
+
+	useEffect(() => {
+		getQuestions();
+	}, []);
+
+	function handleSubmit(e) {
+		e.preventDefault();
+
+		// Check for errors
+		setNewQuestionError(!newQuestion);
+		setChoices({
+			choice1: {
+				answer: choices.choice1.answer,
+				error: !choices.choice1.answer
+			},
+			choice2: {
+				answer: choices.choice2.answer,
+				error: !choices.choice2.answer
+			},
+			choice3: {
+				answer: choices.choice3.answer,
+				error: !choices.choice3.answer
+			},
+			choice4: {
+				answer: choices.choice4.answer,
+				error: !choices.choice4.answer
+			}
+		});
+
+		// If there are errors, don't attempt to submit the question
+		if (
+			!newQuestion ||
+			!choices.choice1.answer ||
+			!choices.choice2.answer ||
+			!choices.choice3.answer ||
+			!choices.choice4.answer
+		)
+			return;
+
+		// Submit the question
+		// question, choices, correctIndex, points
+		axios
+			.post("/api/questions", {
+				question: newQuestion,
+				choices: [
+					choices.choice1.answer,
+					choices.choice2.answer,
+					choices.choice3.answer,
+					choices.choice4.answer
+				],
+				correctIndex: correctChoiceIndex - 1,
+				points: newQuestionPoints
+			})
+			.then(({ data }) => {
+				setAllQuestions([...allQuestions, data.question]);
+				console.log(data.question);
+			})
+			.catch((error) => {
+				if (error.response) {
+					setApiError("API Error: " + error.response.data.error);
+					setTimeout(() => setApiError(""), 5000);
+					console.log(error.response.data.error);
+				} else {
+					setApiError("API Error: Improper data");
+					console.log(error);
+				}
+			});
+
+		setSubmitted(true);
+		setTimeout(() => setSubmitted(false), 5000); // alert disappears after 5 seconds
+	}
+
 	return (
 		<Layout title="Questions Center" color="#55dd99">
-			<Box className="text-center mt-5">
-				<Form style={{textAlign:'center'}}>
-					<h1>
-						Question Submission Form
-					</h1>
-					<FormGroup>
-						<Label for= "questionSubmission">
-							
-							Question here:
-						</Label>
-						<Inputbox>
+			<CenterWrapper>
+				<QuestionPanel>
+					<PanelHeading>Submit a Question</PanelHeading>
+					{submitted && (
+						<Alert
+							color={apiError ? "danger" : "success"}
+							style={{ textAlign: "center" }}
+						>
+							{apiError ? apiError : "Question submitted!"}
+						</Alert>
+					)}
+					<Form onSubmit={handleSubmit}>
+						<FormGroup row>
+							{/* "for=" refers to the id */}
+							<Label for="question">Question</Label>
+							<Col>
+								<Input
+									type="text"
+									name="question"
+									id="question"
+									placeholder="Why did the chicken cross the road?"
+									value={newQuestion}
+									onChange={(e) => setNewQuestion(e.target.value)}
+									invalid={newQuestionError}
+								/>
+								{newQuestionError && (
+									<FormFeedback>You must provide the question</FormFeedback>
+								)}
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label for="choice1">Choice 1</Label>
+							<Col>
+								<Input
+									type="text"
+									name="choice1"
+									id="choice1"
+									placeholder="Answer 1"
+									value={choices.choice1.answer}
+									onChange={(e) =>
+										setChoices({
+											...choices,
+											choice1: { answer: e.target.value }
+										})
+									}
+									invalid={choices.choice1.error}
+								/>
+								{choices.choice1.error && (
+									<FormFeedback>You must provide all four choices</FormFeedback>
+								)}
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label for="choice2">Choice 2</Label>
+							<Col>
+								<Input
+									type="text"
+									name="choice2"
+									id="choice2"
+									placeholder="Answer 2"
+									value={choices.choice2.answer}
+									onChange={(e) =>
+										setChoices({
+											...choices,
+											choice2: { answer: e.target.value }
+										})
+									}
+									invalid={choices.choice2.error}
+								/>
+								{choices.choice2.error && (
+									<FormFeedback>You must provide all four choices</FormFeedback>
+								)}
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label for="choice3">Choice 3</Label>
+							<Col>
+								<Input
+									type="text"
+									name="choice3"
+									id="choice3"
+									placeholder="Answer 3"
+									value={choices.choice3.answer}
+									onChange={(e) =>
+										setChoices({
+											...choices,
+											choice3: { answer: e.target.value }
+										})
+									}
+									invalid={choices.choice3.error}
+								/>
+								{choices.choice3.error && (
+									<FormFeedback>You must provide all four choices</FormFeedback>
+								)}
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label for="choice4">Choice 4</Label>
+							<Col>
+								<Input
+									type="text"
+									name="choice4"
+									id="choice4"
+									placeholder="Answer 4"
+									value={choices.choice4.answer}
+									onChange={(e) =>
+										setChoices({
+											...choices,
+											choice4: { answer: e.target.value }
+										})
+									}
+									invalid={choices.choice4.error}
+								/>
+								{choices.choice4.error && (
+									<FormFeedback>You must provide all four choices</FormFeedback>
+								)}
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label for="correctChoiceIndex">Correct Choice</Label>
+							<Col>
+								<Input
+									type="select"
+									name="correctChoiceIndex"
+									id="correctChoiceIndex"
+									value={correctChoiceIndex}
+									onChange={(e) => setCorrectChoiceIndex(e.target.value)}
+								>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								</Input>
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label for="newQuestionPoints">Points</Label>
+							<Col>
+								<Input
+									type="number"
+									name="newQuestionPoints"
+									id="newQuestionPoints"
+									value={newQuestionPoints}
+									onChange={(e) => setNewQuestionPoints(e.target.value)}
+									invalid={newQuestionPoints < 10 || newQuestionPoints > 1000}
+								/>
+								{(newQuestionPoints < 10 || newQuestionPoints > 1000) && (
+									<FormFeedback>Points must be between 10 and 1000</FormFeedback>
+								)}
+							</Col>
+						</FormGroup>
+						<Button
+							block
+							size="lg"
+							color="success"
+							type="submit"
+							disabled={newQuestionPoints < 10 || newQuestionPoints > 1000}
+						>
+							Submit
+						</Button>
+					</Form>
+				</QuestionPanel>
+				<TablePanel>
+					<PanelHeading>All Questions</PanelHeading>
+					<Table>
+						<thead>
+							<tr>
+								<th>Question</th>
+								<th>Choices</th>
+								<th>Points</th>
+							</tr>
+						</thead>
+						<tbody>
+							{allQuestions.map((question, index) => (
+								<tr key={index + 20}>
+									<th scope="row">{question.question}</th>
+									<td>
+										<ListGroup>
+											{question.choices.map((choice, index) => (
+												<ListGroupItem
+													key={index + 10}
+													style={{
+														display: "flex",
+														alignItems: "center",
+														justifyContent: "space-between",
+														backgroundColor:
+															index === question.correctIndex
+																? "#55dd99"
+																: "white"
+													}}
+												>
+													<span
+														id="choiceNum"
+														style={{
+															fontSize: "0.75rem",
+															fontWeight: "300"
+														}}
+													>
+														{index + 1} -{" "}
+													</span>
 
-			
-						<Questionbox type = "text"
-						
-						id ="questionSubmission"	
-						name="questionSubmission"
-						placeholder= "Enter Quesiton Here"
-						/>
-
-						<Label for= "answerSubmission">
-							
-							Answer: (1 point)
-						</Label>
-						<Answer type = "text"
-						
-						id ="answerSubmission"	
-						name="answerSubmission"
-						placeholder= "Answer"
-						/>
-
-						<Label for= "answerSubmission">
-							
-							Answer: (1 point)
-						</Label>
-						<Answer1 type = "text"
-						
-						id ="answerSubmission"	
-						name="answerSubmission"
-						placeholder= "Answer"
-						/>
-
-						
-					<Label for= "answerSubmission">
-							
-							Answer: (1 point)
-						</Label>
-						<Answer2 type = "text"
-						
-						id ="answerSubmission"	
-						name="answerSubmission"
-						placeholder= "Answer"
-						/>
-
-						
-					<Label for= "answerSubmission">
-							
-							Correct Answer: (1 point)
-						</Label>
-						<Answer3 type = "text"
-						
-						id ="answerSubmission"	
-						name="answerSubmission"
-						placeholder= "Answer"
-						/>
-						
-					
-						</Inputbox>
-					</FormGroup>
-
-				</Form>
-				
-
-
-		
-				<p>
-					This area will be filled with all the questions currently in our database.
-					<br />
-					It will also contain input boxes for submitting your own questions (along with
-					their answer choices and the correct answer) directly to our database.
-					<br />
-					<StyledLink href="/contribute" hoverColor="red">
-						Back to Contribute Center
-					</StyledLink>
-				</p>
-			</Box>
+													<span>{choice}</span>
+												</ListGroupItem>
+											))}
+										</ListGroup>
+									</td>
+									<td style={{ textAlign: "right" }}>{question.points}</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
+				</TablePanel>
+			</CenterWrapper>
 		</Layout>
 	);
 };

@@ -3,14 +3,14 @@ import Link from "next/link";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
 import styled, { css } from "styled-components";
 import { UserContext } from "../components/UserContext";
+import axios from "axios";
 
-const StyledNavbar = styled(Navbar)
-`
+const StyledNavbar = styled(Navbar)`
 	background-color: white;
 	border-bottom: 1px solid black;
 `;
 
-const TopbarLink = styled.a `
+const TopbarLink = styled.a`
 	height: 100%;
 	display: flex;
 	align-items: center;
@@ -20,8 +20,14 @@ const TopbarLink = styled.a `
 
 	&:hover {
 		text-decoration: none;
+
+		&#login {
+			color: hsl(0, 75%, 60%);
+			transition: color 300ms;
+		}
+
 		color: hsl(189, 67%, 49%);
-		transition: 100ms;
+		transition: color 100ms;
 	}
 
 	/* This function allows you to pass this component keywords to provide different CSS styling. */
@@ -41,9 +47,11 @@ const CenteredNav = styled(Nav)`
 `;
 
 const TopbarPlay = styled(TopbarLink)`
+	width: 8rem;
 	background-color: hsl(0, 75%, 60%);
 	border: 2px solid hsl(0, 0%, 13%);
-	padding: 0.5rem 2.5rem;
+	justify-content: center;
+	padding: 0.75rem 0;
 	border-radius: 3px;
 	font-weight: 800;
 	color: white;
@@ -51,8 +59,14 @@ const TopbarPlay = styled(TopbarLink)`
 	&:hover {
 		color: hsl(0, 75%, 60%);
 		background-color: white;
-		transition: 300ms;
 		border-color: hsl(189, 78%, 39%);
+		transition-duration: 300ms;
+		transition-property: color, background-color, border-color;
+	}
+
+	// navbar collapses at 767px width
+	@media screen and (max-width: 767px) {
+		width: 10rem;
 	}
 `;
 
@@ -71,21 +85,33 @@ const ProfilePic = styled(Logo)`
 	margin-left: 0.5rem;
 `;
 
-const LogoutContainer = styled(NavLink)`
+const ProfileContainer = styled(NavLink)`
 	width: 10rem;
-	box-sizing: border-box;
-	padding: 0.25rem 1rem;
-	margin-right: 1rem;
-	margin-left: 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	background-color: hsl(199, 69%, 64%);
-	border: 1px solid black;
-	border-radius: 3px;
+	& #logout {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: #212121;
 
-	& a:hover {
-		color: white;
+		&:hover {
+			cursor: pointer;
+			color: hsl(0, 75%, 60%);
+		}
+	}
+`;
+
+const Separator = styled(NavItem)`
+	display: flex;
+	font-size: 2rem;
+	font-weight: 300;
+	margin: 0 1rem;
+	margin-bottom: 0.5rem;
+
+	// navbar collapses at 767px width
+	@media screen and (max-width: 767px) {
+		display: none;
 	}
 `;
 
@@ -101,7 +127,7 @@ const Topbar = () => {
 
 	return (
 		// The second "light" is the color scheme for the hamburger icon
-		<StyledNavbar light expand="md">
+		<StyledNavbar light expand="lg">
 			<NavbarBrand>
 				<Link href="/" passHref>
 					<TopbarLink primary>
@@ -133,59 +159,11 @@ const Topbar = () => {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link href="/users/Christian2" passHref>
-								<TopbarLink>Test: User Christian2</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink>
-							<Link href="/users/loremipsum" passHref>
-								<TopbarLink>Test: User loremipsum</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink>
-							<Link href="/users/CHRISTIAN2" passHref>
-								<TopbarLink>Test: User CHRISTIAN2</TopbarLink>
-							</Link>
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink>
 							<Link href="/donate" passHref>
 								<TopbarLink style={{ color: "palevioletred" }}>Donate</TopbarLink>
 							</Link>
 						</NavLink>
 					</NavItem>
-					{!!userData ? (
-						<NavItem>
-							<LogoutContainer style={{}}>
-								<Link href="/logout" passHref>
-									<TopbarLink style={{ display: "inline-block" }}>
-										Log out
-									</TopbarLink>
-								</Link>
-								<Link href={`/users/${userData.username}`}>
-									<a>
-										<ProfilePic
-											src={`${userData.profile_picture_url}`}
-											alt={`${userData.username}'s profile picture`}
-										/>
-									</a>
-								</Link>
-							</LogoutContainer>
-						</NavItem>
-					) : (
-						<NavItem>
-							<NavLink>
-								<Link href="/login" passHref>
-									<TopbarLink>Log in</TopbarLink>
-								</Link>
-							</NavLink>
-						</NavItem>
-					)}
 					<NavItem>
 						<NavLink>
 							<a href="/game" style={{ textDecoration: "none" }}>
@@ -193,6 +171,37 @@ const Topbar = () => {
 							</a>
 						</NavLink>
 					</NavItem>
+					<Separator>|</Separator>
+					{!!userData ? (
+						<NavItem>
+							<ProfileContainer>
+								<span
+									id="logout"
+									onClick={() => {
+										window.location.href = `${process.env.BASE_URL}/logout`;
+									}}
+								>
+									Log out
+								</span>
+								<Link href="/users/[username]" as={`/users/${userData.username}`}>
+									<a>
+										<ProfilePic
+											src={`${userData.profile_picture_url}`}
+											alt={`${userData.username}'s profile picture`}
+										/>
+									</a>
+								</Link>
+							</ProfileContainer>
+						</NavItem>
+					) : (
+						<NavItem>
+							<NavLink>
+								<Link href="/login" passHref>
+									<TopbarLink id="login">Log in</TopbarLink>
+								</Link>
+							</NavLink>
+						</NavItem>
+					)}
 				</CenteredNav>
 			</Collapse>
 		</StyledNavbar>

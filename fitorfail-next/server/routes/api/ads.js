@@ -11,7 +11,7 @@ const Ad = require("../../models/Ad");
 router.get("/", (req, res) => {
 	// May contain duplicate results, but it doesn't matter since it only needs one document
 	Ad.aggregate([{ $sample: { size: 1 } }], (err, results) => {
-		// aggregate returns and array of object matches, so we need to specify index 0 (for our one result)
+		// aggregate returns an array of object matches, so we need to specify index 0 (for our one result)
 		if (err) return res.json({ err });
 		const random_ad = results[0];
 		return res.json({ random_ad });

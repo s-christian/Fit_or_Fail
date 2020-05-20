@@ -1,144 +1,111 @@
 import Layout from "../components/Layout";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Badge, ListGroup, ListGroupItem, Button } from "reactstrap";
+import Link from "next/link";
+import { Table } from "reactstrap";
 import styled from "styled-components";
 
-const MediaContainer = styled(Container)`
-	width: 100vw;
-	height: 100vh;
-	@media screen and (max-width: 50rem) {
-		font-size: 3rem;
-		margin-bottom: 200px;
-	}
+const CenterWrapper = styled.div`
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
-const BoardStyle = styled(Container)`
-	background-color: white;
-	border: 2px solid black;
-	background-color: rgba(255, 0, 0, 0.5);
-	@media screen and (max-width: 50rem) {
-		font-size: 2.5rem;
+const TableWrapper = styled.div`
+	display: flex;
+	width: 100%;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 1rem;
+
+	& .tableContainer {
+		border: 2px solid black;
+		border-top-left-radius: 6px;
+		border-top-right-radius: 6px;
 	}
-`;
-
-const RowStyle = styled(Row)`
-	background-color: colorGenerator;
-	border: 1px solid black;
-	margin: 2px;
-	border-radius: 30% 75% 75% 30%;
-	background-color: #fd943f;
-	@media screen and (max-width: 50rem) {
-		font-size: 2rem;
+	& #soloTable {
+		margin-right: 1rem;
 	}
-`;
+	& h1 {
+		margin-bottom: 0;
+		text-align: center;
+		color: white;
+		padding: 1rem;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
 
-const BadgeStyle = styled(Badge)`
-	border: 1px solid purple;
-	margin-bottom: 2px;
-	padding: 5px;
-	color: purple;
-	@media screen and (max-width: 50rem) {
-		font-size: 1.5rem;
-		background-color: rgba(249, 208, 129, 1);
+		&#soloHeading {
+			background-color: hsl(189, 78%, 39%);
+		}
+		&#onlineHeading {
+			background-color: hsl(112, 57%, 42%);
+		}
 	}
-`;
-
-const StyledButton = styled(Button)`
-	border: 5px solid;
-	position: absolute;
-	bottom: -250px;
-	z-index: 1;
-	display: block;
-	top: calc(50% - 2.5rem - 5px);
-	left: calc(50% - 6rem - 5px);
-	height: 5rem;
-	width: 12rem;
-	margin: auto;
-	background: transparent
-		linear-gradient(
-			to top left,
-			rgba(249, 208, 129, 0.2) 0%,
-			rgba(227, 2, 62, 0.2) 40%,
-			rgba(49, 128, 135, 0.2) 100%
-		);
-	border-image-source: linear-gradient(
-		to top left,
-		rgba(249, 208, 129, 1) 0%,
-		rgba(227, 2, 62, 1) 40%,
-		rgba(49, 128, 135, 1) 100%
-	);
-	border-image-slice: 1;
-	transition: transform 0.25s;
-	letter-spacing: 0.2rem;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 1.25rem;
-	font-weight: 300;
-	text-align: center;
-	text-decoration: none;
-	text-transform: uppercase;
-	color: #333;
-
-	&::after {
-		z-index: -1;
-		background: transparent
-			linear-gradient(
-				to bottom left,
-				rgba(249, 208, 129, 0.25) 10%,
-				rgba(227, 2, 62, 0.25) 30%,
-				rgba(49, 128, 135, 0.25) 90%
-			);
-		border-image-source: 3px
-			linear-gradient(
-				to bottom left,
-				rgba(249, 208, 129, 1) 10%,
-				rgba(227, 2, 62, 1) 30%,
-				rgba(49, 128, 135, 1) 90%
-			);
-		transition: opacity 1s;
+	& table {
+		margin-bottom: 0;
 	}
+	& thead tr {
+		background-color: hsl(0, 75%, 60%);
+	}
+	& tbody tr {
+		background-color: hsl(119, 0%, 95%);
+		cursor: pointer;
 
-	&:active {
-		transform: scale(0.96);
+		& :hover {
+			color: white;
+			background-color: hsl(308, 76%, 22%);
 
-		&::before {
-			opacity: 1;
+			animation: popOut 500ms forwards;
+
+			@keyframes popOut {
+				from {
+					transform: scale(1);
+				}
+				to {
+					transform: scale(1.25);
+				}
+			}
+		}
+		& :active {
+			background-color: hsl(308, 76%, 44%);
 		}
 	}
 
-	&::before {
-		z-index: 0;
-		border-image-source: 3px
-			linear-gradient(
-				to bottom left,
-				rgba(249, 208, 129, 1) 20%,
-				rgba(227, 2, 62, 1) 40%,
-				rgba(49, 128, 135, 1) 70%
-			);
-		transition: opacity 0.5s;
-	}
+	@media screen and (max-width: 1200px) {
+		flex-direction: column;
+		align-items: center;
 
-	&:hover::after {
-		opacity: 1;
+		& #soloTable {
+			margin-right: 0;
+			margin-bottom: 1rem;
+		}
 	}
+	@media screen and (max-width: 500px) {
+		padding: 1rem 0;
 
-	@media screen and (max-width: 43rem) {
-		position: absolute;
-		bottom: -1050px;
+		& .tableContainer {
+			width: 100%;
+			border-left: none;
+			border-right: none;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+		& h1 {
+			text-align: center;
+			font-size: 1.8rem;
+		}
+		& table {
+			font-size: 0.75rem;
+		}
+	}
+	@media screen and (max-width: 400px) {
+		& table {
+			font-size: 0.5rem;
+		}
 	}
 `;
 
-const HeaderStyle = styled.h1`
-	border: 2px solid;
-	margin-bottom: 3px;
-	font-weight: 600;
-	color: purple;
-	width: 25vw;
-	background: linear-gradient(70deg, #5ac8fa 70%, #ff6464 70%);
-	@media screen and (max-width: 50rem) {
-		font-size: 1.7rem;
-	}
-`;
 const Leaderboard = () => {
 	const [users, setUsers] = useState([]);
 
@@ -149,53 +116,56 @@ const Leaderboard = () => {
 	}, []);
 
 	return (
-		<Layout
-			title="Leaderboard"
-			color="  background: -webkit-linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
-		background: -o-linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
-		background: -moz-linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
-		background: linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
-	  }"
-		>
-			<MediaContainer
-				style={{
-					width: "100%",
-					height: "100%",
-					justifyContent: "center",
-					alignItems: "center"
-				}}
-			>
-				<HeaderStyle>
-					Leaderboard
-					<BadgeStyle href="/leaderboard" color="">
-						Refresh
-					</BadgeStyle>
-				</HeaderStyle>
-				<ListGroup style={{ background: "opacity 1" }}>
-					<BoardStyle>
-						<Row>
-							<Col>Name</Col>
-							<Col>Points</Col>
-							<Col>team</Col>
-						</Row>
-						<ul>
-							{users.map((user) => (
-								<li>
-									<RowStyle>
-										<Col>{user.username}</Col>
-										<Col>{user.points} </Col>
-										<Col>{user.team}</Col>
-									</RowStyle>
-								</li>
-							))}
-						</ul>
-					</BoardStyle>
-
-					<a href="/game">
-						<StyledButton>PLAY</StyledButton>
-					</a>
-				</ListGroup>
-			</MediaContainer>
+		<Layout title="Leaderboard" color="hsl(276, 61%, 75%)">
+			<CenterWrapper>
+				<TableWrapper>
+					<div id="soloTable" className="tableContainer">
+						<h1 id="soloHeading">Solo Leaderboard</h1>
+						<Table>
+							<thead>
+								<tr>
+									<th>Global Rank</th>
+									<th>Username</th>
+									<th>Points</th>
+									<th>Total Answers</th>
+									<th>Correct Rate</th>
+								</tr>
+							</thead>
+							<tbody>
+								{users.map((user, index) => (
+									<Link
+										href="/users/[username]"
+										as={`/users/${user.username}`}
+										key={index}
+									>
+										<tr>
+											<th scope="row">#{index + 1}</th>
+											<td>{user.username}</td>
+											<td>{user.points}</td>
+											<td style={{ textAlign: "center" }}>
+												{user.totalAnswers}
+											</td>
+											<td style={{ textAlign: "right" }}>
+												{(user.percentageCorrect * 100).toFixed(2)}%
+											</td>
+										</tr>
+									</Link>
+								))}
+							</tbody>
+						</Table>
+					</div>
+					<div id="onlineTable" className="tableContainer">
+						<h1 id="onlineHeading">Multiplayer Leaderboard</h1>
+						<Table striped hover>
+							<thead>
+								<tr style={{ textAlign: "center" }}>
+									<th>Coming soon!</th>
+								</tr>
+							</thead>
+						</Table>
+					</div>
+				</TableWrapper>
+			</CenterWrapper>
 		</Layout>
 	);
 };
