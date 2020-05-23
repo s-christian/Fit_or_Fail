@@ -14,14 +14,12 @@
     -   `/contribute/questions`:
         -   Add ability to delete and modify questions (click on questions in table)
     -   `/contribute/sponsors` frontend needed. API already exists @ `/api/ads`.
--   Separate "Log out" and the user's profile picture in the Topbar
 -   Email contact form
     -   Front end form that collects contact information, the actual email content, etc.
     -   Nodemailer back end
 -   Online multiplayer kahoot-style game
     -   Teams
 -   Mobile optimizations
-    -   Game index page
     -   About page
     -   Anywhere else that you see might need it
         -   users should NEVER have to horizontally scroll for anything
@@ -41,7 +39,7 @@
 -   Upload custom images
     -   User profile_pictures
     -   Ad image_urls
--   Improve API to add/delete multiple questions or ads at once
+-   Improve API to delete multiple questions or ads at once
 -   Improved site statistics
     -   points, totalAnswers, correctAnswers, and wins counts per month
         -   Statistics collection in MongoDB that holds totals for everything, and totals on a monthly basis
@@ -50,11 +48,11 @@
 -   User refresh tokens to avoid the need to manually log in every two hours
     -   Way to blacklist or revoke certain tokens/refresh tokens in order to end the theft of a user's token
         -   Token expiration time is the minimum amount of time the thief will have with the stolen account
--   Better and more diverse typography
+-   More diverse typography
 
 ## Current Issues (to be fixed/optimized in the near future)
 
--   The Topbar has nested anchor tags which throws a lot of ugly errors, although they don't affect anything
+-   The Topbar has nested anchor tags which throws a lot of ugly errors, although they don't affect anything UX-wise
 -   Client-side user can view the correct answers to the quiz questions they were given
     -   This is not plainly visible; the user would have to look at the network request or similar, but this is still an issue
     -   Anybody with a valid JWT (of lowest account_type privilege "user") can make direct requests to the API endpoint to keep receiving information on a hard-coded number (currently 5) of randomly-selected questions from the database
